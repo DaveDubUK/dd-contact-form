@@ -162,7 +162,11 @@
 
 .ddcf_image_container {
 	width:100%;
+        height:3em;
 	margin:auto;
 	text-align:center;
 	position:relative;
+        background-image:url('images/dd-contact-form-ajax-loader.gif');
+        background-repeat:no-repeat;
+        background-position:center center;
 }

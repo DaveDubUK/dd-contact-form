@@ -36,7 +36,7 @@
 	<!--div class="wrap"-->
 		<?php screen_icon(); ?>
 
-		<h2><?php _e('Bookings and Contacts Options', 'ddcf-plugin') ?></h2>
+		<h2><?php _e('DD Contact Form Settings', 'ddcf-plugin') ?></h2>
 
 		<div class="ddcf-options-div">
 			<div id="tabs">
@@ -88,7 +88,7 @@
 							<p>
                                                                 <strong><?php _e('Future Contact Permission', 'ddcf-plugin') ?></strong>
                                                                 <br /><br />
-                                                                <?php _e('Offer to save user permission to send newletters or other updates in the future.', 'ddcf-plugin') ?>                                                                        <br /><br />
+                                                                <?php _e('Offer to save user permission to send newsletters or other updates in the future.', 'ddcf-plugin') ?>                                                                        <br /><br />
 								<input type="checkbox" id="ddcf_rec_updates_option_check" name="ddcf_rec_updates_option_check" value="6329e8aa0ee61bf5726bcf82f3dae21b73f11d9b9dafcd3b60c86cd8224b91c1" <?php if(get_option('ddcf_rec_updates_option_check')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Offer to register contact form users') ?>
 								<br /><br />
                                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="ddcf_rec_updates_message_check" name="ddcf_rec_updates_message_check" value="6329e8aa0ee61bf5726bcf82f3dae21b73f11d9b9dafcd3b60c86cd8224b91c1" <?php if(get_option('ddcf_rec_updates_message_check')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Custom message:'); ?>
