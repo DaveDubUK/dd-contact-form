@@ -1,0 +1,206 @@
+/* Davedub's contact form css */
+/*
+    This file is part of Davedub's Contact Form plugin for WordPress
+
+    Davedub's Contact Form plugin is free software: you can
+    redistribute it and / or modify it under the terms of the
+    GNU General Public License as published by the
+    Free Software Foundation, either version 3 of the License,
+    or (at your option) any later version.
+
+    Davedub's Contact Form plugin is distributed in the hope
+    that it will be useful, but WITHOUT ANY WARRANTY; without
+    even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with the Contacts and Bookings plugin.
+    If not, see <http://www.gnu.org/licenses/>.
+
+
+
+   This is the base stylesheet for appearance modification
+   -------------------------------------------------------
+
+   jQueryUI elements (i.e. the datepicker and buttons) can be 
+   modified by changing the jQueryUI theme - see the setting page
+   
+   Some of these settings may be dynamically changed on page load 
+   for different sized browser windows or on handheld devices.
+*/
+
+
+/* content divs for contact page  */
+#ddcf-contact_form_wrapper {
+	margin-bottom:1.618em;
+}
+#ddcf_contact_form {
+	margin:0px;
+	padding:0px;
+}
+
+#ddcf_contact_form_top_right {
+	
+	/*border: 2px solid #EEEEEE !important;*/
+	box-shadow:1px 1px 2px #2b2b2b inset;
+	
+	background: #eaeaea; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VhZWFlYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM1JSIgc3RvcC1jb2xvcj0iI2ZiZmJmYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOGY4ZjgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #eaeaea 0%, #fbfbfb 35%, #f8f8f8 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(35%,#fbfbfb), color-stop(100%,#f8f8f8)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-8 */	
+	
+	border-radius: 8px  !important; 
+	-webkit-border-radius: 8px !important; 
+	-moz-border-radius: 8px !important;
+	
+	/*margin-bottom:1.1em;*/
+}
+
+
+/* base  styling for all elements (except jQueryUI) */
+.ddcf_input_base {
+	
+	margin:0px 0px 1.2em 0px;
+	
+	font:inherit;
+	font-size:inherit;
+	/*color:inherit;*/
+
+	border: 1px hidden #cccccc !important; 
+	border-radius: 6px  !important; 
+	-webkit-border-radius: 6px !important; 
+	-moz-border-radius: 6px !important;
+	
+	box-shadow:1px 1px 2px #2b2b2b inset;
+	
+	background: #f2f2f2; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YyZjJmMiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjMwJSIgc3RvcC1jb2xvcj0iI2ZlZmVmZSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmMmYyZjIiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #f2f2f2 0%, #fefefe 30%, #f2f2f2 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f2f2f2), color-stop(30%,#fefefe), color-stop(100%,#f2f2f2)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #f2f2f2 0%,#fefefe 30%,#f2f2f2 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #f2f2f2 0%,#fefefe 30%,#f2f2f2 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #f2f2f2 0%,#fefefe 30%,#f2f2f2 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #f2f2f2 0%,#fefefe 30%,#f2f2f2 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f2f2f2', endColorstr='#f2f2f2',GradientType=0 ); /* IE6-8 */	
+}
+
+/* styling for dropdowns */
+.ddcf_dropdown {
+	border-radius:5px;
+	padding:0.45em 0.4em 0.5em 0.2em;
+}
+
+/* buttons bar */
+#ddcf_opts_and_buttons {
+	padding-bottom:0.4em;
+}
+
+/* Buttons (Reset and Submit) */
+.ui-button .ui-button-text {
+	line-height:0.65em !important;
+}
+.ddcf_button {
+
+	/* sizing / positioning */
+	padding:0px 0.2em 0.13em 0.2em !important;
+	margin:0em 0.3em 0.3em 0.3em !important;
+	max-height:2.0em !important;
+	height:2.0em !important;
+	vertical-align:middle;
+ 
+ 	/* font */
+	font:inherit;
+	font-size:inherit;
+	color:inherit;
+	text-transform:capitalize;
+        text-shadow: 2px 2px 4px #ffffff;
+	font-size:0.96em !important;
+	font-weight:normal;
+	line-height:1.83em !important;
+	
+	/* decoration */
+	-webkit-border-radius: 8px; /* Safari 3-4, iOS 1-3.2, Android 1.6- */
+	-moz-border-radius: 8px; /* Firefox 1-3.6 */
+	border-radius: 8px; /* Opera 10.5, IE 9, Safari 5, Chrome, Firefox 4, iOS 4, Android 2.1+ */
+	box-shadow:2px 2px 3px #2B2B2B;
+	outline-color:-moz-use-text-color;
+	outline-style: none;
+	outline-width:medium;
+        border: 1px solid #888888 !important;
+        background: #f3f3f3; /* Old browsers */
+        /* IE9 SVG, needs conditional override of 'filter' to 'none' */
+        background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2YzZjNmMyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjUwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmM2YzZjMiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+        background: -moz-linear-gradient(top,  #f3f3f3 0%, #ffffff 50%, #f3f3f3 100%); /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f3f3f3), color-stop(50%,#ffffff), color-stop(100%,#f3f3f3)); /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #f3f3f3 0%,#ffffff 50%,#f3f3f3 100%); /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #f3f3f3 0%,#ffffff 50%,#f3f3f3 100%); /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #f3f3f3 0%,#ffffff 50%,#f3f3f3 100%); /* IE10+ */
+        background: linear-gradient(to bottom,  #f3f3f3 0%,#ffffff 50%,#f3f3f3 100%); /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f3f3f3', endColorstr='#f3f3f3',GradientType=0 ); /* IE6-8 */
+        /* Prevent background color leak outs */
+        -webkit-background-clip: padding-box; 
+        -moz-background-clip:    padding; 
+        background-clip:         padding-box;
+}
+
+
+/* Text inputs on Contact From */
+.ddcf_contact_text_input {
+	padding:0.5em 0.4em 0.6em 0.75em !important;
+}
+
+
+
+/* captchas - container */
+#ddcf-contact-form-captcha {
+	padding:0.0em;
+}
+/* simple add */
+#simple_add_captcha {
+	/*margin-bottom:0.4em;*/
+	/*padding:2.78em 0.8em 0.6em 0.8em;*/
+}
+/* simple add answer box */
+#ddcf_contact_captcha_add {
+	margin:1.0em 0.58em 1.0em 1.0em;
+	padding:0.5em 0.75em;
+}
+
+/* reCaptcha */
+#recaptcha_area{
+	margin-top:0.55em;
+}
+
+/* Checkbox Area */
+#ddcf-checkbox-area {
+	margin-left:0.5em;
+	padding:0px;
+	font-size:0.9em;
+}
+
+/* tooltips */
+.ui-tooltip {
+	background:#fffeb1;
+	width:auto;
+}
+
+
+/* timepicker (datepicker addon) */
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 65px; }
+.ui-timepicker-div td { font-size: 90%; }
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-rtl{ direction: rtl; }
+.ui-timepicker-rtl dl { text-align: right; }
+.ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }

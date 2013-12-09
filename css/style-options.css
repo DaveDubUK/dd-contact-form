@@ -1,0 +1,39 @@
+/*
+    This file is part of Davedub's Contact Form plugin for WordPress
+
+    Davedub's Contact Form plugin is free software: you can
+    redistribute it and / or modify it under the terms of the
+    GNU General Public License as published by the
+    Free Software Foundation, either version 3 of the License,
+    or (at your option) any later version.
+
+    Davedub's Contact Form plugin is distributed in the hope
+    that it will be useful, but WITHOUT ANY WARRANTY; without
+    even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with the Contacts and Bookings plugin.
+    If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/* Options page stuff */
+
+/* content div for options page */
+.ddcf-options-div {
+	margin:1.5em 1.0em 2.0em 1.5em;
+	max-width:600px;
+	min-height:800px;
+}
+
+/* text inputs on options form */
+.ddcf-text-input {  
+	min-width:185px;
+}
+.ddcf_textarea_input {
+	margin-top:1.0em;
+	width:500px;
+	height:4.0em;
+	vertical-align:bottom;
+}

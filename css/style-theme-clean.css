@@ -1,0 +1,77 @@
+/* Davedub's contact form css */
+/*
+    This file is part of Davedub's Contact Form plugin for WordPress
+
+    Davedub's Contact Form plugin is free software: you can
+    redistribute it and / or modify it under the terms of the
+    GNU General Public License as published by the
+    Free Software Foundation, either version 3 of the License,
+    or (at your option) any later version.
+
+    Davedub's Contact Form plugin is distributed in the hope
+    that it will be useful, but WITHOUT ANY WARRANTY; without
+    even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with the Contacts and Bookings plugin.
+    If not, see <http://www.gnu.org/licenses/>.
+
+
+
+   This is the base stylesheet for appearance modification
+   -------------------------------------------------------
+
+   jQueryUI elements (i.e. the datepicker and buttons) can be 
+   modified by changing the jQueryUI theme - see the setting page
+   
+   Some of these settings may be dynamically changed on page load 
+   for different sized browser windows or on handheld devices.
+*/
+
+
+#ddcf_contact_form_top_right p {
+    font-size: 1.14em;
+    color: #444;
+}
+
+/* styling for dropdowns */
+.ddcf_dropdown {        
+        border: 1px solid #ccc;
+        border-radius: 3px; 
+        font-size: 14px !important;
+}
+
+/* Buttons (Reset and Submit) */
+.ddcf_button { 
+	font:inherit;
+	font-size:inherit;
+	color:inherit;
+	text-transform:capitalize;
+        text-shadow: 2px 2px 4px #ffffff;
+	font-size:0.96em !important;
+	font-weight:normal;
+	line-height:1.83em !important;        
+}
+
+.ddcf_date_picker {
+        font-size: 14px !important;
+}
+.ddcf_datetime_picker {
+        font-size: 14px !important;
+}
+
+/* labels for dropdowns and datepickers */
+label {
+        font-size: 14px !important;
+        color: #444;
+        line-height: 1.3em;
+}
+
+/* base  styling for most elements (except jQueryUI) */
+.ddcf_input_base {
+
+}
+
+

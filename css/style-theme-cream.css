@@ -1,0 +1,97 @@
+/* Davedub's contact form css */
+/*
+    This file is part of Davedub's Contact Form plugin for WordPress
+
+    Davedub's Contact Form plugin is free software: you can
+    redistribute it and / or modify it under the terms of the
+    GNU General Public License as published by the
+    Free Software Foundation, either version 3 of the License,
+    or (at your option) any later version.
+
+    Davedub's Contact Form plugin is distributed in the hope
+    that it will be useful, but WITHOUT ANY WARRANTY; without
+    even the implied warranty of MERCHANTABILITY or FITNESS FOR
+    A PARTICULAR PURPOSE.  See the GNU General Public License
+    for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with the Contacts and Bookings plugin.
+    If not, see <http://www.gnu.org/licenses/>.
+
+
+
+   This is the base stylesheet for appearance modification
+   -------------------------------------------------------
+
+   jQueryUI elements (i.e. the datepicker and buttons) can be 
+   modified by changing the jQueryUI theme - see the setting page
+   
+   Some of these settings may be dynamically changed on page load 
+   for different sized browser windows or on handheld devices.
+*/
+
+
+#ddcf_contact_form_top_right p {
+    font-size: 1.14em;
+    color: #444;
+}
+
+/* styling for dropdowns */
+.ddcf_dropdown {        
+        border: 1px solid #ccc;
+        border-radius:5px;
+        font-size: 14px !important;
+}
+
+/* Buttons (Reset and Submit) */
+.ddcf_button { 
+	font:inherit;
+	font-size:inherit;
+	color:inherit;
+	text-transform:capitalize;
+        text-shadow:1px 1px 1px #FFFFFF;
+	font-size:0.96em !important;
+	font-weight:normal;
+	line-height:1.83em !important;
+	box-shadow:2px 2px 3px #aaaaaa;
+	border: 1px solid #888888 !important;         
+}
+
+.ddcf_date_picker {
+        font-size: 14px !important;
+}
+.ddcf_datetime_picker {
+        font-size: 14px !important;
+}
+
+/* labels for dropdowns and datepickers */
+label {
+        font-size: 14px !important;
+        color: #444;
+        line-height: 1.3em;
+}
+
+/* base  styling for all elements (except jQueryUI) */
+.ddcf_input_base {
+	font:inherit;
+	font-size:inherit;
+	color:inherit;
+
+	border: 1px hidden #cccccc !important; 
+	border-radius: 4px  !important; 
+	-webkit-border-radius: 4px !important; 
+	-moz-border-radius: 4px !important;
+	
+	box-shadow:1px 1px 1px #aaaaaa inset;
+	
+	background: #eaeaea; /* Old browsers */
+	/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VhZWFlYSIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjM1JSIgc3RvcC1jb2xvcj0iI2ZiZmJmYiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmOGY4ZjgiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background: -moz-linear-gradient(top,  #eaeaea 0%, #fbfbfb 35%, #f8f8f8 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eaeaea), color-stop(35%,#fbfbfb), color-stop(100%,#f8f8f8)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-8 */
+}
