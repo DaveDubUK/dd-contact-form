@@ -24,7 +24,6 @@
 	margin:auto;
 	float:left;
 	padding:1.0em 0.0em 1.0em;
-	//background-color:#ccffff;
 }
 
 /* add, edit etc buttons panel */
@@ -33,7 +32,6 @@
 	margin:auto;
 	float:left;
 	padding:1.0em 0.0em 1.0em;
-	//background-color:#ffffcc;
 	text-shadow:1px 1px 1px #FFFFFF;
 }
 

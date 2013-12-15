@@ -45,11 +45,6 @@
         padding-right: 0.25em;        
 }
 
-.ddcf_dropdowns_container {
-    /* need to adjust if dropdown labels taking two lines */
-    min-width: 12.7em;em;
-}
-
 /* Buttons (Reset and Submit) */
 .ddcf_button { 
 	font:inherit;
