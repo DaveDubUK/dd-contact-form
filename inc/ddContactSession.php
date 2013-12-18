@@ -27,7 +27,7 @@ function initialise_form($message) {
 
         // Which Captcha are we using?
         $captcha_type = get_option(ddcf_captcha_type);
-        if(!$captcha_type) $captcha_type = 'Simple Add'; 
+        if(!$captcha_type) $captcha_type = 'Simple Add';
         switch($captcha_type)
         {
         case 'None':
@@ -51,9 +51,10 @@ function initialise_form($message) {
                 die();
                 break;
         case 'reCaptcha':
-                if($message=='reCaptcha Error') 
-                    $user_feedback = _('The reCaptcha is incorrect. Please try again', 'ddcf-plugin');
-                else $user_feedback = '';
+                if($message=='reCaptcha Error')
+                    $user_feedback = 'The reCaptcha is incorrect. Please try again';
+                else
+                	$user_feedback = '';
                 $return = array(
                         'ddcf_error' => $user_feedback,
                         'ddcf_recaptcha_public_key' => get_option(ddcf_recaptcha_public_key),
@@ -115,7 +116,8 @@ function set_html_content_type()
                                                             $_POST["recaptcha_challenge_field"],
                                                             $_POST["recaptcha_response_field"]);
 			if (!$response->is_valid) {
-				initialise_form('reCaptcha Error');
+				if($_POST["recaptcha_response_field"]) initialise_form('reCaptcha Error');
+				else initialise_form('');
 //				die();
 //				break;
 			} else {

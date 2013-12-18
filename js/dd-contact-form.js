@@ -51,7 +51,6 @@ var gbacreCaptchaDefault;
 // resizing vars
 var gbacWidth;
 var gbacHeight;
-//var gbacDatesArea;
 var gbacInitialTimer;
 var gbacErrorCheckingMethod;
 var gbacQuestionsCompulsoryCheck;
@@ -367,18 +366,18 @@ function checkForm(andSubmit,makeChanges)
                 errors += 'reCaptcha not set<br />';
             bChecksOut = false;
             if (gbacErrorCheckingMethod === 'realtime')
-                jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');            
+                jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');
         } else if (jQuery("#recaptcha_response_field").val() !== gbacreCaptchaDefault) {
             gbacreCaptcha = jQuery.trim(jQuery("#recaptcha_response_field").val());
             if (gbacErrorCheckingMethod === 'realtime')
-                jQuery('#ddcf_contact_captcha_fb').html('&#10004;');            
+                jQuery('#ddcf_contact_captcha_fb').html('&#10004;');
         } else {
             //gbacreCaptcha = jQuery("#recaptcha_response_field").val();
             if (andSubmit)
                 errors += 'reCaptcha not set<br />';
             bChecksOut = false;
             if (gbacErrorCheckingMethod === 'realtime')
-                jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');            
+                jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');
         }
     }
 
@@ -444,7 +443,7 @@ function adjust_for_size() {
                 jQuery('#ddcf_table_span_captcha_add').css('width', '22em');
                 jQuery('#ddcf_contact_captcha_fb').css('bottom', '0em').css('right', '0em');
     }
-    
+
     /* show / hide datepickers. Set width of signup checkbox at bottom. Align dropdowns */
     if(gbacWidth<=375){
                 jQuery('#ddcf_checkbox_area').css('width', '100%');
@@ -456,7 +455,7 @@ function adjust_for_size() {
                 jQuery('.ddcf_table_span_date').css('display','inline-block');
                 jQuery('.ddcf_table_span_datetime').css('display','inline-block');
     }
-    
+
     /* flip between 1 and 2 cols at flip_width. */
     var flip_width = 600;
     if(gbacWidth<=flip_width) {
@@ -479,14 +478,15 @@ function adjust_for_size() {
         jQuery("#ddcf_contact_form_top_right").css('height', tableHeight);
     else
         jQuery("#ddcf_contact_form_top_right").css('height', topLeftHeight);
-    var tableTop = tableHeight/2.0; 
-    
+    var tableTop = tableHeight/2.0;
+
     /* and reposition accordingly */
     jQuery("#ddcf_details_table").css('margin-top', -tableTop);
-    
+
     /* record the new form height */
     gbacHeight = jQuery("#ddcf_contact_form_wrapper").height();
-    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px. Form height: '+gbacHeight+'px'); */    
+    jQuery("#ddcf_contact_form_contents").css('min-height',gbacHeight);
+    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px. Form height: '+gbacHeight+'px'); */
 }
 
 
@@ -519,10 +519,10 @@ jQuery(document).ready(function ($) {
 	gbacRecieveUpdatesDefault = jQuery.trim(jQuery('#ddcf_newsletter_signup').is(':checked'));
 	gbacCaptchaDefault = jQuery.trim(jQuery('#ddcf_contact_captcha_add').val());
 	gbacreCaptchaDefault = jQuery.trim(jQuery('#recaptcha_response_field').val());
-        gbacErrorCheckingMethod = jQuery.trim(jQuery('#ddcf_error_checking_method').val());
-        gbacQuestionsCompulsoryCheck = jQuery.trim(jQuery('#ddcf_questions_compulsory_check').val());
-        gbacPartySizeCompulsoryCheck = jQuery.trim(jQuery('#ddcf_party_size_compulsory_check').val());
-        gbaDatesCompulsoryCheck = jQuery.trim(jQuery('#ddcf_dates_compulsory_check').val());
+	gbacErrorCheckingMethod = jQuery.trim(jQuery('#ddcf_error_checking_method').val());
+	gbacQuestionsCompulsoryCheck = jQuery.trim(jQuery('#ddcf_questions_compulsory_check').val());
+	gbacPartySizeCompulsoryCheck = jQuery.trim(jQuery('#ddcf_party_size_compulsory_check').val());
+	gbaDatesCompulsoryCheck = jQuery.trim(jQuery('#ddcf_dates_compulsory_check').val());
 
 	// focus and unfocus handling:
 

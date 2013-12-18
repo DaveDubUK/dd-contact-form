@@ -31,6 +31,16 @@
    for different sized browser windows or on handheld devices.
 */
 
+/* Buttons (Reset and Submit) */
+.ddcf_button {
+	color: #7c7c7c;
+	font-size:0.8em !important;
+	max-height: 2.63em !important;
+	height: 2.63em !important;
+	border: 1px solid #d2d2d2;
+	text-shadow:1px 1px 1px #FFFFFF;
+}
+
 
 /*#ddcf_contact_form_top_right p {
     font-size: 1.14em;
@@ -42,18 +52,6 @@
         border: 1px solid #ccc;
         border-radius: 3px; 
         font-size: 14px !important;
-}
-
- Buttons (Reset and Submit) 
-.ddcf_button { 
-	font:inherit;
-	font-size:inherit;
-	color:inherit;
-	text-transform:capitalize;
-        text-shadow: 2px 2px 4px #ffffff;
-	font-size:0.96em !important;
-	font-weight:normal;
-	line-height:1.83em !important;        
 }
 
 .ddcf_date_picker {

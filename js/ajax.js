@@ -26,12 +26,12 @@ var gResultsPerPage = 25;
 
 /* Contact form stuff */
 function do_captcha(php_message) {
-    
+
     if(php_message.ddcf_captcha_type==='None') {
         /* not advised */
         return;
     }
-    
+
     else if(php_message.ddcf_captcha_type==='reCaptcha') {
         // re-initialise google reCaptcha
         if(Recaptcha) Recaptcha.destroy();
@@ -43,7 +43,7 @@ function do_captcha(php_message) {
         return;
     }
     else { /* default to simple additon */
-        // reinitialse the simple add captcha        
+        // reinitialse the simple add captcha
         jQuery('#ddcf_captcha_one').html(php_message.ddcf_captcha_two_value);
         jQuery('#ddcf_captcha_two').html(php_message.ddcf_captcha_one_value);
         //?jQuery("#ddcf_contact_captcha_add").html(php_message.ddcf_contact_captcha_add);?
@@ -62,7 +62,7 @@ function initialise_session(){
 
 					jQuery("#ddcf_session_initialised").val("true");
 					jQuery("#ddcf_contact_form_contents").css('visibility','visible');
-                                                                               
+
                                         do_captcha(php_message);
     				});
 }
@@ -99,15 +99,11 @@ function submit(){
                                                 }
 					} else {
 						// have another go then...
-                                                jQuery("#error_reporting").html(php_message.ddcf_error);
+                        jQuery("#error_reporting").html(php_message.ddcf_error);
 						do_captcha(php_message);
 					}
 				});
 }
-
-
-
-
 
 
 

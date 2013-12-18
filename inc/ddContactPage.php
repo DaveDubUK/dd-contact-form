@@ -22,6 +22,8 @@
 */
 -->
 
+<!-- clear POST data, just in case of browser refresh or back button presses -->
+<?php unset($_POST); ?>
 
 <!-- stylin based on plugin options -->
 <?php
@@ -45,14 +47,14 @@
 <!-- sprinkle just enough jQuery -->
 <?php
 
-        if (get_option(ddcf_start_date_time_check) || get_option(ddcf_end_date_time_check)) {
+        //if (get_option(ddcf_start_date_time_check) || get_option(ddcf_end_date_time_check)) {
             wp_enqueue_script( 'ddcf_datepicker_script',
                          plugins_url().'/dd-contact-form/js/jquery-ui-timepicker-addon.js',
                          array( 'jquery',
                                 'jquery-ui-core',
                                 'jquery-ui-datepicker')
                         );
-        }
+        //}
 
         if (get_option(ddcf_captcha_type)=="reCaptcha") {
             wp_enqueue_script( 'ddcf_google_recaptcha',
@@ -101,7 +103,8 @@
 
 			<!-- top right -->
 			<div id="ddcf_contact_form_top_right" class="ddcf_float_right ddcf_markable_container">
-                            <?php   // gather user prefs. if none set, set defaults
+                            <?php
+                            		// gather user prefs. if none set, set defaults
                                     $start_date_check = get_option(ddcf_start_date_check);
                                     if(!$start_date_check) $start_date_check = false;
                                     $end_date_check   = get_option(ddcf_end_date_check);
@@ -129,7 +132,7 @@
                                         echo '<tr name="ddcf_details_table_row" id="ddcf_details_table_row">';
 
                                         // start of booking dates
-                                        
+
                                         // first check if dates options should be limited to certain category
                                         $wrong_category = true;
                                         if(get_option(ddcf_dates_category_filter_check)) {
@@ -147,8 +150,8 @@
                                               }
                                             }
                                         } else $wrong_category = false;
-                                        
-                                        if(!$wrong_category) {                                            
+
+                                        if(!$wrong_category) {
                                             if($start_date_check||$end_date_check) {
 
                                                     if($extra_dropdown_one_check||$extra_dropdown_two_check )
@@ -222,11 +225,11 @@
                                                     echo '</td>';
                                             } // end of booking dates
                                         } // if !$wrong_category
-                                        
+
 
                                             // start of dropdowns
                                             if($extra_dropdown_one_check||$extra_dropdown_two_check) {
-                                                
+
                                                 // first check if limited to certain category
                                                 $wrong_category = true;
                                                 if(get_option(ddcf_party_size_category_filter_check)) {
@@ -245,7 +248,7 @@
                                                     }
                                                 } else $wrong_category = false;
 
-                                                if(!$wrong_category) {                                                  
+                                                if(!$wrong_category) {
 
                                                     if($start_date_check||$end_date_check)
                                                          echo '<td name="ddcf_details_table_row_division" id="ddcf_details_table_row_division"> ';
@@ -296,7 +299,7 @@
                                                     }
                                                     else if($extra_dropdown_one_check) {
                                                         echo'
-                                                            
+
                                                                 <span class="ddcf_table_span_dropdown">
                                                                     <div id="ddcf_num_adults_selector" class="ddcf_markable_container" title="'. __('Number of Adults','ddcf-plugin') .'">
                                                                             <label for="ddcf_num_adults">'.__("Adults:","ddcf-plugin").'</label>
@@ -319,7 +322,7 @@
                                                     }
                                                     else if($extra_dropdown_two_check) {
                                                         echo'
-                                                            
+
                                                                 <span class="ddcf_table_span_dropdown">
                                                                     <div id="ddcf_num_children_selector" class="ddcf_markable_container" title="'. __('Number of Children','ddcf-plugin') .'">
                                                                             <!--div class="ddcf_dropdowns_container"-->
@@ -351,7 +354,7 @@
 
 
 
-                                    // row 2 - Captcha 
+                                    // row 2 - Captcha
                                     if($ddcf_captcha_type=='None') {
                                             // not the best idea...
                                     }
@@ -362,13 +365,13 @@
                                             if(get_option(ddcf_recaptcha_public_key)) {
                                                 echo '<div class="ddcf_contact_form_slab">
                                                         <div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha">
-                                                            <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha"></div>                                                        
+                                                            <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha"></div>
                                                             <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
                                                         </div>
                                                       </div>';
                                             }
                                             else _e('Missing Google reCaptcha keys - please see plugin options', 'ddcf-plugin');
-                                            
+
                                             // finish off row
                                             echo 	'</td>
                                                 </tr>';
@@ -401,7 +404,7 @@
 
 			<!-- Full width components below -->
 			<!--div id="ddcf_contact_form_bottom"-->
-				
+
                                 <!-- extra questions -->
 				<?php
                                         // first check if limited to certain category
@@ -421,7 +424,7 @@
                                               }
                                             }
                                         } else $wrong_category = false;
-                                        
+
                                         if(!$wrong_category) {
                                             if(get_option(ddcf_extra_question_one_check) && get_option(ddcf_extra_question_two_check)) echo '
                                             <div class="ddcf_contact_form_slab ddcf_float_left ddcf_markable_container">
@@ -524,20 +527,20 @@
                         <input type="hidden" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="<?php echo get_option('ddcf_error_checking_method');?>" />
                         <input type="hidden" name="ddcf_questions_compulsory_check" id="ddcf_questions_compulsory_check" value="<?php echo get_option('ddcf_questions_compulsory_check');?>" />
                         <input type="hidden" name="ddcf_party_size_compulsory_check" id="ddcf_party_size_compulsory_check" value="<?php echo get_option('ddcf_party_size_compulsory_check');?>" />
-                        <input type="hidden" name="ddcf_dates_compulsory_check" id="ddcf_dates_compulsory_check" value="<?php echo get_option('ddcf_dates_compulsory_check');?>" /> 
-			 
+                        <input type="hidden" name="ddcf_dates_compulsory_check" id="ddcf_dates_compulsory_check" value="<?php echo get_option('ddcf_dates_compulsory_check');?>" />
+
 
                         <!-- category filtering -->
                         <input type="hidden" name="ddcf_extra_question_category_filter" id="ddcf_extra_question_category_filter" value="<?php echo get_option('ddcf_extra_question_category_filter');?>" />
-                        <input type="hidden" name="ddcf_party_size_category_filter" id="ddcf_party_size_category_filter" value="<?php echo get_option('ddcf_party_size_category_filter_check');?>" /> 
-			<input type="hidden" name="ddcf_dates_category_filter" id="ddcf_dates_category_filter" value="<?php echo get_option('ddcf_dates_category_filter');?>" /> 
-			<input type="hidden" name="ddcf_extra_question_category_filter_check" id="ddcf_extra_question_category_filter_check" value="<?php echo get_option('ddcf_extra_question_category_filter_check');?>" /> 
-			<input type="hidden" name="ddcf_party_size_category_filter_check" id="ddcf_party_size_category_filter_check" value="<?php echo get_option('ddcf_party_size_category_filter_check');?>" /> 
-			<input type="hidden" name="ddcf_dates_category_filter_check" id="ddcf_dates_category_filter_check" value="<?php echo get_option('ddcf_dates_category_filter_check');?>" />                         
-                        
-                        
-                        
-                        
+                        <input type="hidden" name="ddcf_party_size_category_filter" id="ddcf_party_size_category_filter" value="<?php echo get_option('ddcf_party_size_category_filter_check');?>" />
+			<input type="hidden" name="ddcf_dates_category_filter" id="ddcf_dates_category_filter" value="<?php echo get_option('ddcf_dates_category_filter');?>" />
+			<input type="hidden" name="ddcf_extra_question_category_filter_check" id="ddcf_extra_question_category_filter_check" value="<?php echo get_option('ddcf_extra_question_category_filter_check');?>" />
+			<input type="hidden" name="ddcf_party_size_category_filter_check" id="ddcf_party_size_category_filter_check" value="<?php echo get_option('ddcf_party_size_category_filter_check');?>" />
+			<input type="hidden" name="ddcf_dates_category_filter_check" id="ddcf_dates_category_filter_check" value="<?php echo get_option('ddcf_dates_category_filter_check');?>" />
+
+
+
+
                         <input type="hidden" name="ddcf_post_title" id="ddcf_post_title" value="<?php echo the_title();?>" />
 			<input type="hidden" name="ddcf_ip_address" id="ddcf_ip_address" value="<?php echo $ip_address?>" />
 			<input type="hidden" name="ddcf_country" id="ddcf_country" value="<?php echo $country?>" />
