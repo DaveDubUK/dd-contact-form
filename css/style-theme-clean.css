@@ -1,6 +1,7 @@
-/* Davedub's contact form css */
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
+
+    Created by David Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -17,9 +18,9 @@
     You should have received a copy of the GNU General Public License
     along with the Contacts and Bookings plugin.
     If not, see <http://www.gnu.org/licenses/>.
+*/
 
-
-
+/*
    This is the base stylesheet for appearance modification
    -------------------------------------------------------
 
@@ -31,19 +32,19 @@
 */
 
 
-#ddcf_contact_form_top_right p {
+/*#ddcf_contact_form_top_right p {
     font-size: 1.14em;
     color: #444;
 }
 
-/* styling for dropdowns */
+ styling for dropdowns 
 .ddcf_dropdown {        
         border: 1px solid #ccc;
         border-radius: 3px; 
         font-size: 14px !important;
 }
 
-/* Buttons (Reset and Submit) */
+ Buttons (Reset and Submit) 
 .ddcf_button { 
 	font:inherit;
 	font-size:inherit;
@@ -60,18 +61,23 @@
 }
 .ddcf_datetime_picker {
         font-size: 14px !important;
-}
+}*/
 
 /* labels for dropdowns and datepickers */
 label {
-        font-size: 14px !important;
-        color: #444;
-        line-height: 1.3em;
+    font-size: 1.14em;
+    /*color: inherit;
+    line-height: 1.3em;*/
 }
 
-/* base  styling for most elements (except dropdowns, jQueryUI date/time picker popups and reCaptcha) */
-.ddcf_input_base {
+/*.ddcf_table_span_datetime {
+    width: 18.5em;
+} */
 
+
+/* base  styling for most elements (except dropdowns, jQueryUI date/time picker popups and reCaptcha) }*/
+.ddcf_input_base {
+    border: 1px solid #ccc;
 }
 
 

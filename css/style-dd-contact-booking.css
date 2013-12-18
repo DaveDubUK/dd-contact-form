@@ -5,6 +5,8 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
+    Created by David Wooldridge
+
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
     GNU General Public License as published by the
@@ -29,6 +31,7 @@
 	width:100%;
 	float:left;
         margin:0.0em;
+        color: inherit;
 }
 
 #ddcf_contact_form {
@@ -44,18 +47,19 @@
 .ddcf_input_base {
 	margin:0em;
 	padding: 0.5em 0.75em 0.5em 0.75em !important;
-        width:100%;/**/
+        width:100%;
+        color: inherit;
+        border-radius: 0.4em;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */        
 }
 
 
-/* lesser elements */
+/* elements */
 #ddcf_contact_form_top_right p {
     margin:0px;
     font-size: 1.14em;
-    color: #444;
 }
 label {
     float: left;
@@ -63,30 +67,46 @@ label {
     padding: 0em;
     line-height: 2.4em !important;
 }
+/* positioning */
+.ddcf_contact_form_slab {
+	width:100%;
+	margin-left:auto;
+	margin-right:auto;
+	position:relative;
+	text-align:center;
+}
+.ddcf_float_right { 
+	margin:0px;
+	padding:0px;
+	float: right;
+}
+.ddcf_float_left { 
+	margin:0px;
+	padding:0px;
+	float: left; 
+}
 
 
-/* Sections - top left, top right, full width */
+/* Section - top left */
 #ddcf_contact_form_top_left {
 	width: 35%; /* initial value - is controlled by jQuery during operation */
 }
         /* Text inputs - name, email, subject */
         .ddcf_contact_text_input {
-                float: left;
-                margin: 0.0em;
+                margin-bottom: 1.0em;
         }
 
         
-
+/* Section - top right, full width */
 #ddcf_contact_form_top_right {
         position:relative;
 	width: 60%;  /* initial value - is controlled by jQuery during operation */
-	float: right;  /* initial value - is controlled by jQuery during operation */
-        height: 153px; /* initial value - is controlled by jQuery during operation */        
-        margin-top: 1em; /* initial value - is controlled by jQuery during operation */
-        margin-bottom: 0em; /* initial value - is controlled by jQuery during operation */
+	float: right;  /* initial value - is controlled by jQuery during operation */      
+        margin-top: 0em; /* initial value - is controlled by jQuery during operation */
+        margin-bottom: 0em; 
 }
     /* table of extra form data inputs */
-    .ddcf_details_table {
+    #ddcf_details_table {
         position:absolute;
         top:50%;
         margin:0px;
@@ -96,26 +116,26 @@ label {
         border-bottom:0em !important;
         line-height:0em;
     }
-    .ddcf_details_table_row {
+    #ddcf_details_table_row {
         border:0em;
         margin:0em;
         padding:0em;
     }
-    .ddcf_details_table_row_division {
+    #ddcf_details_table_row_division {
         text-align: center;
-        vertical-align: middle;
+        vertical-align: top;
         border:0em !important;
         margin:0em;
         padding:0em !important;
         border:none !important;
         line-height: 0em;
     }
-    .ddcf_table_span_captcha_add {
+    #ddcf_table_span_captcha_add {
         display: inline-block;
         position: relative;
         vertical-align:middle;
         float:none;
-        width: 22em;
+        width: 22em; /* initial value - controlled during runtime by jQuery */
     }
     .ddcf_table_span_date {
         display: inline-block;
@@ -123,20 +143,24 @@ label {
         vertical-align:middle;
         float:none;
         width: 17.1em;
+        height: 3.7em;
     }
     .ddcf_table_span_datetime {
         display: inline-block;
         position: relative;
         vertical-align:middle;
         float:none;
-        width: 19.9em;
+        width: 18.5em;
+        height: 3.7em;
     } 
     .ddcf_table_span_dropdown {
         display: inline-block;
         position: relative;
         vertical-align:middle;
         float:none; 
-        width: 13em; /* initial value - set at runtime by jQuery */
+        width: 11.0em;
+        height: 2.5em;
+        margin: 0 0 1.0em;
     }    
         /* dates */
         .ddcf_date_picker {
@@ -149,10 +173,6 @@ label {
         .ddcf_dates_container {                
                 position:relative;
         }
-        /*.ddcf_dropdowns_container {
-                position: relative;                
-                min-width: 7em; /* initial value - is controlled by jQuery during operation           
-        }     */ 
             .ddcf_datetime_picker {
                     width:9.8em;
                     /*height: 1.3em;*/
@@ -173,8 +193,8 @@ label {
             .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }        
 
         .ddcf_dropdown {
-                padding: 0em 0.0em 0em 0.5em !important;
-                margin: 0em 0em 0.75em !important;
+                padding: 0em 0.0em 0em 0.4em !important;
+                margin: 0 !important;
                 height: 2.4em;
                 float:right;
                 width:auto;
@@ -201,7 +221,7 @@ label {
                 margin-bottom: 1em;
         }
         /* simple add captcha */
-        #simple_add_captcha {
+        #ddcf_simple_add_captcha {
                 width:auto;
                 /*margin: 0 0 3em;*/
                 margin: 1.5em 0.0em;
@@ -219,28 +239,11 @@ label {
                 margin-left: auto;
                 margin-right: auto;                
         }        
+/* end of top right section */
 
 
-/* positioning - centre, right, left*/
-.ddcf_contact_form_slab {
-	width:100%;
-	margin-left:auto;
-	margin-right:auto;
-	position:relative;
-	text-align:center;
-}
-.ddcf_float_right { 
-	margin:0px;
-	padding:0px;
-	float: right;
-}
-.ddcf_float_left { 
-	margin:0px;
-	padding:0px;
-	float: left; 
-}
 
-/* Lower part (full width) sections */
+/* Section - bottom, full width */
 .ddcf_question {
         margin: 0.0em 0.0em 1.0em;   
         float: left;
@@ -310,7 +313,7 @@ label {
 .ddcf_markable_container {
 	position:relative;
 	width: 100%;
-        margin:0em 0em 1em;
+        margin:0em;
 }
 
         /* wee divs for the ticks and crosses */
@@ -321,7 +324,7 @@ label {
                 font-size:1.0em;
                 background-color:inherit;
                 right: 0.55em;
-                top: 0.45em;                
+                top: 0.32em;                
         }
         /* individual tweaks */
         #ddcf_contact_recaptcha_fb {
@@ -329,12 +332,12 @@ label {
             top: 1.4em;            
         }
         #ddcf_contact_captcha_fb {
-            right: -0.5em;
-            top: 1.5em;          
+            right: 0em; /* initial value - is controlled by jQuery during operation */
+            top: 1.5em; /* initial value - is controlled by jQuery during operation */         
         }        
         #ddcf_arrival_date_fb {
             right: -1.5em;
-            top: 1.4em;
+            top: 1.3em;
         }
 	#ddcf_departure_date_fb {
             right: -1.5em;
@@ -342,7 +345,7 @@ label {
 	}
 	#ddcf_num_adults_fb {
             right: -1.7em;
-            top: 1.3em;
+            top: 1.27em;
 	}
 	#ddcf_num_children_fb {
             right: -1.7em;

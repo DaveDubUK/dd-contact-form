@@ -1,6 +1,8 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
+    Created by David Wooldridge
+
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
     GNU General Public License as published by the
@@ -23,18 +25,45 @@ var gGreyOut = '#cccccc';
 var gResultsPerPage = 25;
 
 /* Contact form stuff */
+function do_captcha(php_message) {
+    
+    if(php_message.ddcf_captcha_type==='None') {
+        /* not advised */
+        return;
+    }
+    
+    else if(php_message.ddcf_captcha_type==='reCaptcha') {
+        // re-initialise google reCaptcha
+        if(Recaptcha) Recaptcha.destroy();
+        Recaptcha.create(php_message.ddcf_recaptcha_public_key, "ddcf_google_recaptcha",
+        {
+                theme: php_message.ddcf_recaptcha_theme,
+                callback: Recaptcha.focus_response_field
+        });
+        return;
+    }
+    else { /* default to simple additon */
+        // reinitialse the simple add captcha        
+        jQuery('#ddcf_captcha_one').html(php_message.ddcf_captcha_two_value);
+        jQuery('#ddcf_captcha_two').html(php_message.ddcf_captcha_one_value);
+        //?jQuery("#ddcf_contact_captcha_add").html(php_message.ddcf_contact_captcha_add);?
+        return;
+    }
+}
+
+
 function initialise_session(){
 	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
 				function(php_message){
 					jQuery(this).css("display", "none");
 					jQuery('#screen').css("display", "none");
-					jQuery('#ddcf_captcha_one').html(php_message.ddcf_captcha_two_value);
-					jQuery('#ddcf_captcha_two').html(php_message.ddcf_captcha_one_value);
-					jQuery("#error_reporting").html(php_message.ddcf_error);
-					jQuery("#ddcf_contact_captcha_add").html(php_message.ddcf_contact_captcha_add);
+                                        jQuery("#error_reporting").html(php_message.ddcf_error);
+
 					jQuery("#ddcf_session_initialised").val("true");
 					jQuery("#ddcf_contact_form_contents").css('visibility','visible');
+                                                                               
+                                        do_captcha(php_message);
     				});
 }
 
@@ -44,14 +73,11 @@ function submit(){
 				function(php_message){
 
 					jQuery("#error_reporting").html('');
-                                        jQuery("#ddcf_contact_form_contents").fadeIn( "slow");//.css('display', 'inline');
-					//alert("php_message.ddcf_error="+php_message.ddcf_error);
+                                        jQuery("#ddcf_contact_form_contents").fadeIn( "slow");
 
-					if(php_message.ddcf_error=='Success!') {
+					if(php_message.ddcf_error==='Success!') {
 
-						//alert('SUCCESS: '+php_message);
-                                                
-                                                if(jQuery("#ddcf_thankyou_type").val()=='ddcf_thankyou_url') {
+						if(jQuery("#ddcf_thankyou_type").val()==='ddcf_thankyou_url') {
                                                     /* redirect to thankyou page */
                                                     var redirect_page = jQuery("#ddcf_thankyou_url").val();
                                                     window.location.replace(redirect_page);
@@ -60,7 +86,7 @@ function submit(){
                                                     jQuery("#ddcf_contact_captcha_add").val('');//(php_message.ddcf_contact_captcha_add);
                                                     jQuery("#recaptcha_response_field").val('');//.html(php_message.ddcf_contact_captcha_add);
 
-                                                    if(php_message.ddcf_thankyou_message=='')
+                                                    if(php_message.ddcf_thankyou_message==='')
                                                             php_message.ddcf_thankyou_message = _('Thank you. A representative will be in touch shortly.');
 
                                                     // hide the form and replace with ddcf_thankyou_message
@@ -73,14 +99,9 @@ function submit(){
                                                 }
 					} else {
 						// have another go then...
-						//alert('oops: '+php_message);
-						jQuery("#error_reporting").html(php_message.ddcf_error);
-						jQuery('#ddcf_captcha_one').html(php_message.ddcf_captcha_two_value);
-						jQuery('#ddcf_captcha_two').html(php_message.ddcf_captcha_one_value);
+                                                jQuery("#error_reporting").html(php_message.ddcf_error);
+						do_captcha(php_message);
 					}
-					//jQuery("#ddcf-contact-form-wrapper").css('height', 'auto');
-					//jQuery("#ddcf-contact-form").toggle( 'clip', {}, 500 );
-					//jQuery("#ddcf-contact-form").removeAttr( "style" ).hide().fadeIn();
 				});
 }
 
@@ -271,7 +292,7 @@ function showUser(str) {
 
 					if(nResults>0) nOffset++;//zero based in code, one's based from user's perspective so adjust for display
 					jQuery('#ddcf_page_info').html('Showing results '+(nOffset).toString()+' to '+(nShowing).toString()+' of '+(nResults).toString()+' results');
-					if(php_message.ddcf_contact_information=='manager session initialised') {
+					if(php_message.ddcf_contact_information==='manager session initialised') {
 						// whoops - user page refresh before expected search term submission - re-initiailise
 						jQuery('#ddcf_contact_information').html('Please enter a search term or select a filter');
 						jQuery('#ddcf_page_info').html('refreshed - lost search terms');

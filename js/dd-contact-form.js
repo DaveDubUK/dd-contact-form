@@ -1,6 +1,8 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
+    Created by David Wooldridge
+
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
     GNU General Public License as published by the
@@ -428,55 +430,63 @@ function checkForm(andSubmit,makeChanges)
 function adjust_for_size() {
 
     gbacWidth = jQuery("#ddcf_contact_form_wrapper").width();
-    /*jQuery("#error_reporting").html('form width: '+gbacWidth+'px'); */
 
-    /* do adjustments */
-
-    /* big buttons on a small screen */
+    /* big buttons on a small screen. Squeeze simple additon captcha onto small screen */
     if(gbacWidth<=300){
                 jQuery('#ddcf_button_area').css('width', '100%');
                 jQuery('.ddcf_button').css('width', '100%').css('margin', '0.5em 0');
+                jQuery('#ddcf_table_span_captcha_add').css('width', 'auto');
+                jQuery('#ddcf_contact_captcha_fb').css('bottom', '-2em').css('right', '-1em');
     }
     else {
                 jQuery('#ddcf_button_area').css('width', 'auto');
                 jQuery('.ddcf_button').css('width', 'auto').css('margin', '0 0 0.7em 0.6em');
+                jQuery('#ddcf_table_span_captcha_add').css('width', '22em');
+                jQuery('#ddcf_contact_captcha_fb').css('bottom', '0em').css('right', '0em');
     }
     
     /* show / hide datepickers. Set width of signup checkbox at bottom. Align dropdowns */
-    if(gbacWidth<=380){
+    if(gbacWidth<=375){
                 jQuery('#ddcf_checkbox_area').css('width', '100%');
-                jQuery('.ddcf_dates_align').css('display','none');
-                /*jQuery('.ddcf_table_span_dropdown').css('width', 'auto');*/
+                jQuery('.ddcf_table_span_date').css('display','none');
+                jQuery('.ddcf_table_span_datetime').css('display','none');
     }
     else {
                 jQuery('#ddcf_checkbox_area').css('width', 'auto');
-                jQuery('.ddcf_dates_align').css('display','block');
-                /*jQuery('.ddcf_table_span_dropdown').css('width', '11.6em');*/
+                jQuery('.ddcf_table_span_date').css('display','inline-block');
+                jQuery('.ddcf_table_span_datetime').css('display','inline-block');
     }
     
     /* flip between 1 and 2 cols at flip_width. */
-    var flip_width = 640;
+    var flip_width = 600;
     if(gbacWidth<=flip_width) {
 		jQuery('#ddcf_contact_form_top_left').css('width', '100%');
-		jQuery('#ddcf_contact_form_top_right').css('width', '100%').css('float', 'left');
+		jQuery('#ddcf_contact_form_top_right').css('width', '100%').css('float', 'left').css('margin-top', '0em');
+                jQuery('.ddcf_table_span_date').css('float','left');
+                jQuery('.ddcf_table_span_datetime').css('float','left');
     }
-    else {      // width >flip_width
+    else {      // width > flip_width
 		jQuery('#ddcf_contact_form_top_left').css('width', '35%');
-		jQuery('#ddcf_contact_form_top_right').css('width', '65%').css('float', 'right');
+		jQuery('#ddcf_contact_form_top_right').css('width', '65%').css('float', 'right').css('margin-top', '0em');
+                jQuery('.ddcf_table_span_date').css('float','none');
+                jQuery('.ddcf_table_span_datetime').css('float','none');
     }
 
-    /* position table */
-    var tableHeightPX = jQuery(".ddcf_details_table").css('height');
-    var tableHeightSt = tableHeightPX.replace("px","");
-    var tableHeight = parseInt(tableHeightSt,10);
-    var tableTop = tableHeight/2.0; 
-    jQuery(".ddcf_details_table").css('margin-top', -tableTop);
-//    if(tableHeight>153)
+    /* set top right section height */
+    var topLeftHeight = jQuery("#ddcf_contact_form_top_left").height();
+    var tableHeight = jQuery("#ddcf_details_table").height();
+    if(tableHeight>topLeftHeight)
         jQuery("#ddcf_contact_form_top_right").css('height', tableHeight);
-//    else
-//        jQuery("#ddcf_contact_form_top_right").css('height', "153px").css('margin-bottom', '0em').css('margin-top', '0em');
+    else
+        jQuery("#ddcf_contact_form_top_right").css('height', topLeftHeight);
+    var tableTop = tableHeight/2.0; 
     
+    /* and reposition accordingly */
+    jQuery("#ddcf_details_table").css('margin-top', -tableTop);
+    
+    /* record the new form height */
     gbacHeight = jQuery("#ddcf_contact_form_wrapper").height();
+    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px. Form height: '+gbacHeight+'px'); */    
 }
 
 

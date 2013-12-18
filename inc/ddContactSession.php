@@ -3,6 +3,8 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
+    Created by David Wooldridge
+
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
     GNU General Public License as published by the
@@ -20,64 +22,67 @@
     If not, see <http://www.gnu.org/licenses/>.
 */
 
-		// helper functions
-		function initialise_form($message) {
+// helper functions
+function initialise_form($message) {
 
-			// Which Captcha are we using?
-			$captcha_type = get_option(ddcf_captcha_type);
-			if(!$captcha_type) $captcha_type = 'Simple Add'; // for first run, no setting set yet
-			switch($captcha_type)
-			{
-			case 'None':
-				$return = array(
-					'ddcf_error' => $message
-				);
-				wp_send_json($return);
-				die();
-				break;
-			case 'Simple Add':
-				$_SESSION['bacc_one']=rand(1,15);
-				$_SESSION['bacc_two']=rand(1,15);
-				$return = array(
-					'ddcf_captcha_one_value'		=> $_SESSION['bacc_one'],
-					'ddcf_captcha_two_value'		=> $_SESSION['bacc_two'],
-					'ddcf_error' => $message
-				);
-				wp_send_json($return);
-				die();
-				break;
-			case 'reCaptcha':
-                                if($message=='reCaptcha Error') {
-                                    $user_feedback = _('The reCaptcha is incorrect. Please try again', 'ddcf-plugin');
-                                    $return = array(
-					'ddcf_error' => $user_feedback
-                                    );
-                                }
-				else $return = array(
-					'ddcf_error' => $message
-				);
-				wp_send_json($return);
-				die();
-				break;
-			default:
-				$return = array(
-					'ddcf_error' => 'Default: '+$message
-				);
-				wp_send_json($return);
-				die();
-				break;
-			}
-		}
-		// helper funtion to set the mail type after sending
-		function set_html_content_type()
-		{
-			return 'text/html';
-		}
+        // Which Captcha are we using?
+        $captcha_type = get_option(ddcf_captcha_type);
+        if(!$captcha_type) $captcha_type = 'Simple Add'; 
+        switch($captcha_type)
+        {
+        case 'None':
+                $return = array(
+                        'ddcf_error' => $message,
+                        'ddcf_captcha_type' => $captcha_type
+                );
+                wp_send_json($return);
+                die();
+                break;
+        case 'Simple Add':
+                $_SESSION['bacc_one']=rand(1,15);
+                $_SESSION['bacc_two']=rand(1,15);
+                $return = array(
+                        'ddcf_captcha_one_value'		=> $_SESSION['bacc_one'],
+                        'ddcf_captcha_two_value'		=> $_SESSION['bacc_two'],
+                        'ddcf_error' => $message,
+                        'ddcf_captcha_type' => $captcha_type
+                );
+                wp_send_json($return);
+                die();
+                break;
+        case 'reCaptcha':
+                if($message=='reCaptcha Error') 
+                    $user_feedback = _('The reCaptcha is incorrect. Please try again', 'ddcf-plugin');
+                else $user_feedback = '';
+                $return = array(
+                        'ddcf_error' => $user_feedback,
+                        'ddcf_recaptcha_public_key' => get_option(ddcf_recaptcha_public_key),
+                        'ddcf_recaptcha_theme' => get_option(ddcf_recaptcha_theme),
+                        'ddcf_captcha_type' => $captcha_type
+                );
+                wp_send_json($return);
+                die();
+                break;
+        default:
+                $return = array(
+                        'ddcf_error' => 'Default: '+$message,
+                        'ddcf_captcha_type' => $captcha_type
+                );
+                wp_send_json($return);
+                die();
+                break;
+        }
+}
+// helper funtion to set the mail type after sending
+function set_html_content_type()
+{
+        return 'text/html';
+}
 
 
-//////////////////////////////////
+//////////////////////////////////////////////////////////
 /* 			Start Here			*/
-//////////////////////////////////
+//////////////////////////////////////////////////////////
 
 	if($_POST['ddcf_session_initialised']=='uninitialised') {
 		$check = check_ajax_referer('ddcf_contact_initialise_action','ddcf_init_nonce',false);
@@ -98,7 +103,8 @@
 		case 'None':
 			$return = array(
 				'ddcf_error' => 'Success!',
-				'ddcf_thankyou_message' => get_option(ddcf_thankyou_message)
+				'ddcf_thankyou_message' => get_option(ddcf_thankyou_message),
+                                'ddcf_captcha_type' => $captcha_type
 			);
 			break;
 		case 'reCaptcha':
@@ -110,28 +116,28 @@
                                                             $_POST["recaptcha_response_field"]);
 			if (!$response->is_valid) {
 				initialise_form('reCaptcha Error');
-				die();
-				break;
-			}
-			else
-			{
+//				die();
+//				break;
+			} else {
 				$return = array(
 					'ddcf_error' => 'Success!',
-					'ddcf_thankyou_message' => get_option(ddcf_thankyou_message)
+					'ddcf_thankyou_message' => get_option(ddcf_thankyou_message),
+                                        'ddcf_captcha_type' => $captcha_type
 				);
 			}
 			break;
 		default:
-		        // default case 'Simple Add':
+		        // default to 'Simple Add':
 			if($_POST["ddcf_contact_captcha_add"] == ($_SESSION['bacc_one'] +$_SESSION['bacc_two']) )
 			{
 				$return = array(
 					'ddcf_error' => 'Success!',
-					'ddcf_thankyou_message' => get_option(ddcf_thankyou_message)
+					'ddcf_thankyou_message' => get_option(ddcf_thankyou_message),
+                                        'ddcf_captcha_type' => $captcha_type
 				);
 				break;
 			}
-			else initialise_form('Captcha wrong - try this one');
+			else initialise_form('The Captcha answer is wrong - please try again');
 		}
 	}
 	else initialise_form('nocheck');
