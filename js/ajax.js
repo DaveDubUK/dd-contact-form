@@ -22,7 +22,6 @@
 
 var gLastOpenAccordionHTML = '';
 var gGreyOut = '#cccccc';
-var gResultsPerPage = 25;
 
 /* Contact form stuff */
 function do_captcha(php_message) {
@@ -43,10 +42,9 @@ function do_captcha(php_message) {
         return;
     }
     else { /* default to simple additon */
-        // reinitialse the simple add captcha
+        // reinitialse the simple addition captcha
         jQuery('#ddcf_captcha_one').html(php_message.ddcf_captcha_two_value);
         jQuery('#ddcf_captcha_two').html(php_message.ddcf_captcha_one_value);
-        //?jQuery("#ddcf_contact_captcha_add").html(php_message.ddcf_contact_captcha_add);?
         return;
     }
 }
@@ -99,7 +97,11 @@ function submit(){
                                                 }
 					} else {
 						// have another go then...
-                        jQuery("#error_reporting").html(php_message.ddcf_error);
+                                                jQuery("#ddcf_contact_captcha_add").val('');
+                                                jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');
+                                                jQuery("#recaptcha_response_field").val('');
+                                                jQuery('#recaptcha_response_field_fb').html('&nbsp;');
+                                                jQuery("#error_reporting").html(php_message.ddcf_error);
 						do_captcha(php_message);
 					}
 				});
@@ -166,33 +168,6 @@ function doxUser(ui) {
 										+ item.special_instructions + ')<br /><br />';
 						});
 					}
-
-//					data = jQuery.parseJSON(php_message.ddcf_contact_notes);
-//					if(data) {
-//						finalOutput	+= '<strong>Contact Notes</strong><br />';
-//						jQuery.each(data, function(i, item) {
-//							finalOutput	+=item.note_date + ': '
-//										+ item.note + '<br />';
-//						});
-//					}
-
-//					data = jQuery.parseJSON(php_message.ddcf_contact_relations);
-//					if(data) {
-//						finalOutput	+= '<strong>Contact Relations</strong><br />';
-//						jQuery.each(data, function(i, item) {
-//							finalOutput	+=item.contact_relationship + ': '
-//										+ item.contact_relative_one_id + ': '
-//										+ item.contact_relative_two_id + '<br />';
-//						});
-//					}
-
-//					data = jQuery.parseJSON(php_message.ddcf_contact_bookables);
-//					if(data) {
-//						finalOutput	+= '<strong>Contact Owned Bookables</strong><br />';
-//							jQuery.each(data, function(i, item) {
-//								finalOutput	+= '<a href="'+item.guid+'">'+item.post_title + '</a><br />';
-//								});
-//					}
 
 					data = jQuery.parseJSON(php_message.ddcf_contact_enquiries);
 					if(data) {
@@ -264,14 +239,17 @@ function showUser(str) {
 	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
 				,
 				function(php_message){
-					jQuery("#ddcf_action").val('');
-					jQuery("#ddcf_action_arg").val('');
-					jQuery('#ddcf_manager_nonce').val(php_message.ddcf_manager_nonce);
-
+                                    
 					// results navigation logic
 					var nResults = parseInt(php_message.ddcf_num_results);
 					var nOffset = parseInt(jQuery('#ddcf_results_offset').val());
 					var nShowing = gResultsPerPage;
+                                        
+  					jQuery("#ddcf_action").val('');
+					jQuery("#ddcf_action_arg").val('');
+					jQuery('#ddcf_manager_nonce').val(php_message.ddcf_manager_nonce);
+                                        jQuery('#ddcf_total_num_results').val(nResults);                                      
+                                        
 					if(nResults<=gResultsPerPage) {
 						nShowing = nResults;
 						showNext(false);
@@ -323,10 +301,6 @@ function showUser(str) {
 								jQuery('#ddcf_create_user').button({ disabled: false });
 							}
 						}});
-						//ui.newHeader // jQuery object, activated header
-						//ui.oldHeader // jQuery object, previous header
-						//ui.newContent // jQuery object, activated content
-						//ui.oldContent // jQuery object, previous content
 					}
 				});
 }
@@ -336,71 +310,7 @@ function initialise_manager_session(){
 	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
 				,
 				function(php_message){
-                                        /* Silent acknowledgement of nonce accepted */
-					/*jQuery('#ddcf_manager_nonce').val(php_message.ddcf_manager_nonce);*/
 					jQuery('#ddcf_action').val('ddcf_filter_action');
-                                        //jQuery('#ddcf_action_arg').val('all contact types')
-					showUser('all contact types');
+					search('all contact types');
 				});
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// Works? - populates the form from returned POST vars
-//deserialize($('#ddcf_contact_form'),php_message, false);
-
-/*function deserialize(element, data, clearForm)
-{
-	var splits = decodeURIComponent(data).split('&'),
-	i = 0,
-	split = null,
-	key = null,
-	value = null,
-	splitParts = null;
-
-	if (clearForm)
-	{
-		$('input[type="checkbox"],input[type="radio"]', element).removeAttr('checked');
-		$('select,input[type="text"],input[type="password"],input[type="hidden"],textarea', element).val('');
-	}
-
-	var kv = {};
-	while(split = splits[i++]){
-
-		splitParts = split.split('=');
-		key = splitParts[0] || '';
-		value = (splitParts[1] || '').replace(/\+/g, ' ');
-
-		if (key != ''){
-			if( key in kv ){
-				if( $.type(kv[key]) !== 'array' )
-				kv[key] = [kv[key]];
-
-				kv[key].push(value);
-				}else
-				kv[key] = value;
-			}
-		}
-
-		for( key in kv ){
-			value = kv[key];
-
-			$('input[type="checkbox"][name="'+ key +'"][value="'+ value +'"],input[type="radio"][name="'+ key +'"][value="'+ value +'"]', element).attr('checked', 'checked');
-			$('select[name="'+ key +'"],input[type="text"][name="'+ key +'"],input[type="password"][name="'+ key +'"],input[type="hidden"][name="'+ key +'"],textarea[name="'+ key +'"]', element).val(value);
-	}
-}*/

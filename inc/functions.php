@@ -78,73 +78,78 @@ function ddcf_management_page() {
 	return ob_get_clean();
 }
 
-// bac options pages
+// dd contact form options pages
 function ddcf_options_page() {
 	include 'ddOptionsPage.php';
 }
 
-// enqueue and localise scripts for ajax
+// enqueue and localise scripts
 function ddcf_enqueue_front_end_pages () {
 	wp_enqueue_script( 'my-ajax-handle', plugins_url().'/dd-contact-form/js/ajax.js', array( 'jquery' ) );
 	wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+        
+        //if (get_option(ddcf_start_date_time_check) || get_option(ddcf_end_date_time_check)) {
+        wp_enqueue_script( 'ddcf_datetimepicker_script',
+                         plugins_url().'/dd-contact-form/js/jquery-ui-timepicker-addon.js',
+                         array( 'jquery',
+                                'jquery-ui-core',
+                                'jquery-ui-datepicker')
+                        );
+        //}        
+        if (get_option(ddcf_captcha_type)=="reCaptcha") {
+            wp_enqueue_script( 'ddcf_google_recaptcha',
+                         'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
+        }
+        
+        global $post;
+        if(has_shortcode( $post->post_content, 'dd_contact_form' ))                 
+            wp_enqueue_script( 'ddcf_contact_form_script',
+                         plugins_url().'/dd-contact-form/js/dd-contact-form.js',
+                         array( 'jquery',
+                                'jquery-ui-core',
+                                'jquery-effects-core',
+                                'jquery-effects-explode',
+                                'jquery-ui-datepicker',
+                                'jquery-ui-button' )
+                        );
+        if(has_shortcode( $post->post_content, 'dd_management_page' )&&current_user_can(read))                 
+            wp_enqueue_script( 'ddcf_dashboard_script',
+                                plugins_url().'/dd-contact-form/js/dd-contact-booking-dashboard.js',
+                                array(  'jquery',
+                                        'jquery-ui-core',
+                                        'jquery-ui-accordion',
+                                        'jquery-ui-dialog',
+                                        'jquery-ui-button' )
+                            );                            
+
+        /* enqueue styles */
+	wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
+	if((get_option(ddcf_jqueryui_theme)!="none")&&
+           (get_option(ddcf_jqueryui_theme)!="custom")&&
+           (get_option(ddcf_jqueryui_theme)!="")) 
+		wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.get_option(ddcf_jqueryui_theme).'/jquery-ui.css');
+	else if (get_option(ddcf_jqueryui_theme)=="custom") 
+		wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-custom.min.css');
+	else    wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css');
+        if(has_shortcode( $post->post_content, 'dd_contact_form' ))
+                wp_enqueue_style('ddcf_layout_style', plugins_url().'/dd-contact-form/css/style-dd-contact-booking.css');
+	if(get_option(ddcf_form_theme)!='') wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-'.get_option(ddcf_form_theme).'.css');
+	else    wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-clean.css');
+        if(has_shortcode( $post->post_content, 'dd_management_page' )&&current_user_can(read))                 
+                wp_enqueue_style('ddcf_manager_layout_style', plugins_url().'/dd-contact-form/css/style-dashboard.css');
 }
+
 function ddcf_enqueue_back_end_pages () {
 	wp_enqueue_script( 'my-ajax-handle', plugins_url().'/dd-contact-form/js/ajax.js', array( 'jquery' ) );
 	wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
-}
-
-function ddcf_contacts_dashboard_widget_function() {
-	echo '<!--a href="manager/">Click here for the contact manager page...</a-->';}
-
-/*function ddcf_bookings_dashboard_widget_function() {
-	echo '<a href="../ddcf-manager/">Click here</a>';}*/
-
-function ddcf_add_dashboard_widgets() {
-	wp_add_dashboard_widget('ddcf_contacts_dashboard_widget', 'Bookings and Contacts', 'ddcf_contacts_dashboard_widget_function');
-	//wp_add_dashboard_widget('ddcf_bookings_dashboard_widget', 'BaC: Bookings', 'ddcf_bookings_dashboard_widget_function');
-
-	// Globalize the metaboxes array, this holds all the widgets for wp-admin
-	global $wp_meta_boxes;
-
-	// Get the regular dashboard widgets array
-	// (which has our new widget already but at the end)
-	$normal_dashboard = $wp_meta_boxes['dashboard']['normal']['core'];
-
-	// Backup and delete our new dashboard widget from the end of the array
-	$ddcf_widget_backup = array('ddcf_contacts_dashboard_widget' => $normal_dashboard['ddcf_contacts_dashboard_widget']);
-	unset($normal_dashboard['ddcf_contacts_dashboard_widget']);
-
-	// Merge the two arrays together so our widget is at the beginning
-	$sorted_dashboard = array_merge($ddcf_widget_backup, $normal_dashboard);
-
-	// Save the sorted array back into the original metaboxes
-	$wp_meta_boxes['dashboard']['normal']['core'] = $sorted_dashboard;
-}
-
-
-// Remove useless wdgets
-function example_remove_dashboard_widgets() {
-	/* remove_meta_box( 'dashboard_quick_press',    'dashboard', 'side' );
-	//remove_meta_box( 'dashboard_incoming_links', 'dashboard', 'normal' );
-	remove_meta_box( 'dashboard_plugins',        'dashboard', 'normal' );
-	//remove_meta_box( 'dashboard_recent_comments','dashboard', 'normal' );
-	remove_meta_box( 'dashboard_recent_drafts',  'dashboard', 'side' );
-	remove_meta_box( 'dashboard_primary',        'dashboard', 'side' );
-	remove_meta_box( 'dashboard_secondary',      'dashboard', 'side' );
-
-
-	complete list of wdgets
-	$wp_meta_boxes['dashboard']['normal']['high']['dashboard_browser_nag']
-	$wp_meta_boxes['dashboard']['normal']['core']['dashboard_right_now']
-	$wp_meta_boxes['dashboard']['normal']['core']['dashboard_recent_comments']
-	$wp_meta_boxes['dashboard']['normal']['core']['dashboard_incoming_links']
-	$wp_meta_boxes['dashboard']['normal']['core']['dashboard_plugins']
-
-	$wp_meta_boxes['dashboard']['side']['core']['dashboard_quick_press']
-	$wp_meta_boxes['dashboard']['side']['core']['dashboard_recent_drafts']
-	$wp_meta_boxes['dashboard']['side']['core']['dashboard_primary']
-	$wp_meta_boxes['dashboard']['side']['core']['dashboard_secondary']
-	*/
+        wp_enqueue_script( 'ddcf_dashboard_script',
+                            plugins_url().'/dd-contact-form/js/dd-contact-booking-dashboard.js',
+                            array(  'jquery',
+                                    'jquery-ui-core',
+                                    'jquery-ui-accordion',
+                                    'jquery-ui-dialog',
+                                    'jquery-ui-button' )
+			);        
 }
 
 function add_ddcf_options_to_menu() {
@@ -157,55 +162,53 @@ function ddcf_admin_init() {
 	wp_enqueue_script( 'my-ajax-handle', plugins_url().'/dd-contact-form/js/ajax.js', array( 'jquery' ) );
 	wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 
-	register_setting( 'ddcf-settings-group', 'ddcf_enquiries_email_one' );
-	register_setting( 'ddcf-settings-group', 'ddcf_enquiries_email_two' );
-	register_setting( 'ddcf-settings-group', 'ddcf_enquiries_email_three');
-	register_setting( 'ddcf-settings-group', 'ddcf_enquiries_email_four' );
-	register_setting( 'ddcf-settings-group', 'ddcf_enquiries_email_five' );
-	register_setting( 'ddcf-settings-group', 'ddcf_email_confirmation' );
-	register_setting( 'ddcf-settings-group', 'ddcf_email_confirmation_text' );
-	register_setting( 'ddcf-settings-group', 'ddcf_booking_start' );
-	register_setting( 'ddcf-settings-group', 'ddcf_booking_end' );
-	register_setting( 'ddcf-settings-group', 'ddcf_start_date_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_start_date_time_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_end_date_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_end_date_time_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_dates_compulsory_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_dates_category_filter_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_dates_category_filter' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_question_one_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_question_two_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_question_one' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_question_two' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_dropdown_one_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_dropdown_two_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_party_size_compulsory_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_party_size_category_filter' );
-        register_setting( 'ddcf-settings-group', 'ddcf_party_size_category_filter_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_captcha_type' );
-        register_setting( 'ddcf-settings-group', 'ddcf_recaptcha_public_key' );
-        register_setting( 'ddcf-settings-group', 'ddcf_recaptcha_private_key' );
-	register_setting( 'ddcf-settings-group', 'ddcf_recaptcha_theme' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_question_category_filter_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_extra_question_category_filter' );
-	//register_setting( 'ddcf-settings-group', 'ddcf_extra_details_category_filter_check' );
-	//register_setting( 'ddcf-settings-group', 'ddcf_extra_details_category_filter' );
-        register_setting( 'ddcf-settings-group', 'ddcf_questions_compulsory_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_form_theme' );
-	register_setting( 'ddcf-settings-group', 'ddcf_jqueryui_theme' );
-	register_setting( 'ddcf-settings-group', 'ddcf_geo_ip_option_check' );
-        register_setting( 'ddcf-settings-group', 'ddcf_geoloc_key' );
-        register_setting( 'ddcf-settings-group', 'ddcf_rec_updates_option_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_rec_updates_message_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_rec_updates_message' );
-	register_setting( 'ddcf-settings-group', 'ddcf_thankyou_type' );
-        register_setting( 'ddcf-settings-group', 'ddcf_thankyou_message' );
-        register_setting( 'ddcf-settings-group', 'ddcf_thankyou_url' );
-	register_setting( 'ddcf-settings-group', 'ddcf_tooltips_check' );
-	register_setting( 'ddcf-settings-group', 'ddcf_email_header' );
-	//register_setting( 'ddcf-settings-group', 'ddcf_bookable_category' );
-        register_setting( 'ddcf-settings-group', 'ddcf_error_checking_method' );
-
+	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_one' );
+	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_two' );
+	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_three');
+	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_four' );
+	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_five' );
+	register_setting( 'ddcf_settings_group', 'ddcf_email_confirmation' );
+	register_setting( 'ddcf_settings_group', 'ddcf_email_confirmation_text' );
+	register_setting( 'ddcf_settings_group', 'ddcf_booking_start' );
+	register_setting( 'ddcf_settings_group', 'ddcf_booking_end' );
+	register_setting( 'ddcf_settings_group', 'ddcf_start_date_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_start_date_time_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_end_date_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_end_date_time_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_dates_compulsory_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_one_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_two_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_one' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_two' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_dropdown_one_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_dropdown_two_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_party_size_compulsory_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_party_size_category_filter' );
+        register_setting( 'ddcf_settings_group', 'ddcf_party_size_category_filter_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_captcha_type' );
+        register_setting( 'ddcf_settings_group', 'ddcf_recaptcha_public_key' );
+        register_setting( 'ddcf_settings_group', 'ddcf_recaptcha_private_key' );
+	register_setting( 'ddcf_settings_group', 'ddcf_recaptcha_theme' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_category_filter_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_category_filter' );
+        register_setting( 'ddcf_settings_group', 'ddcf_questions_compulsory_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_form_theme' );
+	register_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
+        register_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
+	register_setting( 'ddcf_settings_group', 'ddcf_keep_records_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_geoloc_key' );
+        register_setting( 'ddcf_settings_group', 'ddcf_rec_updates_option_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_rec_updates_message_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_rec_updates_message' );
+	register_setting( 'ddcf_settings_group', 'ddcf_thankyou_type' );
+        register_setting( 'ddcf_settings_group', 'ddcf_thankyou_message' );
+        register_setting( 'ddcf_settings_group', 'ddcf_thankyou_url' );
+	register_setting( 'ddcf_settings_group', 'ddcf_tooltips_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_email_header' );
+	//register_setting( 'ddcf_settings_group', 'ddcf_bookable_category' );
+        register_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
 }
 
 
@@ -310,7 +313,6 @@ function dd_contact_form_activation()
 
 	$populated = mysql_result(mysql_query('SELECT COUNT(*) FROM '.$table_name), 0);
 	if(!$populated) {
-		// types are: phone, email, address, website, skype, facebook, linkedin, twitter
 		$sql = "INSERT INTO ".$table_name ." (contact_role_index, contact_role) VALUES
 //											   (null, 'associate'),
 //											   (null, 'client'),
@@ -319,119 +321,6 @@ function dd_contact_form_activation()
 											   (null, 'all contact types')";
 		if(!dbDelta($sql)) trigger_error ("Unable to update database");
 	}
-
-	// contact relations
-//	$table_name = $wpdb->prefix . "contact_relations";
-//	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-//		contact_relation_index INTEGER(10) NOT NULL AUTO_INCREMENT,
-//		contact_relative_one_id INT,
-//		contact_relative_two_id INT,
-//		contact_relationship TEXT,
-//		PRIMARY KEY (contact_relation_index) )';
-//	if(!dbDelta($sql)) trigger_error ("Unable to update database");
-
-
-	// contact notes
-	/*$table_name = $wpdb->prefix . "contact_note";
-	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-		note_id INTEGER(10) NOT NULL AUTO_INCREMENT,
-		contact_id INT,
-		note_author_id INT,
-		note_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		note TEXT,
-		PRIMARY KEY (note_id) )';
-	if(!dbDelta($sql)) trigger_error ( "Unable to update database" );*/
-
-
-	// bookings stuff - TODO
-	/*$table_name = $wpdb->prefix . "booking";
-	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-		booking_id INTEGER(10) NOT NULL AUTO_INCREMENT,
-		bookable_id INT,
-		guest_id INT,
-		agent_id INT,
-		arrival_date DATETIME,
-		departure_date DATETIME,
-		booking_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-		booking_status TEXT,
-		notes TEXT,
-		PRIMARY KEY (booking_id) )';
-	if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-
-
-	$table_name = $wpdb->prefix . "booking_status_types";
-	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-	booking_status_type_index	 INTEGER(10) NOT NULL AUTO_INCREMENT,
-	booking_status_type TEXT,
-	PRIMARY KEY (booking_status_type_index) )';
-	if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-
-	$populated = mysql_result(mysql_query('SELECT COUNT(*) FROM '.$table_name), 0);
-	if(!$populated) {
-		// types are: confirmed, deposit paid, booked, held
-		$sql = "INSERT INTO ".$table_name ."   (booking_status_type_index, booking_status_type) VALUES
-											   (null, 'confirmed'),
-											   (null, 'deposit paid'),
-											   (null, 'booked'),
-											   (null, 'held')";
-		if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-	}
-
-
-	$table_name = $wpdb->prefix . "bookable_rates";
-	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-		rate_id INTEGER(10) NOT NULL AUTO_INCREMENT,
-		bookable_id INT,
-		booking_rate DECIMAL,
-		booking_rate_string TEXT,
-		booking_period_start DATETIME,
-		booking_period_end DATETIME,
-		booking_period_label TEXT,
-		booking_period TEXT,
-		PRIMARY KEY (rate_id) )';
-	if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-
-
-	$table_name = $wpdb->prefix . "bookable_rates_period";
-	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-	booking_period_index	 INTEGER(10) NOT NULL AUTO_INCREMENT,
-	booking_period TEXT,
-	PRIMARY KEY (booking_period_index) )';
-	if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-
-	$populated = mysql_result(mysql_query('SELECT COUNT(*) FROM '.$table_name), 0);
-	if(!$populated) {
-		// booking_period are by the; minute, hour, day, week, month, year or a long lease)
-		$sql = "INSERT INTO ".$table_name ." (booking_period_index, booking_period) VALUES
-											   (null, 'minute'),
-											   (null, 'hour'),
-											   (null, 'week'),
-											   (null, 'month'),
-											   (null, 'year'),
-											   (null, 'long lease')";
-		if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-	}
-
-
-
-	$kplv_special = true;
-	$table_name = $wpdb->prefix . "bookable";
-	if($kplv_special) {
-		$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-			bookable_id INTEGER(10) NOT NULL AUTO_INCREMENT,
-			owner_id INT,
-			bookable_post_id INT,
-			PRIMARY KEY (rate_id) )';
-		if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-	}
-	else {
-		$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-			bookable_id INTEGER(10) NOT NULL AUTO_INCREMENT,
-			owner_id INT,
-			bookable_post_id INT,
-			PRIMARY KEY (bookable_id) )';
-		if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
-	}*/
 }
 
 //function dd_contact_form_deactivation()
@@ -441,11 +330,60 @@ function dd_contact_form_activation()
 
 function dd_contact_form_uninstall()
 {
-	// this doesn't seem to work...
-	delete_option('ddcf-settings-group','0.1');
-	global $wpdb;
+	// remove all settings
+	unregister_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_one' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_two' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_three');
+	unregister_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_four' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_five' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_email_confirmation' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_email_confirmation_text' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_booking_start' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_booking_end' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_start_date_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_start_date_time_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_end_date_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_end_date_time_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_dates_compulsory_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_question_one_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_question_two_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_question_one' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_question_two' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_question_category_filter_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_question_category_filter' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_questions_compulsory_check' );        
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_dropdown_one_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_extra_dropdown_two_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_party_size_compulsory_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_party_size_category_filter' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_party_size_category_filter_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_captcha_type' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_recaptcha_public_key' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_recaptcha_private_key' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_recaptcha_theme' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_form_theme' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_keep_records_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_geo_ip_option_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_geoloc_key' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_rec_updates_option_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_rec_updates_message_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_rec_updates_message' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_thankyou_type' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_thankyou_message' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_thankyou_url' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_tooltips_check' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_email_header' );
+	//unregister_setting( 'ddcf_settings_group', 'ddcf_bookable_category' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
+        delete_option('ddcf_settings_group','0.1');
+        
+        // remove all tables from DB
+        global $wpdb;
 	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-
+        
         $sql = "DROP TABLE IF EXISTS ". $wpdb->prefix ."enquiries;";
         $wpdb->query($sql);
         $sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'contact;';
@@ -456,76 +394,5 @@ function dd_contact_form_uninstall()
 	$wpdb->query($sql);
 	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'contact_roles;';
 	$wpdb->query($sql);
-//	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'contact_relations;';
-//	$wpdb->query($sql);
-//	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'contact_note;';
-//	$wpdb->query($sql);
-//	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'booking;';
-//	$wpdb->query($sql);
-//	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'booking_status_types;';
-//	$wpdb->query($sql);
-//	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'bookable_rates;';
-//	$wpdb->query($sql);
-//	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'bookable_rates_period;';
-//	$wpdb->query($sql);
 }
-
-/* Adds a box to the main column on the Post and Page edit screens 
-function ddcf_add_custom_box() {
-    $screens = array( 'post', 'page' );
-    foreach ($screens as $screen) {
-        add_meta_box(
-            'ddcf_sectionid',
-            __( 'Bookings and Contacts', 'ddcf-plugin' ),
-            'ddcf_inner_custom_box',
-            $screen
-        );
-    }
-}*/
-
-/* Prints the meta box content 
-function ddcf_inner_custom_box( $post ) {
-
-  // Use nonce for verification
-  wp_nonce_field( plugin_basename( __FILE__ ), 'ddcf_noncename' );
-
-  // The actual fields for data entry
-  // Use get_post_meta to retrieve an existing value from the database and use the value for the form
-  $value = get_post_meta( $post->ID, '_my_meta_value_key', true );
-  echo '<label for="ddcf_owner_field">';
-       _e("Owner ID", 'ddcf-plugin' );
-  echo '</label> ';
-  echo '<input type="text" id="ddcf_owner_field" name="ddcf_owner_field" value="'.esc_attr($value).'" size="25" />';
-}*/
-
-/* When the post is saved, saves our custom data */
-//function ddcf_save_postdata( $post_id ) {
-//
-//  // First we need to check if the current user is authorised to do this action.
-//  if ( 'page' == $_POST['post_type'] ) {
-//    if ( ! current_user_can( 'edit_page', $post_id ) )
-//        return;
-//  } else {
-//    if ( ! current_user_can( 'edit_post', $post_id ) )
-//        return;
-//  }
-//
-//  // Secondly we need to check if the user intended to change this value.
-//  if ( ! isset( $_POST['ddcf_noncename'] ) || ! wp_verify_nonce( $_POST['ddcf_noncename'], plugin_basename( __FILE__ ) ) )
-//      return;
-//
-//  // Thirdly we can save the value to the database
-//  //if saving in a custom table, get post_ID
-//  $post_ID = $_POST['post_ID'];
-//  //sanitize user input
-//  $mydata = sanitize_text_field( $_POST['ddcf_owner_field'] );
-//
-//  // Do something with $mydata
-//  // either using
-//  add_post_meta($post_ID, 'bookable_owner_id', $mydata, true) or
-//    update_post_meta($post_ID, 'bookable_owner_id', $mydata);
-//  // or a custom table
-//}
-
-
 ?>

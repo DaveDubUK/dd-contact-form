@@ -38,13 +38,6 @@ function selectTextareaTwo(isSelected) {
 										 //.prop('disabled', true);
 }
 
-//function selectExtraDetailsFilter(isSelected) {
-//	if(isSelected) jQuery('#ddcf_extra_details_category_filter').css("background-color","#ffffff")
-//										 .css("color","#000000");
-//	else jQuery('#ddcf_extra_details_category_filter').css("background-color","#ececec")
-//										 .css("color","#cccccc");
-//}
-
 function selectExtraQuestionFilter(isSelected) {
 	if(isSelected) jQuery('#ddcf_extra_question_category_filter').css("background-color","#ffffff")
 										 .css("color","#000000");
@@ -80,6 +73,23 @@ function selectRequestDatesFilter(isSelected) {
 										 .css("opacity","0.35");    
 }
 
+function selectSaveUserDetails(isSelected) {
+	if(isSelected) {
+            jQuery('#ddcf_rec_updates_option_check').css("background-color","#ffffff").css("opacity","1");
+            jQuery('#ddcf_rec_updates_message_check').css("background-color","#ffffff").css("opacity","1");
+            jQuery('#ddcf_rec_updates_message').css("background-color","#ffffff").css("opacity","1");
+            jQuery('#ddcf_geo_ip_option_check').css("background-color","#ffffff").css("opacity","1");
+            jQuery('#ddcf_geoloc_key').css("background-color","#ffffff").css("opacity","1");
+        }
+	else {
+            jQuery('#ddcf_rec_updates_option_check').css("background-color","#ececec").css("opacity","0.35");
+            jQuery('#ddcf_rec_updates_message_check').css("background-color","#ececec").css("opacity","0.35");
+            jQuery('#ddcf_rec_updates_message').css("background-color","#ececec").css("opacity","0.35");
+            jQuery('#ddcf_geo_ip_option_check').css("background-color","#ececec").css("opacity","0.35");
+            jQuery('#ddcf_geoloc_key').css("background-color","#ececec").css("opacity","0.35");
+        } 
+}
+
 function selectRegisterUsers(isSelected) {
     if (isSelected) {
         if (jQuery('#ddcf_rec_updates_message_check').is(":checked"))
@@ -106,30 +116,22 @@ function selectRegisterUsersMessage(isSelected) {
 
 jQuery(document).ready(function ($) {
 
-	// Enable accordian
-	//jQuery( "#accordion" ).accordion({ active: 2, collapsible: true});
-
-
-	//jQuery('#ddcf_captcha_options').css('visibility', 'visible');
-
 	// enable accordions
 	jQuery( "#accordion1" ).accordion({
-								collapsible: true,
-								active : 2
-								});
+                                            collapsible: true,
+                                            active : 2
+                                            });
 	jQuery( "#accordion2" ).accordion({
-								collapsible: true,
-								active : 1
-								});
+                                            collapsible: true,
+                                            active : 1
+                                            });
                                                                 
 	jQuery( "#accordion3" ).accordion({
-								collapsible: true,
-								active : 2
-								});                                                                
-
+                                            collapsible: true,
+                                            active : 2
+                                            });                                                                
 	// enable tabs
 	jQuery( "#tabs" ).tabs();
-
 
 	// keep extra question text boxes updated
 	selectTextareaOne(jQuery('#ddcf_extra_question_one_check').is(":checked")); // first run through
@@ -159,12 +161,6 @@ jQuery(document).ready(function ($) {
 		selectRequestPartySizeFilter(jQuery('#ddcf_party_size_category_filter_check').is(":checked"));
 	});        
 
-//	/* keep form updated with state of extra details filter check selction */
-//	selectExtraDetailsFilter(jQuery('#ddcf_extra_details_category_filter_check').is(":checked")); // first run through
-//	jQuery('#ddcf_extra_details_category_filter_check').change(function() {
-//		selectExtraDetailsFilter(jQuery(this).is(":checked"));
-//	});
-
 	/* grey out start and end time checkboxes when date not selected */
 	selectRequestStartDate(jQuery('#ddcf_start_date_check').is(":checked")); // first run through
 	jQuery('#ddcf_start_date_check').change(function() {
@@ -175,15 +171,18 @@ jQuery(document).ready(function ($) {
 		selectRequestEndDate(jQuery(this).is(":checked"));
 	});
 
-
 	/* grey out customer message stuff when not offering to register Contact Form users */
 	selectRegisterUsers(jQuery('#ddcf_rec_updates_option_check').is(":checked")); // first run through
 	jQuery('#ddcf_rec_updates_option_check').change(function() {
 		selectRegisterUsers(jQuery(this).is(":checked"));
-	});
-
+        });     
 	selectRegisterUsersMessage(jQuery('#ddcf_rec_updates_message_check').is(":checked")); // first run through
 	jQuery('#ddcf_rec_updates_message_check').change(function() {
 		selectRegisterUsersMessage(jQuery(this).is(":checked"));
 	});
+        /* grey out privacy settings if not saving user details to DB */
+        selectSaveUserDetails(jQuery('#ddcf_keep_records_check').is(":checked")); // first run through
+	jQuery('#ddcf_keep_records_check').change(function() {
+		selectSaveUserDetails(jQuery(this).is(":checked"));
+	});        
 });

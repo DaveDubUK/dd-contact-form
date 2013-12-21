@@ -23,7 +23,7 @@
 var gLastSearch = '';
 var gLastQuery;
 var gLastAction;
-var gResultsPerPage = 25;
+var gResultsPerPage = 10;
 var gGreyOut = '#cccccc';
 
 function search(str) {
@@ -59,36 +59,38 @@ jQuery(document).ready(function ($) {
 	resetButtons();
 
 
-	/* Contact type dropdown select response */
+	/* Contact type dropdown select response 
 	jQuery('#ddcf_contact_types')
 		.change(function () {
 			resetButtons();
 			jQuery('#ddcf_results_offset').val(0);
 			jQuery('#ddcf_action').val('ddcf_filter_action');
 			search(jQuery('#ddcf_contact_types option:selected').text());
-		});
+		});*/
 
 
 	/* previous and next results page links  */
 	jQuery('#ddcf_previous_page').css('color', gGreyOut)
-								.click(function() {
-		var cursorType = jQuery(this).css('cursor')
-		if(cursorType=='pointer') {
+            .click(function() {
+		var cursorType = jQuery(this).css('cursor');
+		if(cursorType==='pointer') {
 			resetButtons();
 			var currentValue = parseInt(jQuery('#ddcf_results_offset').val(),10);
 			currentValue-=parseInt(gResultsPerPage,10);
 			if(currentValue<0) currentValue = 0;
 			jQuery('#ddcf_results_offset').val(currentValue);
+                        jQuery('#ddcf_action').val('ddcf_search_action');
 			showMore();
 		}
 	});
 	jQuery('#ddcf_next_page').css('color', gGreyOut)
-							.click(function() {
-		var cursorType = jQuery(this).css('cursor')
-		if(cursorType=='pointer') {
+            .click(function() {
+		var cursorType = jQuery(this).css('cursor');
+		if(cursorType==='pointer') {
 			resetButtons();
 			var currentValue = parseInt(jQuery('#ddcf_results_offset').val(),10);
 			currentValue+=parseInt(gResultsPerPage,10);
+                        if(currentValue>jQuery('#ddcf_total_num_results').val()) currentValue -= gResultsPerPage;
 			jQuery('#ddcf_results_offset').val(currentValue);
 			jQuery('#ddcf_action').val('ddcf_search_action');
 			showMore();
@@ -97,7 +99,8 @@ jQuery(document).ready(function ($) {
 
 	jQuery("#ddcf_action").val('');
 	jQuery("#ddcf_action_arg").val('');
-	/*jQuery("#ddcf_manager_nonce").val('');*/
+	jQuery("#ddcf_num_results").val(gResultsPerPage);
+        jQuery("#ddcf_results_offset").val('0');
 
 	initialise_manager_session();
 
@@ -105,7 +108,7 @@ jQuery(document).ready(function ($) {
 	gLastSearch = jQuery('#ddcf_search_form').val();
 	var intervalID = setInterval(function(){
 		var currentSearch=jQuery('#ddcf_search_form').val();
-		if(currentSearch!=gLastSearch) {
+		if(currentSearch!==gLastSearch) {
 			resetButtons();
 			jQuery('#ddcf_action').val('ddcf_search_action');
 			jQuery('#ddcf_results_offset').val(0);
@@ -232,4 +235,4 @@ jQuery(document).ready(function ($) {
 				////allFields.val("").removeClass("ui-state-error");
 			}
 		 });
-})
+});

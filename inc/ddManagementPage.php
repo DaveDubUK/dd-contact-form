@@ -20,37 +20,7 @@
     If not, see <http://www.gnu.org/licenses/>.
 -->
 
-<!-- stylin based on plugin options -->
-<?php
-	wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
-	if((get_option(ddcf_jqueryui_theme)!="none")&&
-	   (get_option(ddcf_jqueryui_theme)!="custom")&&
-	   (get_option(ddcf_jqueryui_theme)!="")) {
-		wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.get_option(ddcf_jqueryui_theme).'/jquery-ui.css');
-	}
-	else if (get_option(ddcf_jqueryui_theme)=="custom") {
-		wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-custom.min.css');
-	}
-	else {
-		wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css');
-	}
-	wp_enqueue_style('ddcf_layout_style', plugins_url().'/dd-contact-form/css/style-dashboard.css');
-?>
 <!--[if gte IE 9]><style type="text/css">.gradient { filter: none; }</style><![endif]-->
-
-<!-- sprinkle just enough jQuery -->
-<?php wp_enqueue_script(   'ddcf_dashboard_script',
-                            plugins_url().'/dd-contact-form/js/dd-contact-booking-dashboard.js',
-                            array(  'jquery',
-                                    'jquery-ui-core',
-                                    'jquery-ui-accordion',
-                                    'jquery-ui-dialog',
-                                    'jquery-ui-button' )
-			);
-
-?>
-
-<!-- go go go -->
 
 <?php
 
@@ -98,9 +68,9 @@
                         echo'
 
 				<div class="ddcf_navigation_bar">
-					<div class="ddcf-tool-l" id="ddcf_previous_page" name="ddcf_previous_page">'.__("<<  Previous  - - -", "ddcf-plugin").'</div>
+					<div class="ddcf-tool-l" id="ddcf_previous_page" name="ddcf_previous_page">'.__("<<  Previous  - - -", "ddcf_plugin").'</div>
 					<div class="ddcf-tool-l" id="ddcf_page_info" name="ddcf_page_info"></div>
-					<div class="ddcf-tool-l" id="ddcf_next_page" name="ddcf_next_page">'.__("- - -  Next  >>", "ddcf-plugin").'</div>
+					<div class="ddcf-tool-l" id="ddcf_next_page" name="ddcf_next_page">'.__("- - -  Next  >>", "ddcf_plugin").'</div>
 				</div>
 
 
@@ -110,8 +80,6 @@
 				<input type="hidden" name="ddcf_num_results" id="ddcf_num_results" value="0" />
 				<input type="hidden" name="ddcf_results_offset" id="ddcf_results_offset" value="0" />
 				<input type="hidden" name="action" value="the_ajax_hook" /> <!-- this puts the action the_ajax_hook into the serialized form -->';
-
-                                // ty http://www.prelovac.com/vladimir/improving-security-in-wordpress-plugins-using-nonces
                                 $mgrNonce=wp_create_nonce('ddcf_mgr_action');                                                                
                                 echo '<input type="hidden" name="ddcf_mgr_nonce" id="ddcf_mgr_nonce" value="'.$mgrNonce.'" >
 			</form>

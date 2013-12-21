@@ -50,7 +50,6 @@ var gbacCaptchaDefault;
 var gbacreCaptchaDefault;
 // resizing vars
 var gbacWidth;
-var gbacHeight;
 var gbacInitialTimer;
 var gbacErrorCheckingMethod;
 var gbacQuestionsCompulsoryCheck;
@@ -99,7 +98,7 @@ function resetForm()
 	jQuery("#recaptcha_response_field").val(gbacreCaptchaDefault);
 	jQuery('#recaptcha_response_field_fb').html('&nbsp;');
 
-    // reset Rec. Updates option
+        // reset Rec. Updates option
 	gbacRecieveUpdates = '';
 	if(gbacRecieveUpdatesDefault) jQuery("#ddcf_newsletter_signup").prop('checked', true);
 	else jQuery("#ddcf_newsletter_signup").prop('checked', false);
@@ -328,7 +327,7 @@ function checkForm(andSubmit,makeChanges)
     } // gbacNumChildren?
 
 
-    /* Simple Add Captcha */
+    /* Simple Addition Captcha */
     if (jQuery('#ddcf_contact_captcha_add').length !== 0) { // element found
         gbacCaptcha = jQuery.trim(jQuery("#ddcf_contact_captcha_add").val());
         if (gbacCaptcha !== gbacCaptchaDefault && gbacCaptcha !== '') {
@@ -429,22 +428,22 @@ function checkForm(andSubmit,makeChanges)
 function adjust_for_size() {
 
     gbacWidth = jQuery("#ddcf_contact_form_wrapper").width();
+    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px'); */
 
-    /* big buttons on a small screen. Squeeze simple additon captcha onto small screen */
+    /* tiny screens - big buttons, squash simple additon captcha */
     if(gbacWidth<=300){
                 jQuery('#ddcf_button_area').css('width', '100%');
                 jQuery('.ddcf_button').css('width', '100%').css('margin', '0.5em 0');
                 jQuery('#ddcf_table_span_captcha_add').css('width', 'auto');
                 jQuery('#ddcf_contact_captcha_fb').css('bottom', '-2em').css('right', '-1em');
-    }
-    else {
+    } else {
                 jQuery('#ddcf_button_area').css('width', 'auto');
                 jQuery('.ddcf_button').css('width', 'auto').css('margin', '0 0 0.7em 0.6em');
                 jQuery('#ddcf_table_span_captcha_add').css('width', '22em');
-                jQuery('#ddcf_contact_captcha_fb').css('bottom', '0em').css('right', '0em');
+                jQuery('#ddcf_contact_captcha_fb').css('bottom', '0em').css('right', '-0.5em');
     }
 
-    /* show / hide datepickers. Set width of signup checkbox at bottom. Align dropdowns */
+    /* small screens - show / hide datepickers, set width of signup checkbox at bottom */
     if(gbacWidth<=375){
                 jQuery('#ddcf_checkbox_area').css('width', '100%');
                 jQuery('.ddcf_table_span_date').css('display','none');
@@ -456,22 +455,24 @@ function adjust_for_size() {
                 jQuery('.ddcf_table_span_datetime').css('display','inline-block');
     }
 
-    /* flip between 1 and 2 cols at flip_width. */
+    /* flip between 1 and 2 columns */
     var flip_width = 600;
     if(gbacWidth<=flip_width) {
 		jQuery('#ddcf_contact_form_top_left').css('width', '100%');
 		jQuery('#ddcf_contact_form_top_right').css('width', '100%').css('float', 'left').css('margin-top', '0em');
+                jQuery('#ddcf_dates_align').css('max-width','22em');
                 jQuery('.ddcf_table_span_date').css('float','left');
                 jQuery('.ddcf_table_span_datetime').css('float','left');
     }
     else {      // width > flip_width
 		jQuery('#ddcf_contact_form_top_left').css('width', '35%');
 		jQuery('#ddcf_contact_form_top_right').css('width', '65%').css('float', 'right').css('margin-top', '0em');
+                jQuery('#ddcf_dates_align').css('max-width','100em');
                 jQuery('.ddcf_table_span_date').css('float','none');
                 jQuery('.ddcf_table_span_datetime').css('float','none');
     }
 
-    /* set top right section height */
+    /* set top right section height and reposition accordingly */
     var topLeftHeight = jQuery("#ddcf_contact_form_top_left").height();
     var tableHeight = jQuery("#ddcf_details_table").height();
     if(tableHeight>topLeftHeight)
@@ -479,28 +480,11 @@ function adjust_for_size() {
     else
         jQuery("#ddcf_contact_form_top_right").css('height', topLeftHeight);
     var tableTop = tableHeight/2.0;
-
-    /* and reposition accordingly */
     jQuery("#ddcf_details_table").css('margin-top', -tableTop);
-
-    /* record the new form height */
-    gbacHeight = jQuery("#ddcf_contact_form_wrapper").height();
-    jQuery("#ddcf_contact_form_contents").css('min-height',gbacHeight);
-    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px. Form height: '+gbacHeight+'px'); */
 }
 
 
 jQuery(document).ready(function ($) {
-
-	// tooltips (wip)
-	if(jQuery('#ddcf-show-tooltips').val()==='ddcf_tooltips_check')
-	{
-		var tooltips = $( "[title]" ).tooltip(
-				{ position: { my: "right bottom", at: "right top" }},
-				{ tooltipClass: 'ddcf_tooltip_styling' }
-			);
-	}
-	else $('[title]').removeAttr('title');
 
 	// tweak on resize
 	jQuery(window).resize(function() {adjust_for_size();});

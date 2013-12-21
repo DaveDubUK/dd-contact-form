@@ -30,7 +30,7 @@
 			$ddcf_action = $_POST['ddcf_action'];
 			$ddcf_action_arg = $_POST['ddcf_action_arg'];
 			$ddcf_search_form = $_POST['ddcf_search_form'];
-			$ddcf_num_results = 'none';
+			$ddcf_num_results = $_POST['ddcf_num_results'];
 			$ddcf_results_offset = $_POST['ddcf_results_offset'];
 
 			global $wpdb;
@@ -41,14 +41,14 @@
 					// get the list of contacts for the given name from ddcf_search_form
 					$dbtable = $wpdb->prefix . "contact";
 					$query = "SELECT COUNT(*) FROM ".$dbtable.' WHERE contact_name LIKE "%'.$ddcf_search_form.'%"';
-					$ddcf_num_results = $wpdb->get_var( $query );
-					$query = 'SELECT * FROM '.$dbtable.' WHERE contact_name LIKE "%'.$ddcf_search_form.'%" ORDER BY contact_name LIMIT '.$ddcf_results_offset.', 25';
+					$ddcf_total_num_results = $wpdb->get_var( $query );
+					$query = 'SELECT * FROM '.$dbtable.' WHERE contact_name LIKE "%'.$ddcf_search_form.'%" ORDER BY contact_name LIMIT '.$ddcf_results_offset.', '.$ddcf_num_results;
 					$contacts = $wpdb->get_results($query);
 					if($contacts) {
 						$contacts_json_encoded = json_encode($contacts);
 						$return = array(
 							'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-							'ddcf_num_results' => $ddcf_num_results,
+							'ddcf_num_results' => $ddcf_total_num_results,
 							'ddcf_contact_information' => $contacts_json_encoded
 						);
 						wp_send_json($return);
@@ -58,7 +58,7 @@
 						$error_message = 'No results for '.$_POST['ddcf_search_form'].' using: '.$query;
 						$return = array(
 							'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-							'ddcf_num_results' => $ddcf_num_results,
+							'ddcf_num_results' => $ddcf_total_num_results,
 							'ddcf_contact_information' => $error_message
 						);
 						wp_send_json($return);
@@ -68,15 +68,15 @@
 				else {// blank search box
 					$dbtable = $wpdb->prefix . "contact";
 					$query = "SELECT COUNT(*) FROM ".$dbtable.' WHERE contact_name LIKE "%'.$ddcf_search_form.'%"';
-					$ddcf_num_results = $wpdb->get_var( $query );
-					if($ddcf_search_form!='') $query = 'SELECT * FROM '.$dbtable.' WHERE contact_name LIKE "%'.$ddcf_search_form.'%" ORDER BY contact_name LIMIT '.$ddcf_results_offset.', 25';
-					else $query = 'SELECT * FROM '.$dbtable.' ORDER BY contact_name LIMIT '.$ddcf_results_offset.', 25';
+					$ddcf_total_num_results = $wpdb->get_var( $query );
+					if($ddcf_search_form!='') $query = 'SELECT * FROM '.$dbtable.' WHERE contact_name LIKE "%'.$ddcf_search_form.'%" ORDER BY contact_name LIMIT '.$ddcf_results_offset.', '.$ddcf_num_results;
+					else $query = 'SELECT * FROM '.$dbtable.' ORDER BY contact_name LIMIT '.$ddcf_results_offset.', '.$ddcf_num_results;
 					$contacts = $wpdb->get_results($query);
 					if($contacts) {
 						$contacts_json_encoded = json_encode($contacts);
 						$return = array(
 							'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-							'ddcf_num_results' => $ddcf_num_results,
+							'ddcf_num_results' => $ddcf_total_num_results,
 							'ddcf_contact_information' => $contacts_json_encoded
 						);
 						wp_send_json($return);
@@ -86,7 +86,7 @@
 						$error_message = 'No results for '.$_POST['ddcf_search_form'].' using: '.$query;
 						$return = array(
 							'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-							'ddcf_num_results' => $ddcf_num_results,
+							'ddcf_num_results' => $ddcf_total_num_results,
 							'ddcf_contact_information' => $error_message
 						);
 						wp_send_json($return);
@@ -106,13 +106,13 @@
                                         // prepare list of contacts in selected category
                                         $dbtable = $wpdb->prefix . "contact";
                                         $query = "SELECT COUNT(*) FROM ".$dbtable;
-                                        $ddcf_num_results = $wpdb->get_var( $query );
-                                        $query='SELECT * FROM '.$dbtable.' ORDER BY contact_name LIMIT '.$ddcf_results_offset.', 25';
+                                        $ddcf_total_num_results = $wpdb->get_var( $query );
+                                        $query='SELECT * FROM '.$dbtable.' ORDER BY contact_name LIMIT '.$ddcf_results_offset.', '.$ddcf_num_results;
                                         $contacts = $wpdb->get_results($query);
                                         $contacts_json_encoded = json_encode($contacts);
                                         $return = array(
                                                 //'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-                                                'ddcf_num_results' => $ddcf_num_results,
+                                                'ddcf_num_results' => $ddcf_total_num_results,
                                                 'ddcf_contact_information' => $contacts_json_encoded
                                         );
                                         wp_send_json($return);
@@ -128,13 +128,13 @@
 						// prepare list of contacts in selected category
 						$dbtable = $wpdb->prefix . "contact";
                                                 $query = "SELECT COUNT(*) FROM ".$dbtable;
-                                                $ddcf_num_results = $wpdb->get_var( $query );
-                                                $query='SELECT * FROM '.$dbtable.' ORDER BY contact_name LIMIT '.$ddcf_results_offset.', 25';
+                                                $ddcf_total_num_results = $wpdb->get_var( $query );
+                                                $query='SELECT * FROM '.$dbtable.' ORDER BY contact_name LIMIT '.$ddcf_results_offset.', '.$ddcf_num_results;
 						$contacts = $wpdb->get_results($query);
 						$contacts_json_encoded = json_encode($contacts);
 						$return = array(
 							//'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-							'ddcf_num_results' => $ddcf_num_results,
+							'ddcf_num_results' => $ddcf_total_num_results,
 							'ddcf_contact_information' => $contacts_json_encoded
 						);
 						wp_send_json($return);
@@ -144,13 +144,13 @@
 						// prepare list of contacts in selected category
 						$dbtable = $wpdb->prefix . "contact";
                                                 $query = "SELECT COUNT(*) FROM ".$dbtable.' WHERE contact_type = "'.$ddcf_action_arg.'"';
-                                                $ddcf_num_results = $wpdb->get_var( $query );
-                                                $query='SELECT * FROM '.$dbtable.' WHERE contact_type = "'.$ddcf_action_arg.'" ORDER BY contact_name LIMIT '.$ddcf_results_offset.', 25';
+                                                $ddcf_total_num_results = $wpdb->get_var( $query );
+                                                $query='SELECT * FROM '.$dbtable.' WHERE contact_type = "'.$ddcf_action_arg.'" ORDER BY contact_name LIMIT '.$ddcf_results_offset.', '.$ddcf_num_results;
 						$contacts = $wpdb->get_results($query);
 						$contacts_json_encoded = json_encode($contacts);
 						$return = array(
 							//'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-							'ddcf_num_results' => $ddcf_num_results,
+							'ddcf_num_results' => $ddcf_total_num_results,
 							'ddcf_contact_information' => $contacts_json_encoded
 						);
 						wp_send_json($return);
