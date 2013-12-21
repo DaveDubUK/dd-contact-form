@@ -130,6 +130,9 @@ label {
         border:none !important;
         line-height: 0em;
     }
+    #ddcf_dates_align {
+        max-width: 100em; /* initial value - controlled during runtime by jQuery */
+    }
     #ddcf_table_span_captcha_add {
         display: inline-block;
         position: relative;
@@ -220,13 +223,13 @@ label {
                 position:relative;
                 margin-bottom: 1em;
         }
-        /* simple add captcha */
+        /* simple addition captcha */
         #ddcf_simple_add_captcha {
                 width:auto;
                 /*margin: 0 0 3em;*/
                 margin: 1.5em 0.0em;
         }
-        /* text input for simple add captcha */
+        /* text input for simple addition captcha */
         #ddcf_contact_captcha_add {
                 width:3em;
                 text-align: center;
