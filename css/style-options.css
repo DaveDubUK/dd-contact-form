@@ -30,8 +30,9 @@
 }
 
 /* text inputs on options form */
-.ddcf-text-input {  
-	min-width:185px;
+.ddcf_text_input {  
+	min-width:20em;
+        margin:0.5em;
 }
 .ddcf_textarea_input {
 	margin-top:1.0em;

@@ -49,6 +49,7 @@
 	padding: 0.5em 0.75em 0.5em 0.75em !important;
         width:100%;
         color: inherit;
+        border: 1px solid #ccc;
         border-radius: 0.4em;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
@@ -116,12 +117,12 @@ label {
         border-bottom:0em !important;
         line-height:0em;
     }
-    #ddcf_details_table_row {
+    .ddcf_details_table_row {
         border:0em;
         margin:0em;
         padding:0em;
     }
-    #ddcf_details_table_row_division {
+    .ddcf_details_table_row_division {
         text-align: center;
         vertical-align: top;
         border:0em !important;
@@ -153,7 +154,7 @@ label {
         position: relative;
         vertical-align:middle;
         float:none;
-        width: 18.5em;
+        width: 17.1em;
         height: 3.7em;
     } 
     .ddcf_table_span_dropdown {
@@ -161,7 +162,7 @@ label {
         position: relative;
         vertical-align:middle;
         float:none; 
-        width: 11.0em;
+        width: 9.5em;
         height: 2.5em;
         margin: 0 0 1.0em;
     }    
@@ -178,7 +179,7 @@ label {
         }
             .ddcf_datetime_picker {
                     width:9.8em;
-                    /*height: 1.3em;*/
+                    height: 2.5em;
                     text-align:center;
                     margin: 0em 0em 0.75em !important;
                     float: right;
@@ -196,9 +197,9 @@ label {
             .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }        
 
         .ddcf_dropdown {
-                padding: 0em 0.0em 0em 0.4em !important;
+                padding: 0.3em 0.5em 0.35em !important;
                 margin: 0 !important;
-                height: 2.4em;
+                height: 2.5em;
                 float:right;
                 width:auto;
                 
@@ -208,7 +209,6 @@ label {
         }        
         #ddcf_num_children_selector {
                 float:left;
-                /*width:10em;*/
                 text-align:center;
         }
         #ddcf_num_adults_selector {
@@ -223,6 +223,8 @@ label {
                 position:relative;
                 margin-bottom: 1em;
         }
+            .recaptchatable td img {border-radius: 0px;}
+            
         /* simple addition captcha */
         #ddcf_simple_add_captcha {
                 width:auto;
@@ -272,10 +274,9 @@ label {
     .ddcf_button {
             /* sizing / positioning */
             width:auto;
-            padding:0px 0.4em 0.13em 0.4em !important;
-            /*margin:0em 0.0em 0.7em 0.6em !important;*/
-            max-height:2.0em !important;
-            height:2.0em !important;
+            padding:0px 0.4em 0.13em 0.4em;
+            /* height:2.6em !important;*/
+            /* font-size: 1.0em; */
             vertical-align:middle;
             appearance:button;
             -moz-appearance:button; /* Firefox */

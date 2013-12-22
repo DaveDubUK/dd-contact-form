@@ -8,8 +8,8 @@ Author: Davedub
 Author URI: http://davedub.co.uk
 License: GNU GPL
 */
-
-/*
+ 
+/*  <a href="options-general.php?page=ddOptionsPage.php">Settings</a>'
     This file is part of Davedub's Contact Form plugin for WordPress
 
     Created by David Wooldridge
@@ -51,6 +51,10 @@ add_action( 'admin_menu', 'add_ddcf_options_to_menu' );
 
 // call register settings and enqueue scripts / styles function
 add_action( 'admin_init', 'ddcf_admin_init' );
+
+// add a link to the settings page on the plugins list page 
+//add_filter('plugin_action_links_' . __FILE__, 'ddcf_plugin_settings_link' );
+add_filter('plugin_action_links', 'ddcf_plugin_settings_link', 10, 2);
 
 // plugin activation, deactivation and uninstall
 register_activation_hook(__FILE__,'dd_contact_form_activation');

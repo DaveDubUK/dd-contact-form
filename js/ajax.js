@@ -54,13 +54,11 @@ function initialise_session(){
 	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
 				function(php_message){
-					jQuery(this).css("display", "none");
-					jQuery('#screen').css("display", "none");
+                                        jQuery(this).css("display", "none");
+                                        /*jQuery('#screen').css("display", "none");*/
                                         jQuery("#error_reporting").html(php_message.ddcf_error);
-
-					jQuery("#ddcf_session_initialised").val("true");
-					jQuery("#ddcf_contact_form_contents").css('visibility','visible');
-
+                                        jQuery("#ddcf_session_initialised").val("true");
+                                        jQuery("#ddcf_contact_form_contents").css('visibility','visible');
                                         do_captcha(php_message);
     				});
 }

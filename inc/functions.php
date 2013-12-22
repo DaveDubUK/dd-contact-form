@@ -122,19 +122,29 @@ function ddcf_enqueue_front_end_pages () {
                                         'jquery-ui-button' )
                             );                            
 
-        /* enqueue styles */
+        /* enqueue css styles */
+        
+        /* normalise */
 	wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
-	if((get_option(ddcf_jqueryui_theme)!="none")&&
+	
+        /* jQuery UI */
+        if((get_option(ddcf_jqueryui_theme)!="none")&&
            (get_option(ddcf_jqueryui_theme)!="custom")&&
            (get_option(ddcf_jqueryui_theme)!="")) 
 		wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.get_option(ddcf_jqueryui_theme).'/jquery-ui.css');
 	else if (get_option(ddcf_jqueryui_theme)=="custom") 
 		wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-custom.min.css');
 	else    wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css');
+      
+        /* contact form base */
         if(has_shortcode( $post->post_content, 'dd_contact_form' ))
                 wp_enqueue_style('ddcf_layout_style', plugins_url().'/dd-contact-form/css/style-dd-contact-booking.css');
-	if(get_option(ddcf_form_theme)!='') wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-'.get_option(ddcf_form_theme).'.css');
-	else    wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-clean.css');
+        
+        /* contact form appearance */
+        if(get_option(ddcf_form_theme)!='') wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-'.get_option(ddcf_form_theme).'.css');
+	else    wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-clean.css');          
+        
+        /* manager page only */
         if(has_shortcode( $post->post_content, 'dd_management_page' )&&current_user_can(read))                 
                 wp_enqueue_style('ddcf_manager_layout_style', plugins_url().'/dd-contact-form/css/style-dashboard.css');
 }
@@ -154,6 +164,15 @@ function ddcf_enqueue_back_end_pages () {
 
 function add_ddcf_options_to_menu() {
 	add_options_page( 'Contact Form Options', 'DD Contact Form', 'administrator', '__FILE__', 'ddcf_options_page');
+}
+
+function ddcf_plugin_settings_link($links, $file) {
+        // check to make sure we are on the correct plugin
+        if ($file == 'dd-contact-form/ddContactForm.php') {
+            $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=__FILE__">Settings</a>';
+            array_unshift($links, $settings_link);
+        }
+        return $links;
 }
 
 function ddcf_admin_init() {

@@ -31,83 +31,67 @@
    for different sized browser windows or on handheld devices.
 */
 
-
-#ddcf_contact_form_top_right p {
-    font-size: 1.0em;
-}
-
-/* styling for dropdowns */
-.ddcf_dropdown {        
-        border: 1px solid #ccc;
-        border-radius:5px;
-        font-size: 14px !important;
-        line-height: 0em !important;
-        padding-left: 0.5em;
-        padding-right: 0.25em;        
-}
-
-/* Buttons (Reset and Submit) */
-.ddcf_button { 
-	font:inherit;
-	font-size:inherit;
-	color:inherit;
-	text-transform:capitalize;
-        text-shadow:1px 1px 1px #FFFFFF;
-	font-size:0.96em !important;
-	font-weight:normal;
-	line-height:1.83em !important;
-	box-shadow:2px 2px 3px #aaaaaa;
-	border: 1px solid #ccc !important;
-	border-radius:8px;
-	-moz-border-radius:8px;
-	-webkit-border-radius:8px;
-}
-
-.ddcf_date_picker {
-        font-size: 14px !important;
-        line-height: 0em !important;
-}
-.ddcf_datetime_picker {
-        font-size: 14px !important;
-        line-height: 0em !important;
-}
-
-/* labels for dropdowns and datepickers */
-label {
-        font-size: 14px !important;
-        color: #444;
-        line-height: 1.3em;
-        padding: 0.5em 0em 0em 2.5em;
-}
-
-/* base  styling for all elements (except jQueryUI) */
+/* base styling for most elements (except jQueryUI elements and reCaptcha) }*/
 .ddcf_input_base {
 	font:inherit;
 	font-size:inherit;
 	color:inherit !important;
-	
-	-webkit-box-sizing: inherit !important;  /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: inherit !important;     /* Firefox, other Gecko */
-	box-sizing: inherit !important;          /* Opera/IE 8+ */	
-        
 
-	border: 1px hidden #cccccc !important; 
-	border-radius: 8px  !important; 
-	-webkit-border-radius: 8px !important; 
-	-moz-border-radius: 8px !important;
+	border: 1px hidden #cacaca !important; 
+	border-radius: 0.3em  !important; 
+	-webkit-border-radius: 0.3em !important; 
+	-moz-border-radius: 0.3em !important;
 	
-	box-shadow:1px 1px 1px #aaaaaa inset !important; 
+	box-shadow:1px 1px 1px #ababab inset !important; 
 	
-        background: #cccccc; /* Old browsers */
+        background: #cacaca; /* Old browsers */
         /* IE9 SVG, needs conditional override of 'filter' to 'none' */
         background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2NjY2NjYyIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNmNGY0ZjQiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+) !important; 
-        background: -moz-linear-gradient(top,  #cccccc 0%, #f4f4f4 100%) !important;  /* FF3.6+ */
-        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cccccc), color-stop(100%,#f4f4f4)) !important;  /* Chrome,Safari4+ */
-        background: -webkit-linear-gradient(top,  #cccccc 0%,#f4f4f4 100%) !important;  /* Chrome10+,Safari5.1+ */
-        background: -o-linear-gradient(top,  #cccccc 0%,#f4f4f4 100%) !important;  /* Opera 11.10+ */
-        background: -ms-linear-gradient(top,  #cccccc 0%,#f4f4f4 100%) !important;  /* IE10+ */
-        background: linear-gradient(to bottom,  #cccccc 0%,#f4f4f4 100%) !important;  /* W3C */
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cccccc', endColorstr='#f4f4f4',GradientType=0 ) !important;  /* IE6-8 */
+        background: -moz-linear-gradient(top,  #cacaca 0%, #f4f4f4 100%) !important;  /* FF3.6+ */
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cacaca), color-stop(100%,#f2f2f2)) !important;  /* Chrome,Safari4+ */
+        background: -webkit-linear-gradient(top,  #cacaca 0%,#f2f2f2 100%) !important;  /* Chrome10+,Safari5.1+ */
+        background: -o-linear-gradient(top,  #cacaca 0%,#f2f2f2 100%) !important;  /* Opera 11.10+ */
+        background: -ms-linear-gradient(top,  #cacaca 0%,#f2f2f2 100%) !important;  /* IE10+ */
+        background: linear-gradient(to bottom,  #cacaca 0%,#f2f2f2 100%) !important;  /* W3C */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cacaca', endColorstr='#f2f2f2',GradientType=0 ) !important;  /* IE6-8 */
+}
 
+/* Buttons (Reset and Submit) */
+.ddcf_button {
+	height: 2.1em !important;
+	font:inherit;
+	font-size:inherit;
+	color:inherit;
+	text-transform:capitalize;
+        text-shadow:1px 1px 1px #fefefe;
+	font-size:0.96em !important;
+	font-weight:normal;
+	line-height:1.83em !important;
+	box-shadow:1px 1px 2px #ababab;
+	border: 1px solid #cacaca !important;
+	border-radius:0.3em;
+	-moz-border-radius:0.3em;
+	-webkit-border-radius:0.3em;        
+}
+/* text in top right corner*/
+#ddcf_contact_form_top_right p, label {
+    font-size: 1.2em;
+    color: #444;
+}
 
+.ddcf_table_span_dropdown {
+    width: 11.3em; /* increase to allow for larger font sizes. Chrome always seems to display largest */
+}
+
+/* labels for dropdowns and datepickers */
+label {
+    font-size: 1.2em !important;
+    color: #444;
+}
+
+.ddcf_table_span_date {
+    width: 15.5em;
+}
+.ddcf_table_span_datetime {
+    width: 17.9em;
 }

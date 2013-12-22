@@ -31,57 +31,16 @@
    for different sized browser windows or on handheld devices.
 */
 
-
-#ddcf_contact_form_top_right p {
-    font-size: 1.14em;
-    color: #444;
-}
-
-/* styling for dropdowns */
-.ddcf_dropdown {        
-        border: 1px solid #ccc;
-        border-radius:5px;
-        font-size: 14px !important;
-}
-
-/* Buttons (Reset and Submit) */
-.ddcf_button { 
-	font:inherit;
-	font-size:inherit;
-	color:inherit;
-	text-transform:capitalize;
-        text-shadow:1px 1px 1px #FFFFFF;
-	font-size:0.96em !important;
-	font-weight:normal;
-	line-height:1.83em !important;
-	box-shadow:2px 2px 3px #aaaaaa;
-	border: 1px solid #888888 !important;         
-}
-
-.ddcf_date_picker {
-        font-size: 14px !important;
-}
-.ddcf_datetime_picker {
-        font-size: 14px !important;
-}
-
-/* labels for dropdowns and datepickers */
-label {
-        font-size: 14px !important;
-        color: #444;
-        line-height: 1.3em;
-}
-
-/* base  styling for all elements (except jQueryUI) */
+/* base styling for most elements (except jQueryUI elements and reCaptcha) }*/
 .ddcf_input_base {
 	font:inherit;
 	font-size:inherit;
 	color:inherit;
 
-	border: 1px hidden #cccccc !important; 
-	border-radius: 4px  !important; 
-	-webkit-border-radius: 4px !important; 
-	-moz-border-radius: 4px !important;
+	border: 1px hidden #ccc; 
+	border-radius: 0.5em  !important; 
+	-webkit-border-radius: 0.5em !important; 
+	-moz-border-radius: 0.5em !important;
 	
 	box-shadow:1px 1px 1px #aaaaaa inset;
 	
@@ -95,4 +54,40 @@ label {
 	background: -ms-linear-gradient(top,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* IE10+ */
 	background: linear-gradient(to bottom,  #eaeaea 0%,#fbfbfb 35%,#f8f8f8 100%); /* W3C */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-8 */
+}
+
+/* Buttons (Reset and Submit) */
+.ddcf_button {
+	height: 2.25em !important;
+	font:inherit;
+	font-size:inherit;
+	color:inherit;
+	text-transform:capitalize;
+        text-shadow:1px 1px 1px #FFFFFF;
+	font-size:0.96em !important;
+	font-weight:normal;
+	line-height:1.83em !important;
+	box-shadow:2px 2px 3px #ccc;
+	border: 1px solid #aaa !important;           
+}
+/* text in top right corner*/
+#ddcf_contact_form_top_right p, label {
+    font-size: 1.2em;
+    color: #444;
+}
+
+.ddcf_table_span_dropdown {
+    width: 11.3em; /* increase to allow for larger font sizes. Chrome always seems to display largest */
+}
+
+/* labels for dropdowns and datepickers */
+label {
+    font-size: 1.2em !important;
+}
+
+.ddcf_table_span_date {
+    width: 15.5em;
+}
+.ddcf_table_span_datetime {
+    width: 17.9em;
 }

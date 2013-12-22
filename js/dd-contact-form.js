@@ -415,7 +415,7 @@ function checkForm(andSubmit,makeChanges)
         }
         if (bChecksOut) {
             jQuery('#error_reporting').html('');
-            jQuery("#ddcf_contact_form_contents").fadeOut("slow"); //.css('display', 'none');
+            jQuery("#ddcf_contact_form_contents").fadeOut("slow"); 
             submit();
         }
     }
@@ -428,31 +428,37 @@ function checkForm(andSubmit,makeChanges)
 function adjust_for_size() {
 
     gbacWidth = jQuery("#ddcf_contact_form_wrapper").width();
-    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px'); */
+    var formDensity = parseInt(jQuery('#ddcf_form_density').val());
+    if(formDensity===0) jQuery('#ddcf_contact_form_top_right').css('display','none');
+    /*jQuery("#error_reporting").html('Form width: '+gbacWidth+'px'); */ 
 
-    /* tiny screens - big buttons, squash simple additon captcha */
+    /* tiny screens */
     if(gbacWidth<=300){
-                jQuery('#ddcf_button_area').css('width', '100%');
-                jQuery('.ddcf_button').css('width', '100%').css('margin', '0.5em 0');
                 jQuery('#ddcf_table_span_captcha_add').css('width', 'auto');
                 jQuery('#ddcf_contact_captcha_fb').css('bottom', '-2em').css('right', '-1em');
     } else {
-                jQuery('#ddcf_button_area').css('width', 'auto');
-                jQuery('.ddcf_button').css('width', 'auto').css('margin', '0 0 0.7em 0.6em');
                 jQuery('#ddcf_table_span_captcha_add').css('width', '22em');
                 jQuery('#ddcf_contact_captcha_fb').css('bottom', '0em').css('right', '-0.5em');
     }
 
-    /* small screens - show / hide datepickers, set width of signup checkbox at bottom */
-    if(gbacWidth<=375){
+    /* small screens */
+    if(gbacWidth<375){
+                jQuery('#ddcf_button_area').css('width', '100%');
+                jQuery('.ddcf_button').css('width', '100%').css('margin', '0.5em 0');        
                 jQuery('#ddcf_checkbox_area').css('width', '100%');
                 jQuery('.ddcf_table_span_date').css('display','none');
                 jQuery('.ddcf_table_span_datetime').css('display','none');
+                jQuery('#ddcf_dates_row_division').css('display','none');
+                if(formDensity===2||formDensity===3) jQuery('#ddcf_contact_form_top_right').css('display','none');
     }
     else {
+                jQuery('#ddcf_button_area').css('width', 'auto');
+                jQuery('.ddcf_button').css('width', 'auto').css('margin', '0 0 0.7em 0.6em');        
                 jQuery('#ddcf_checkbox_area').css('width', 'auto');
                 jQuery('.ddcf_table_span_date').css('display','inline-block');
                 jQuery('.ddcf_table_span_datetime').css('display','inline-block');
+                jQuery('#ddcf_dates_row_division').css('display','block');
+                if(formDensity===2||formDensity===3) jQuery('#ddcf_contact_form_top_right').css('display','block');
     }
 
     /* flip between 1 and 2 columns */
@@ -460,16 +466,28 @@ function adjust_for_size() {
     if(gbacWidth<=flip_width) {
 		jQuery('#ddcf_contact_form_top_left').css('width', '100%');
 		jQuery('#ddcf_contact_form_top_right').css('width', '100%').css('float', 'left').css('margin-top', '0em');
-                jQuery('#ddcf_dates_align').css('max-width','22em');
-                jQuery('.ddcf_table_span_date').css('float','left');
-                jQuery('.ddcf_table_span_datetime').css('float','left');
+                jQuery('#ddcf_dates_align').css('width','22em');
+                jQuery('.ddcf_table_span_date').css('float','left').css('margin-left','1.0em');
+                jQuery('.ddcf_table_span_datetime').css('float','left').css('margin-left','1.0em');
     }
-    else {      // width > flip_width
-		jQuery('#ddcf_contact_form_top_left').css('width', '35%');
-		jQuery('#ddcf_contact_form_top_right').css('width', '65%').css('float', 'right').css('margin-top', '0em');
-                jQuery('#ddcf_dates_align').css('max-width','100em');
-                jQuery('.ddcf_table_span_date').css('float','none');
-                jQuery('.ddcf_table_span_datetime').css('float','none');
+    else { // width > flip_width
+                
+                /* set top right and left section width ratio */                
+                var widthLeft = '45%';var widthRight = '55%';
+                if(formDensity===0) { widthLeft = '100%'; widthRight = '0%'; }          /* nothing = 0 */
+                else if(formDensity===1) { widthLeft = '70%'; widthRight = '30%'; }     /* party size = 1 */
+                else if(formDensity===2) { widthLeft = '69%'; widthRight = '31%'; }     /* booking dates = 2 */
+                else if(formDensity===3) { widthLeft = '60%'; widthRight = '40%'; }     /* booking datetimes = 3 */
+                else if(formDensity===4) { widthLeft = '50%'; widthRight = '50%'; }     /* simple additon captcha = 4 */
+                else if(formDensity===5) { widthLeft = '45%'; widthRight = '55%'; }     /* google reCaptcha = 5 */
+                else if(formDensity===6) { widthLeft = '40%'; widthRight = '60%'; }     /* booking dates & party size = 6 */
+                else { widthLeft = '36%'; widthRight = '64%'; }                         /* booking datetimes & party size = 6 */
+                
+		jQuery('#ddcf_contact_form_top_left').css('width', widthLeft);
+		jQuery('#ddcf_contact_form_top_right').css('width', widthRight).css('float', 'right').css('margin-top', '0em');
+                jQuery('#ddcf_dates_align').css('width','auto');
+                jQuery('.ddcf_table_span_date').css('float','none').css('margin-left','0em');
+                jQuery('.ddcf_table_span_datetime').css('float','none').css('margin-left','0em');
     }
 
     /* set top right section height and reposition accordingly */
@@ -601,7 +619,7 @@ jQuery(document).ready(function ($) {
 		jQuery('.ddcf_contact_input_verify').css('display', 'none');
 	}
 
-	// set up captcha etc (js / jQuery via WP / Ajax / php ;-) :-O
+	// set up captcha etc (js / jQuery via WP / Ajax / php )
 	initialise_session();
 
         // adjust screen elements after given time to allow for setting up of captcha (multiple of 500mS)

@@ -52,21 +52,13 @@ function initialise_form($message) {
                 break;
         case 'reCaptcha':
                 if($message=='reCaptcha Error')
-                    $user_feedback = 'The reCaptcha is incorrect. Please try again';
+                        $user_feedback = 'The reCaptcha is incorrect. Please try again';
                 else
-                	$user_feedback = '';
+                	$user_feedback = $message;
                 $return = array(
                         'ddcf_error' => $user_feedback,
                         'ddcf_recaptcha_public_key' => get_option(ddcf_recaptcha_public_key),
                         'ddcf_recaptcha_theme' => get_option(ddcf_recaptcha_theme),
-                        'ddcf_captcha_type' => $captcha_type
-                );
-                wp_send_json($return);
-                die();
-                break;
-        default:
-                $return = array(
-                        'ddcf_error' => 'Default: '+$message,
                         'ddcf_captcha_type' => $captcha_type
                 );
                 wp_send_json($return);
@@ -85,7 +77,7 @@ function set_html_content_type()
 /* 			Start Here			*/
 //////////////////////////////////////////////////////////
 
-	if($_POST['ddcf_session_initialised']=='uninitialised') {
+   	if($_POST['ddcf_session_initialised']=='uninitialised') {
 		$check = check_ajax_referer('ddcf_contact_initialise_action','ddcf_init_nonce',false);
 		if($check) initialise_form('');
 		else die();
@@ -113,8 +105,6 @@ function set_html_content_type()
 			if (!$response->is_valid) {
 				if($_POST["recaptcha_response_field"]) initialise_form('reCaptcha Error');
 				else initialise_form('');
-//				die();
-//				break;
 			} else {
 				$return = array(
 					'ddcf_error' => 'Success!',
@@ -137,7 +127,7 @@ function set_html_content_type()
                         else initialise_form('');
 		}
 	}
-	else initialise_form('nocheck');
+	else initialise_form('');
 
 	// good to here? then verify form inputs
 
@@ -176,7 +166,7 @@ function set_html_content_type()
             else if(get_option(ddcf_dates_compulsory_check)&&get_option(ddcf_end_date_check)) $errors.='The booking end date was not set<br />';    
         }
         
-        /* not compulsory */
+        /* ddcf_num_children not compulsory */
         if(isset($_POST['ddcf_num_children'])&&!empty($_POST["ddcf_num_children"])) $ddcf_num_children = filter_var($_POST['ddcf_num_children'], FILTER_SANITIZE_STRING);
 	else $ddcf_num_children = __('unset');
 	
@@ -231,13 +221,11 @@ function set_html_content_type()
 	if(isset($_POST['ddcf_city'])&&!empty($_POST["ddcf_city"])) $ddcf_city = filter_var($_POST['ddcf_city'], FILTER_SANITIZE_STRING);
 	else $ddcf_city = 'not set';
 
-
-	// providing there were no verification errors
-	// we log the enquiry, send out the emails and
-	// send the success message back to the user
+        // verification errors?
 	if(strlen($errors)>0)
 		initialise_form($errors);
 	else {
+                // log the enquiry, send out the emails
                 if(get_option(ddcf_keep_records_check)) {
 
                     // log contact, contact detail (email address) and enquiry to database
@@ -306,7 +294,7 @@ function set_html_content_type()
 		$headers[] .= 'MIME-Version: 1.0';
 		$headers[] .= 'Content-type: text/html';
 
-		$final_subject = get_bloginfo('name').' : '.$ddcf_contact_subject;
+		$final_subject = get_bloginfo('name').': '.$ddcf_contact_subject;
 
 		$message_heading = '<div style="width:640px"><br />';
 		if(get_option(ddcf_email_header)) $message_heading .= '<img src="'.get_option(ddcf_email_header).'" /><br /><br />';
@@ -315,9 +303,9 @@ function set_html_content_type()
 		if(get_option(ddcf_end_date_check)) $final_message .= 'Booking End: '.$ddcf_departure_date.'<br /><br />';
 		if(get_option(ddcf_extra_dropdown_one_check)) $final_message .= $ddcf_num_adults.' adults<br /><br />';
 		if(get_option(ddcf_extra_dropdown_two_check)) $final_message .= $ddcf_num_children.' children<br /><br />';
-		if(get_option(ddcf_extra_question_one_check)) $final_message .= get_option(ddcf_extra_question_one).' '.$ddcf_question_one.'<br /><br />';
-		if(get_option(ddcf_extra_question_two_check)) $final_message .= get_option(ddcf_extra_question_two).' '.$ddcf_question_two.'<br /><br />';
-		$final_message .= 'Message:<br /><br/>'.$ddcf_contact_message.'<br /><br /><br />';
+		if(get_option(ddcf_extra_question_one_check)) $final_message .= get_option(ddcf_extra_question_one).' '.stripslashes($ddcf_question_one).'<br /><br />';
+		if(get_option(ddcf_extra_question_two_check)) $final_message .= get_option(ddcf_extra_question_two).' '.stripslashes($ddcf_question_two).'<br /><br />';
+		$final_message .= 'Message:<br /><br/>'.stripslashes($ddcf_contact_message).'<br /><br /><br />';
 
 
                 $footer_legals = '<p style="font-size:0.7em;">'.__('The information contained in this email is confidential and may contain proprietary information. It is meant solely for the intended recipient. Access to this email by anyone else is unauthorised. If you are not the intended recipient, any disclosure, copying, distribution or any action taken or omitted in reliance on this, is prohibited and may be unlawful. No liability or responsibility is accepted if information or data is, for whatever reason corrupted or does not reach its intended recipient. The views expressed in this email are, unless otherwise stated, those of the author and not those of the website owners or any of its subsidiaries or its management. The website owner and its subsidiaries reserves the right to monitor, intercept and block emails addressed to its users or take any other action in accordance with its email use policy.');
@@ -366,6 +354,7 @@ function set_html_content_type()
 
 		remove_filter( 'wp_mail_content_type', 'set_html_content_type' ); // reset content-type
 
+                
 		// finally send Ajax message back to user to complete process
 		wp_send_json($return);
 		die();// wordpress may print out a spurious zero without this - can be particularly bad if using json
