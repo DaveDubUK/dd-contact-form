@@ -161,7 +161,7 @@ function checkForm(andSubmit,makeChanges)
     if (szEmailEntry !== gbacContactEmailDefault && szEmailEntry !== '') {
         if (!validateEmail(szEmailEntry)) {
             if (gbacErrorCheckingMethod === 'realtime')
-                jQuery('#ddcf_contact_email_fb').html('<a style="color:red">&#10008;</a>');
+                jQuery('#ddcf_contact_email_fb').html('<p style="color:red;">&#10008;</p>');
             if (andSubmit)
                 errors += 'Email format not recognised<br />';
             bChecksOut = false;
@@ -339,7 +339,7 @@ function checkForm(andSubmit,makeChanges)
             }
             else {
                 if (gbacErrorCheckingMethod === 'realtime')
-                    jQuery('#ddcf_contact_captcha_fb').html('<a style="color:red">&#10008;</a>');
+                    jQuery('#ddcf_contact_captcha_fb').html('<p style="color:red">&#10008;</p>');
                 if (andSubmit)
                     errors += 'The Captcha answer is incorrect<br />';
                 bChecksOut = false;
@@ -435,10 +435,10 @@ function adjust_for_size() {
     /* tiny screens */
     if(gbacWidth<=300){
                 jQuery('#ddcf_table_span_captcha_add').css('width', 'auto');
-                jQuery('#ddcf_contact_captcha_fb').css('bottom', '-2em').css('right', '-1em');
+                jQuery('#ddcf_contact_captcha_fb').css('top', '-2em').css('right', '-1em');
     } else {
                 jQuery('#ddcf_table_span_captcha_add').css('width', '22em');
-                jQuery('#ddcf_contact_captcha_fb').css('bottom', '0em').css('right', '-0.5em');
+                jQuery('#ddcf_contact_captcha_fb').css('top', '2.27em').css('right', '0em');
     }
 
     /* small screens */

@@ -217,6 +217,7 @@ function ddcf_admin_init() {
 	register_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
         register_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
 	register_setting( 'ddcf_settings_group', 'ddcf_keep_records_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_geo_ip_option_check' );
         register_setting( 'ddcf_settings_group', 'ddcf_geoloc_key' );
         register_setting( 'ddcf_settings_group', 'ddcf_rec_updates_option_check' );
 	register_setting( 'ddcf_settings_group', 'ddcf_rec_updates_message_check' );

@@ -50,7 +50,9 @@
         width:100%;
         color: inherit;
         border: 1px solid #ccc;
-        border-radius: 0.4em;
+	border-radius: 0.4em;
+	-moz-border-radius: 0.4em;
+	-webkit-border-radius: 0.4em;        
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */        
@@ -223,12 +225,15 @@ label {
                 position:relative;
                 margin-bottom: 1em;
         }
-            .recaptchatable td img {border-radius: 0px;}
+            .recaptchatable td img {
+                border-radius: 0em;
+                -moz-border-radius: 0em;
+                -webkit-border-radius: 0em;                   
+            }
             
         /* simple addition captcha */
         #ddcf_simple_add_captcha {
                 width:auto;
-                /*margin: 0 0 3em;*/
                 margin: 1.5em 0.0em;
         }
         /* text input for simple addition captcha */
@@ -330,6 +335,9 @@ label {
                 right: 0.55em;
                 top: 0.32em;                
         }
+        .ddcf_contact_input_verify p {
+                text-decoration:none !important;
+        }
         /* individual tweaks */
         #ddcf_contact_recaptcha_fb {
             right: 1em;
@@ -337,7 +345,7 @@ label {
         }
         #ddcf_contact_captcha_fb {
             right: 0em; /* initial value - is controlled by jQuery during operation */
-            top: 1.5em; /* initial value - is controlled by jQuery during operation */         
+            top: 1.0em; /* initial value - is controlled by jQuery during operation */         
         }        
         #ddcf_arrival_date_fb {
             right: -1.5em;

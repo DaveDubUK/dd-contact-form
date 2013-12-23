@@ -285,7 +285,8 @@
                                                                             <option value="overcast" <?php if(get_option(ddcf_jqueryui_theme)=='overcast') echo 'selected';?>>Overcast</option>
                                                                             <option value="pepper-grinder" <?php if(get_option(ddcf_jqueryui_theme)=='pepper-grinder') echo 'selected';?>>Pepper Grinder</option>
                                                                             <option value="redmond" <?php if(get_option(ddcf_jqueryui_theme)=='redmond') echo 'selected';?>>Redmond</option>
-                                                                            <option value="smoothness" <?php if(get_option(ddcf_jqueryui_theme)=='smoothness') echo 'selected';?>>Smoothness</option>
+                                                                            <option value="smoothness" <?php if(get_option(ddcf_jqueryui_theme)=='smoothness'||get_option(ddcf_jqueryui_theme)=='') 
+                                                                                echo 'selected';?>>Smoothness</option>
                                                                             <option value="south-street" <?php if(get_option(ddcf_jqueryui_theme)=='south-street') echo 'selected';?>>South Street</option>
                                                                             <option value="start" <?php if(get_option(ddcf_jqueryui_theme)=='start') echo 'selected';?>>Start</option>
                                                                             <option value="sunny" <?php if(get_option(ddcf_jqueryui_theme)=='sunny') echo 'selected';?>>Sunny</option>

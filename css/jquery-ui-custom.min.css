@@ -1174,4 +1174,6 @@ body .ui-tooltip {
 	opacity: .3;
 	filter: Alpha(Opacity=30);
 	border-radius: 8px;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;   
 }
