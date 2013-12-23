@@ -3,7 +3,7 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
-    Created by David Wooldridge
+    Author: David Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -25,7 +25,7 @@
 // helper functions
 function initialise_form($message) {
 
-        // Which Captcha are we using?
+        // Which Captcha are we using? 
         $captcha_type = get_option(ddcf_captcha_type);
         if(!$captcha_type) $captcha_type = 'Simple Addition';
         switch($captcha_type)
@@ -86,12 +86,16 @@ function set_html_content_type()
 	if(check_ajax_referer('ddcf_contact_submit_action','ddcf_submit_nonce',false)) {
 
 		// Captcha passed?
+                $captcha_type = get_option(ddcf_captcha_type);
+                if(!$captcha_type) $captcha_type = 'Simple Addition';
+                $ddcf_thankyou_message = get_option(ddcf_thankyou_message);
+                if(!$ddcf_thankyou_message) $ddcf_thankyou_message = __('Thank you for your message. A representative will be in touch shortly');
 		switch(get_option(ddcf_captcha_type))
 		{
 		case 'None':
 			$return = array(
 				'ddcf_error' => 'Success!',
-				'ddcf_thankyou_message' => get_option(ddcf_thankyou_message),
+				'ddcf_thankyou_message' => $ddcf_thankyou_message,
                                 'ddcf_captcha_type' => $captcha_type
 			);
 			break;
@@ -108,7 +112,7 @@ function set_html_content_type()
 			} else {
 				$return = array(
 					'ddcf_error' => 'Success!',
-					'ddcf_thankyou_message' => get_option(ddcf_thankyou_message),
+					'ddcf_thankyou_message' => $ddcf_thankyou_message,
                                         'ddcf_captcha_type' => $captcha_type
 				);
 			}
@@ -119,7 +123,7 @@ function set_html_content_type()
 			{
 				$return = array(
 					'ddcf_error' => 'Success!',
-					'ddcf_thankyou_message' => get_option(ddcf_thankyou_message),
+					'ddcf_thankyou_message' => $ddcf_thankyou_message,
                                         'ddcf_captcha_type' => $captcha_type
 				);
 			}
@@ -220,6 +224,8 @@ function set_html_content_type()
 	else $ddcf_ip_address = 'not set';
 	if(isset($_POST['ddcf_city'])&&!empty($_POST["ddcf_city"])) $ddcf_city = filter_var($_POST['ddcf_city'], FILTER_SANITIZE_STRING);
 	else $ddcf_city = 'not set';
+	if(isset($_POST['ddcf_referrer_id'])&&!empty($_POST["ddcf_referrer_id"])) $ddcf_referrer_id = filter_var($_POST['ddcf_referrer_id'], FILTER_SANITIZE_URL);
+	else $ddcf_referrer_id = 'not set';        
 
         // verification errors?
 	if(strlen($errors)>0)
@@ -281,7 +287,8 @@ function set_html_content_type()
                             'city'            => $ddcf_city,
                             'region'          => $ddcf_region,
                             'country'         => $ddcf_country,
-                            'contact_id'      => $ddcf_contact_id
+                            'contact_id'      => $ddcf_contact_id,
+                            'referrer_id'     => $ddcf_referrer_id
                     );
                     if ($wpdb->insert( $table, $data )) $fail = false;
                     else $fail = true;

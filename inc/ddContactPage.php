@@ -2,7 +2,7 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
-    Created by David Wooldridge
+    Author: David Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -505,7 +505,6 @@
                         <input type="hidden" name="ddcf_thankyou_url" id="ddcf_thankyou_url" value="<?php echo get_option('ddcf_thankyou_url');?>" />
                         <input type="hidden" name="ddcf_thankyou_type" id="ddcf_thankyou_type" value="<?php echo get_option('ddcf_thankyou_type');?>" />
                         <input type="hidden" name="ddcf_thankyou_message" id="ddcf_thankyou_message" value="<?php echo get_option('ddcf_thankyou_message');?>" />
-                        <input type="hidden" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="<?php echo get_option('ddcf_error_checking_method');?>" />
                         <input type="hidden" name="ddcf_questions_compulsory_check" id="ddcf_questions_compulsory_check" value="<?php echo get_option('ddcf_questions_compulsory_check');?>" />
                         <input type="hidden" name="ddcf_party_size_compulsory_check" id="ddcf_party_size_compulsory_check" value="<?php echo get_option('ddcf_party_size_compulsory_check');?>" />
                         <input type="hidden" name="ddcf_dates_compulsory_check" id="ddcf_dates_compulsory_check" value="<?php echo get_option('ddcf_dates_compulsory_check');?>" />
@@ -518,20 +517,21 @@
 			<input type="hidden" name="action" id="action" value="the_ajax_hook" /> <!-- this puts the action the_ajax_hook into the serialized form -->
 			<input type="hidden" name="ddcf_session" id="ddcf_session" value="ddcf_contact_session">
 			<input type="hidden" name="ddcf_session_initialised" id="ddcf_session_initialised" value="uninitialised">
-                        <input type="hidden" name="ddcf_dates_category" id="ddcf_dates_category" value="any">
                         <input type="hidden" name="ddcf_form_density" id="ddcf_form_density" value="<?php echo $ddcf_form_density ?>">
-                        
-                        <input type="hidden" name="ddcf_questions_category" id="ddcf_dates_category" value="any">
+                        <input type="hidden" name="ddcf_referrer_id" id="ddcf_referrer_id" value="<?php echo isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'not given' ?>">
+
 			<?php
                             /* create nonces */
-                            echo '<input type="hidden" name="ddcf_init_nonce" id="ddcf_init_nonce" value="'.wp_create_nonce ('ddcf_contact_initialise_action').'" >';	
-                            echo '<input type="hidden" name="ddcf_submit_nonce" id="ddcf_submit_nonce" value="'.wp_create_nonce ('ddcf_contact_submit_action').'" >';
+                            echo '<input type="hidden" name="ddcf_init_nonce" id="ddcf_init_nonce" value="'.wp_create_nonce('ddcf_contact_initialise_action').'" >';	
+                            echo '<input type="hidden" name="ddcf_submit_nonce" id="ddcf_submit_nonce" value="'.wp_create_nonce('ddcf_contact_submit_action').'" >';
                             
                             /* set the error checking method as per options */
-                            if(get_settings(ddcf_error_checking_method)=="realtime")
+                            if(get_settings(ddcf_error_checking_method)=="")
+                                echo  '<input type="hidden" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="realtime">';
+                            else if(get_settings(ddcf_error_checking_method)=="realtime")
                                 echo  '<input type="hidden" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="realtime">';
                             else
-                                echo '<input type="hidden" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="noverify">';
+                                echo '<input type="hidden" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="onsubmit">';
                             
                             /* set any category filters for the additional form element options */
                             $categories = get_the_category();

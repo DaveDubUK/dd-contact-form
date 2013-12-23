@@ -3,7 +3,7 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
-    Created by David Wooldridge
+    Author: David Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -268,6 +268,7 @@ function dd_contact_form_activation()
 		region VARCHAR(32),
 		country VARCHAR(32),
 		contact_id INT,
+                referrer_id TEXT,
 		PRIMARY KEY  (enquiry_id) )';
 	if(!dbDelta($sql)) trigger_error ( "Unable to update database" );
 

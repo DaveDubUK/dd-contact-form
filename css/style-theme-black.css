@@ -1,4 +1,4 @@
-/* 
+/*
     This file is part of Davedub's Contact Form plugin for WordPress
 
     Author: David Wooldridge
@@ -25,8 +25,45 @@
    -------------------------------------------------------
 
    jQueryUI elements (i.e. the datepicker and buttons) can be 
-   modified by changing the jQueryUI theme - see the plugin settings
+   modified by changing the jQueryUI theme - see the setting page
    
-   Some css settings may be dynamically changed on page load 
-   for different sized browser windows or on handheld devices.
+   Some of these settings may be dynamically changed on page load
 */
+
+/* base styling for most elements (except jQueryUI elements and reCaptcha) }*/
+.ddcf_input_base {
+    border: 1px solid #ccc;
+    color: #fefefe;
+    background-color: #1e1e1e;
+    
+}
+
+/* Buttons (Reset and Submit) */
+.ddcf_button {
+	color: #fefefe !important;;
+	font-size: 0.8em;
+	height: 2.63em !important;
+	border: 1px solid #484848;
+	text-shadow:0px 0px 0px #24890d;
+}
+/* text in top right corner*/
+#ddcf_contact_form_top_right p, label {
+    font-size: 1.2em;
+    color: #fefefe;
+}
+
+.ddcf_table_span_dropdown {
+    width: 11.3em; /* increase to allow for larger font sizes. Chrome always seems to display largest */
+}
+
+/* labels for dropdowns and datepickers */
+label {
+    font-size: 1.2em !important;
+}
+
+.ddcf_table_span_date {
+    width: 15.5em;
+}
+.ddcf_table_span_datetime {
+    width: 17.9em;
+}

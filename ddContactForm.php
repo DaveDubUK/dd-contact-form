@@ -9,10 +9,10 @@ Author URI: http://davedub.co.uk
 License: GNU GPL
 */
  
-/*  <a href="options-general.php?page=ddOptionsPage.php">Settings</a>'
+/*  
     This file is part of Davedub's Contact Form plugin for WordPress
 
-    Created by David Wooldridge
+    Author: David Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -31,7 +31,7 @@ License: GNU GPL
     If not, see <http://www.gnu.org/licenses/>.
 */
 
-// include all the extra functions
+// include extra functions
 include 'inc/functions.php';
 
 // add the shortcode support for [dd_contact_form]
@@ -52,8 +52,7 @@ add_action( 'admin_menu', 'add_ddcf_options_to_menu' );
 // call register settings and enqueue scripts / styles function
 add_action( 'admin_init', 'ddcf_admin_init' );
 
-// add a link to the settings page on the plugins list page 
-//add_filter('plugin_action_links_' . __FILE__, 'ddcf_plugin_settings_link' );
+// add a link to the settings page on the installed plugins page 
 add_filter('plugin_action_links', 'ddcf_plugin_settings_link', 10, 2);
 
 // plugin activation, deactivation and uninstall

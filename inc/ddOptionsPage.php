@@ -2,7 +2,7 @@
 /*
     This file is part of Davedub's Contact Form plugin for WordPress
 
-    Created by David Wooldridge
+    Author: David Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -22,7 +22,6 @@
 */
 -->
 
-
 	<!-- stylin -->
 	<?php
 		wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
@@ -35,7 +34,6 @@
 							 plugins_url().'/dd-contact-form/js/dd-contact-form-options.js',
 							 array( 'jquery', 'jquery-ui-core',  'jquery-ui-accordion',  'jquery-ui-tabs') ); ?>
 
-	<!--div class="wrap"-->
 		<?php screen_icon(); ?>
 
 		<h2><?php _e('DD Contact Form Settings', 'ddcf_plugin') ?></h2>
@@ -44,7 +42,8 @@
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                         <input type="hidden" name="cmd" value="_s-xclick">
                         <input type="hidden" name="hosted_button_id" value="M3TPTL2LSP4UG">
-                        <label>Like the contact form? Please donate:</label><input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                        <input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online.">
+                        <label><br />Like the contact form?<br />Please donate towards future development!</label>
                         <img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
                     </form>
                 </div>
@@ -242,6 +241,7 @@
                                                         <select name="ddcf_form_theme" id="ddcf_form_theme">ddcf_jqueryui_theme ddcf_form_theme
                                                                         <option value="clean" <?php if(get_option(ddcf_form_theme)=='clean') echo 'selected';?>>Clean</option>
                                                                         <option value="cream" <?php if(get_option(ddcf_form_theme)=='cream') echo 'selected';?>>Cream</option>
+                                                                        <option value="black" <?php if(get_option(ddcf_form_theme)=='black') echo 'selected';?>>Black</option>
                                                                         <option value="steel" <?php if(get_option(ddcf_form_theme)=='steel') echo 'selected';?>>Steel</option>
                                                                         <option value="custom" <?php if(get_option(ddcf_form_theme)=='custom') echo 'selected';?>>Custom</option>
                                                         </select>
