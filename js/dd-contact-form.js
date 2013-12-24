@@ -113,6 +113,12 @@ function resetForm()
 
 	// clear the user feedback div contents
 	jQuery('#error_reporting').html('');
+        
+        // reset important hidden fields
+        jQuery("#ddcf_init_nonce").val('');
+        jQuery("#ddcf_submit_nonce").val('');
+        jQuery("#ddcf_session_initialised").val('uninitialised');
+        jQuery("#ddcf_form_density").val(0);        
 }
 
 function validateEmail(email)
@@ -381,16 +387,16 @@ function checkForm(andSubmit,makeChanges)
     }
 
     /* Enable send button if form checks out and in realtime checking mode */
-    if (bChecksOut) {
-        if (gbacErrorCheckingMethod === 'realtime') {
-            jQuery('#ddcf_contact_send').button({disabled: false});
-            jQuery('#ddcf_contact_send_fb').html('&nbsp;');
+    if (gbacErrorCheckingMethod === 'realtime') {
+        if(bChecksOut) {
+                jQuery('#ddcf_contact_send').prop('disabled', false).css('opacity', 1.0);
+                jQuery('#ddcf_contact_send_fb').html('&nbsp;');
+
         }
-    }
-    else {
-        if (gbacErrorCheckingMethod === 'realtime') {
-            jQuery('#ddcf_contact_send').button({disabled: true});
-            jQuery('#ddcf_contact_send_fb').html('&nbsp;');
+        else {
+                jQuery('#ddcf_contact_send').prop('disabled', true).css('opacity', 0.4);
+                jQuery('#ddcf_contact_send_fb').html('&nbsp;');
+
         }
     }
 
@@ -444,7 +450,7 @@ function adjust_for_size() {
     /* small screens */
     if(gbacWidth<375){
                 jQuery('#ddcf_button_area').css('width', '100%');
-                jQuery('.ddcf_button').css('width', '100%').css('margin', '0.5em 0');        
+                jQuery('.ddcf_button').css('width', '100%');//.css('margin', '0.5em 0');        
                 jQuery('#ddcf_checkbox_area').css('width', '100%');
                 jQuery('.ddcf_table_span_date').css('display','none');
                 jQuery('.ddcf_table_span_datetime').css('display','none');
@@ -453,7 +459,7 @@ function adjust_for_size() {
     }
     else {
                 jQuery('#ddcf_button_area').css('width', 'auto');
-                jQuery('.ddcf_button').css('width', 'auto').css('margin', '0 0 0.7em 0.6em');        
+                jQuery('.ddcf_button').css('width', 'auto');//.css('margin', '0 0 0.7em 0.6em');        
                 jQuery('#ddcf_checkbox_area').css('width', 'auto');
                 jQuery('.ddcf_table_span_date').css('display','inline-block');
                 jQuery('.ddcf_table_span_datetime').css('display','inline-block');
@@ -489,6 +495,27 @@ function adjust_for_size() {
                 jQuery('.ddcf_table_span_date').css('float','none').css('margin-left','0em');
                 jQuery('.ddcf_table_span_datetime').css('float','none').css('margin-left','0em');
     }
+    
+    
+    /* try to match up the default styling a little */
+    /* only need to do if wpcf7-text class is not available */
+    jQuery('.ddcf_dropdown').css('border' , jQuery(':text').css('border'));
+    jQuery('.ddcf_dropdown').css('border-radius' , jQuery(':text').css('border-radius'));
+    
+    jQuery('.ddcf_dropdown').css('-webkit-transition' , jQuery(':text').css('-webkit-transition'));
+    jQuery('.ddcf_dropdown').css('-moz-transition' , jQuery(':text').css('-moz-transition'));
+    jQuery('.ddcf_dropdown').css('-o-transition' , jQuery(':text').css('-o-transition'));
+    jQuery('.ddcf_dropdown').css('transition' , jQuery(':text').css('transition'));
+    
+    jQuery('.ddcf_dropdown').css('color' , jQuery(':text').css('color'));
+    jQuery('.ddcf_dropdown').css('height' , jQuery(':text').css('height'));
+    jQuery('.ddcf_dropdown').css('background' , jQuery(':text').css('background'));
+    jQuery('.ddcf_dropdown').css('-webkit-appearance' , jQuery(':text').css('-webkit-appearance'));
+
+    
+    /* set the height of the Simple Add Captcha 
+    jQuery('#ddcf_contact_captcha_add').css('height', jQuery(':text').css('height'));*/
+    
 
     /* set top right section height and reposition accordingly */
     var topLeftHeight = jQuery("#ddcf_contact_form_top_left").height();
@@ -576,25 +603,25 @@ jQuery(document).ready(function ($) {
 
 
 	// Reset Button
-	jQuery('#ddcf_contact_reset').button()
+	jQuery('#ddcf_contact_reset')
 	                        .click(function( event ) {
 								event.preventDefault();
 								resetForm();
 							});
 	// Submit Button
         if(gbacErrorCheckingMethod==='onsubmit') {
-            jQuery('#ddcf_contact_send').button({ disabled: false })
-                                                            .click(function( event ) {
-                                                                    event.preventDefault();
-                                                                    checkForm(true,true);
-                                                            });
+            jQuery('#ddcf_contact_send').prop('disabled', false)
+                                .click(function( event ) {
+                                        event.preventDefault();
+                                        checkForm(true,true);
+                                });
         }
         else { // assume 'realtime'
-            jQuery('#ddcf_contact_send').button({ disabled: true })
-                                                            .click(function( event ) {
-                                                                    event.preventDefault();
-                                                                    checkForm(true,true);
-                                                            });
+            jQuery('#ddcf_contact_send').prop('disabled', true)
+                                .click(function( event ) {
+                                        event.preventDefault();
+                                        checkForm(true,true);
+                                });
         }
 
 	/* take control of Enter Key presses - run checkForm9ture) (could just forward them to the next input, like tab :-) */
@@ -611,7 +638,7 @@ jQuery(document).ready(function ($) {
 		resetForm();
 	});
 
-	// show realtime error checking?
+	// show realtime error checking (ticks and crosses)?
 	if(jQuery('#ddcf_error_checking_method').val()==='realtime') {
 		jQuery('.ddcf_contact_input_verify').css('display', 'inline');
 	}

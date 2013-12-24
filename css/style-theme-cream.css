@@ -56,20 +56,6 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eaeaea', endColorstr='#f8f8f8',GradientType=0 ); /* IE6-8 */
 }
 
-/* Buttons (Reset and Submit) */
-.ddcf_button {
-	height: 2.25em !important;
-	font:inherit;
-	font-size:inherit;
-	color:inherit;
-	text-transform:capitalize;
-        text-shadow:1px 1px 1px #FFFFFF;
-	font-size:0.96em !important;
-	font-weight:normal;
-	line-height:1.83em !important;
-	box-shadow:2px 2px 3px #ccc;
-	border: 1px solid #aaa !important;           
-}
 /* text in top right corner*/
 #ddcf_contact_form_top_right p, label {
     font-size: 1.2em;

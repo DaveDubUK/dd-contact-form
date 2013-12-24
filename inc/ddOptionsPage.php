@@ -36,8 +36,8 @@
 
 		<?php screen_icon(); ?>
 
-		<h2><?php _e('DD Contact Form Settings', 'ddcf_plugin') ?></h2>
-
+		<h2><div id="icon-plugins" class="icon32"></div><?php _e('DD Contact Form Settings', 'ddcf_plugin') ?></h2>
+                
                 <div style="margin-left:2.0em">
                     <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
                         <input type="hidden" name="cmd" value="_s-xclick">
@@ -103,7 +103,7 @@
                                                                 <br /><br />
                                                                 <?php _e('Save details of each message sent from the contact form to your Wordpress database.', 'ddcf_plugin') ?>
                                                                 <br /><br />
-                                                                <input type="checkbox" id="ddcf_keep_records_check" name="ddcf_keep_records_check" value="ddcf_keep_records_check" <?php if(get_option('ddcf_keep_records_check')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Save details') ?>
+                                                                <input type="checkbox" id="ddcf_keep_records_check" name="ddcf_keep_records_check" value="ddcf_keep_records_check" <?php if(get_option(ddcf_keep_records_check, 'true')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Save details') ?>
                                                         </p>
                                                         <br />
 							<p>

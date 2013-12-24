@@ -78,12 +78,12 @@ function set_html_content_type()
 //////////////////////////////////////////////////////////
 
    	if($_POST['ddcf_session_initialised']=='uninitialised') {
-		$check = check_ajax_referer('ddcf_contact_initialise_action','ddcf_init_nonce',false);
+		$check = check_ajax_referer('ddcf_contact_initialise_action', 'ddcf_init_nonce', false);
 		if($check) initialise_form('');
 		else die();
 	}
 
-	if(check_ajax_referer('ddcf_contact_submit_action','ddcf_submit_nonce',false)) {
+	if(check_ajax_referer('ddcf_contact_submit_action', 'ddcf_submit_nonce', false)) {
 
 		// Captcha passed?
                 $captcha_type = get_option(ddcf_captcha_type);
@@ -232,7 +232,7 @@ function set_html_content_type()
 		initialise_form($errors);
 	else {
                 // log the enquiry, send out the emails
-                if(get_option(ddcf_keep_records_check)) {
+                if(get_option(ddcf_keep_records_check, 'true')) {
 
                     // log contact, contact detail (email address) and enquiry to database
                     global $wpdb;

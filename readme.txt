@@ -1,7 +1,7 @@
 === DD Contact Form ===
 Contributors: Davedub
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DSNPQBLWGLFMJ
-Tags: contact, form, contact form3
+Tags: contact,form,contact form,davedub
 Requires at least: 3.0.1
 Tested up to: 3.8
 Stable tag: 1.0b
@@ -9,60 +9,37 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 
-Davedub's contact form
-
-	~ easy to use - works staight out of the box, just add shortcode!
-	~ easy to set up - no registration
-	~ fully integrated captcha options
-	~ optional additional information feilds (dates/times, party size and extra questions)
-	~ easy to customise with predefined and custom css options	
-
-Simple to use and highly configurable, DD Contact Form gives your customers a clear, easy to fill in contact form designed to make the message sending process as painless as possible. Also integrated into the plugin is a basic but functional contacts management system. The form look and feel is highly customisable, with the choice of built in css styles or your own. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Other features include: multiple contact form recipient emails, additional questions, date fields and more.
+The DD Contact Form gives your customers a clear, easy to fill in contact form designed to make the message sending process as painless as possible.
 
 == Description ==
 
+[WordPress](http://davedub.co.uk/davedub/wordpress/dd-contact-form/ "Up to date information and help pages for the DD Contact Form")
 
+*DD Contact Form* by *David Wooldridge*
 
-This is the long description.  No limit, and you can use Markdown (as well as in the following sections).
+* easy to use - works straight out of the box
+* simple to set up - no registration
+* fully responsive
+* fully integrated captcha options
+* optional additional information fields (dates/times, party size, extra questions, newsletter signup)
+* easy to customise with predefined and custom css options	
 
-For backwards compatibility, if this section is missing, the full length of the short description will be used, and
-Markdown parsed.
-
-A few notes about the sections above:
-
-*   "Contributors" is a comma separated list of wp.org/wp-plugins.org usernames
-*   "Tags" is a comma separated list of tags that apply to the plugin
-*   "Requires at least" is the lowest version that the plugin will work on
-*   "Tested up to" is the highest version that you've *successfully used to test the plugin*. Note that it might work on
-higher versions... this is just the highest one you've verified.
-*   Stable tag should indicate the Subversion "tag" of the latest stable version, or "trunk," if you use `/trunk/` for
-stable.
-
-    Note that the `readme.txt` of the stable tag is the one that is considered the defining one for the plugin, so
-if the `/trunk/readme.txt` file says that the stable tag is `4.3`, then it is `/tags/4.3/readme.txt` that'll be used
-for displaying information about the plugin.  In this situation, the only thing considered from the trunk `readme.txt`
-is the stable tag pointer.  Thus, if you develop in trunk, you can update the trunk `readme.txt` to reflect changes in
-your in-development version, without having that information incorrectly disclosed about the current stable version
-that lacks those changes -- as long as the trunk's `readme.txt` points to the correct stable tag.
-
-    If no stable tag is provided, it is assumed that trunk is stable, but you should specify "trunk" if that's where
-you put the stable version, in order to eliminate any doubt.
+Simple to use and highly configurable, DD Contact Form gives your customers a clear, easy to fill in contact form designed to make the message sending process as painless as possible. The form is fully responsive, automagically optimising the layout for even the smallest of screens. The form look and feel is highly customisable, with the choice of built in css styles or your own. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Also integrated into the plugin is a basic but functional contacts management system. Other features include: multiple contact form recipient email addresses, additional question options, date fields and more.
 
 == Installation ==
 
-This section describes how to install the plugin and get it working.
-
-e.g.
+This section describes how to install the DD Contact Form plugin and get it working.
 
 1. Upload the `dd-contact-form` folder to the `/wp-content/plugins/` directory
 1. Activate the plugin through the 'Plugins' menu in WordPress
+1. (not essential) You can set the form's settings via the WordPress Settings Menu -> DD Contact Form
 1. Place shortcode [dd_contact_form] on the pages / posts where you want the form to appear
 
 == Frequently Asked Questions ==
 
-= A question that someone might have =
+= How do I get started? =
 
-An answer to that question.
+Install and activate the plugin, the place shortcode [dd_contact_form] on the pages / posts where you want the form to appear
 
 = What about foo bar? =
 

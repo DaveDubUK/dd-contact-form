@@ -43,16 +43,11 @@
 	visibility:hidden;  /* initial value - is controlled by jQuery during operation */
 }
 
+
 /* base styling for most elements (not jQueryUI dat/time pickers) */
 .ddcf_input_base {
-	margin:0em;
-	padding: 0.5em 0.75em 0.5em 0.75em !important;
-        width:100%;
-        color: inherit;
-        border: 1px solid #ccc;
-	border-radius: 0.4em;
-	-moz-border-radius: 0.4em;
-	-webkit-border-radius: 0.4em;        
+	margin-bottom:1.0em !important;
+        width:100% !important;   
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */        
@@ -64,6 +59,7 @@
     margin:0px;
     font-size: 1.14em;
 }
+
 label {
     float: left;
     margin: 0em;
@@ -94,10 +90,10 @@ label {
 #ddcf_contact_form_top_left {
 	width: 35%; /* initial value - is controlled by jQuery during operation */
 }
-        /* Text inputs - name, email, subject */
+        /* Text inputs - name, email, subject 
         .ddcf_contact_text_input {
                 margin-bottom: 1.0em;
-        }
+        }*/
 
         
 /* Section - top right, full width */
@@ -120,6 +116,7 @@ label {
         line-height:0em;
     }
     .ddcf_details_table_row {
+        background: inherit !important;
         border:0em;
         margin:0em;
         padding:0em;
@@ -149,7 +146,7 @@ label {
         vertical-align:middle;
         float:none;
         width: 17.1em;
-        height: 3.7em;
+/*        height: 3.7em;*/
     }
     .ddcf_table_span_datetime {
         display: inline-block;
@@ -165,25 +162,24 @@ label {
         vertical-align:middle;
         float:none; 
         width: 9.5em;
-        height: 2.5em;
-        margin: 0 0 1.0em;
+/*        height: 2.5em;*/
     }    
         /* dates */
-        .ddcf_date_picker {
-                width:7.5em;
-                /*height: 1.3em;*/
-                text-align:center;
-                margin: 0em 0em 0.75em 0em !important;
-                float: right;
-        }
         .ddcf_dates_container {                
                 position:relative;
         }
+            .ddcf_date_picker {
+                    width: 7.5em !important;
+                    /*height: 1.3em;*/
+                    text-align:center;
+    /*                margin: 0em 0em 0.75em 0em !important;*/
+                    float: right;
+            }        
             .ddcf_datetime_picker {
                     width:9.8em;
                     height: 2.5em;
                     text-align:center;
-                    margin: 0em 0em 0.75em !important;
+                    /*margin: 0em 0em 0.75em !important;*/
                     float: right;
             }
             /* timepicker (datepicker addon) */
@@ -199,16 +195,11 @@ label {
             .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }        
 
         .ddcf_dropdown {
-                padding: 0.3em 0.5em 0.35em !important;
-                margin: 0 !important;
-                height: 2.5em;
-                float:right;
-                width:auto;
-                
-                appearance:field;
-                -moz-appearance:field; /* Firefox */
-                -webkit-appearance:field; /* Safari and Chrome */                
-        }        
+                padding-left: 0.4em;
+                padding-right: 0.4em;                
+                float:right;    
+                width: auto !important;          
+}        
         #ddcf_num_children_selector {
                 float:left;
                 text-align:center;
@@ -223,7 +214,6 @@ label {
         #ddcf_contact_form_captcha {
                 width:100%;
                 position:relative;
-                margin-bottom: 1em;
         }
             .recaptchatable td img {
                 border-radius: 0em;
@@ -234,15 +224,13 @@ label {
         /* simple addition captcha */
         #ddcf_simple_add_captcha {
                 width:auto;
-                margin: 1.5em 0.0em;
         }
         /* text input for simple addition captcha */
         #ddcf_contact_captcha_add {
-                width:3em;
+                width: 3.5em !important;
                 text-align: center;
-                margin:0em 0.5em 0.5em 0.5em;
-                padding:0.0em;                
-        }
+                margin-left: 0.5em; 
+}
         /* override reCaptcha script settings */
         #recaptcha_area {
                 float: none;
@@ -255,12 +243,10 @@ label {
 
 /* Section - bottom, full width */
 .ddcf_question {
-        margin: 0.0em 0.0em 1.0em;   
         float: left;
 }        
 #ddcf_contact_message {
         min-height:11.0em;
-        margin: 0.0em 0.0em 1.0em;
 }
 /* buttons and options bar */
 #ddcf_opts_and_buttons {
@@ -275,21 +261,7 @@ label {
             padding:0em;
             float:right;
     }
-    /* Buttons (Reset and Submit) */
-    .ddcf_button {
-            /* sizing / positioning */
-            width:auto;
-            padding:0px 0.4em 0.13em 0.4em;
-            /* height:2.6em !important;*/
-            /* font-size: 1.0em; */
-            vertical-align:middle;
-            appearance:button;
-            -moz-appearance:button; /* Firefox */
-            -webkit-appearance:button; /* Safari and Chrome */
-    }
-    .ui-button .ui-button-text {
-            line-height:0.65em !important;
-    }    
+    
     /* Checkbox Area */
     #ddcf_checkbox_area {
             float: left;
@@ -310,7 +282,7 @@ label {
 	width:100%;
 	text-align:center;
 	color:red;
-	font-size:1.0em;
+	font-size:0.9em;
 }
 /* tooltips */
 .ddcf_tooltip_styling {

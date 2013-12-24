@@ -39,35 +39,17 @@ function showMore() {
 }
 
 function resetButtons() {
-	jQuery('.ddcf_button').button({ disabled: true })
-					.click(function( event ) {
-						event.preventDefault();
-					});
-	jQuery('#ddcf_create_user').button({ disabled: false })
-                                        .click(function () {
-                                        jQuery('#ddcf_create_contact_dialog').dialog("open");
-					});
+	jQuery('.ddcf_button').prop('disabled', true)
+                                .click(function( event ) {
+                                        event.preventDefault();
+                                });
 }
 
 
 jQuery(document).ready(function ($) {
 
-	/* initialise
-	jQuery('#ddcf_contacts_wrapper').css('min-height', '1.0em');*/
-
-
-	resetButtons();
-
-
-	/* Contact type dropdown select response 
-	jQuery('#ddcf_contact_types')
-		.change(function () {
-			resetButtons();
-			jQuery('#ddcf_results_offset').val(0);
-			jQuery('#ddcf_action').val('ddcf_filter_action');
-			search(jQuery('#ddcf_contact_types option:selected').text());
-		});*/
-
+	/* initialise */
+        resetButtons();
 
 	/* previous and next results page links  */
 	jQuery('#ddcf_previous_page').css('color', gGreyOut)

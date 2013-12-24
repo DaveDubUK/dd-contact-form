@@ -275,29 +275,7 @@ function showUser(str) {
 						jQuery("#accordion").accordion({activate: function(event, ui) {
 							if(ui.oldPanel.prevObject.attr('id')) ui.oldPanel.first().html(gLastOpenAccordionHTML);
 							gLastOpenAccordionHTML = ui.newPanel.first().html();
-							if(ui.newHeader.length>0) {
-								doxUser(ui);
-								jQuery('#ddcf_edit_user').button({ disabled: false })
-										  .click(function () {
-										  jQuery('#ddcf_edit_contact_dialog').dialog("open");
-								});
-								jQuery('#ddcf_add_user_details').button({ disabled: false })
-										  .click(function () {
-										  jQuery('#ddcf_add_contact_info_dialog').dialog("open");
-								});
-								jQuery('#ddcf_add_relation').button({ disabled: false })
-										  .click(function () {
-										  jQuery('#ddcf_add_contact_rel_dialog').dialog("open");
-								});
-								jQuery('#ddcf_add_note').button({ disabled: false })
-										  .click(function () {
-										  jQuery('#ddcf_add_contact_note_dialog').dialog("open");
-								});
-							}
-							else {
-								jQuery('.ddcf_button').button({ disabled: true });
-								jQuery('#ddcf_create_user').button({ disabled: false });
-							}
+							if(ui.newHeader.length>0) doxUser(ui);
 						}});
 					}
 				});

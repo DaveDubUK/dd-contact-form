@@ -37,17 +37,6 @@
     background-color: #1e1e1e;  
 }
 
-/* Buttons (Reset and Submit) */
-.ddcf_button {
-	/*color: #fefefe !important;*/
-	font-size: 0.8em;
-        font-weight: 700;
-	height: 2.63em !important;
-	border-radius: 0.3em;
-	-moz-border-radius: 0.3em;
-	-webkit-border-radius: 0.3em;
-}
-
 
 #ddcf_details_table {
     background-color:#1e1e1e;
