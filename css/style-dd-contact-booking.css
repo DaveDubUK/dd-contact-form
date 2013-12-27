@@ -46,7 +46,7 @@
 
 /* base styling for most elements (not jQueryUI dat/time pickers) */
 .ddcf_input_base {
-	margin-bottom:1.0em !important;
+/*	margin-bottom:1.0em !important;*/
         width:100% !important;   
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
@@ -54,17 +54,17 @@
 }
 
 
-/* elements */
+/* elements 
 #ddcf_contact_form_top_right p {
     margin:0px;
     font-size: 1.14em;
-}
+}*/
 
 label {
     float: left;
     margin: 0em;
     padding: 0em;
-    /*line-height: 2.4em !important;*/
+    line-height: 2.2em;
 }
 /* positioning */
 .ddcf_contact_form_slab {
@@ -74,11 +74,7 @@ label {
 	position:relative;
 	text-align:center;
 }
-.ddcf_float_right { 
-	margin:0px;
-	padding:0px;
-	float: right;
-}
+
 .ddcf_float_left { 
 	margin:0px;
 	padding:0px;
@@ -90,10 +86,6 @@ label {
 #ddcf_contact_form_top_left {
 	width: 35%; /* initial value - is controlled by jQuery during operation */
 }
-        /* Text inputs - name, email, subject 
-        .ddcf_contact_text_input {
-                margin-bottom: 1.0em;
-        }*/
 
         
 /* Section - top right, full width */
@@ -103,9 +95,10 @@ label {
 	float: right;  /* initial value - is controlled by jQuery during operation */      
         margin-top: 0em; /* initial value - is controlled by jQuery during operation */
         margin-bottom: 0em; 
+        background-color: #eddb62;
 }
-    /* table of extra form data inputs */
-    #ddcf_details_table {
+    /* table of extra form data inputs 
+    #ddcf_details_rows_container {
         position:absolute;
         top:50%;
         margin:0px;
@@ -114,31 +107,50 @@ label {
         border:0em !important;
         border-bottom:0em !important;
         line-height:0em;
-    }
-    .ddcf_details_table_row {
+    }*/
+    .ddcf_details_row {   
+        position:absolute;
+        top:50%;
+        width:100%;
         background: inherit !important;
         border:0em;
         margin:0em;
         padding:0em;
+        background-color: #f1524b;
+/*        display: inline-flex;*/
     }
-    .ddcf_details_table_row_division {
+    
+    .ddcf_details_row_division {
+        float:none !important;
+        margin:auto !important;               
         text-align: center;
-        vertical-align: top;
+        vertical-align: middle;
         border:0em !important;
         margin:0em;
-        padding:0em !important;
+        padding:0em !important; 
         border:none !important;
         line-height: 0em;
+        background-color: #1bd242;
+        
+        display: inline-block;
     }
-    #ddcf_dates_align {
-        max-width: 100em; /* initial value - controlled during runtime by jQuery */
-    }
-    #ddcf_table_span_captcha_add {
+        .ddcf_half_width {
+            width:50%;
+/*            display: inline-block;*/
+        }
+
+        .ddcf_full_width {
+            width:100%;
+/*            display: inline;*/
+        }
+
+    #ddcf_span_captcha_add {
         display: inline-block;
         position: relative;
         vertical-align:middle;
         float:none;
         width: 22em; /* initial value - controlled during runtime by jQuery */
+        height: 2.4em;        
     }
     .ddcf_table_span_date {
         display: inline-block;
@@ -282,13 +294,7 @@ label {
 	color:red;
 	font-size:0.9em;
 }
-/* tooltips */
-.ddcf_tooltip_styling {
-	background-color:#fefefe !important;
-	color:inherit !important;
-	/*box-shadow: 0px;*/
-}
-/* ticks and crosses stuff */
+/* ticks and crosses containers */
 .ddcf_markable_container {
 	position:relative;
 	width: 100%;
@@ -306,13 +312,20 @@ label {
                 top: 0.32em;                
         }
         .ddcf_contact_input_verify_rel {
-                position:relative;
+/*                position:relative;
                 width:1.2em; 
                 color:green;
                 font-size:1.0em;
                 background-color:inherit;
                 float: right;
-                margin-left: 0.5em;
+                margin-left: 0.5em;*/
+                position:absolute;
+                width:1.2em; 
+                color:green;
+                font-size:1.0em;
+                background-color:inherit;
+                right: -1.7em;
+                top: 1em;
         }        
         .ddcf_contact_input_verify p {
                 text-decoration:none !important;
@@ -322,9 +335,9 @@ label {
             right: 1em;
             top: 1.4em;            
         }
-        #ddcf_contact_captcha_fb {
-            right: -0.5em; /* initial value - is controlled by jQuery during operation */
-            top: 0.2em; /* initial value - is controlled by jQuery during operation */         
+ /*       #ddcf_contact_captcha_fb {
+            /* right: -0.5em; initial value - is controlled by jQuery during operation */
+            /* top: 0.2em;  initial value - is controlled by jQuery during operation */         
         }        
 /*        #ddcf_arrival_date_fb {
             right: -1.5em;

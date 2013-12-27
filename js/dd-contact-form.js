@@ -440,11 +440,11 @@ function adjust_for_size() {
 
     /* tiny screens */
     if(gbacWidth<=300){
-                jQuery('#ddcf_table_span_captcha_add').css('width', 'auto');
-                jQuery('#ddcf_contact_captcha_fb').css('top', '0em').css('right', '-1em');
+                jQuery('#ddcf_span_captcha_add').css('width', 'auto');
+//                jQuery('#ddcf_contact_captcha_fb').css('top', '0em').css('right', '-1em');
     } else {
-                jQuery('#ddcf_table_span_captcha_add').css('width', '22em');
-                jQuery('#ddcf_contact_captcha_fb').css('top', '0.2em').css('right', '-0.5em');
+                jQuery('#ddcf_span_captcha_add').css('width', '22em');
+//                jQuery('#ddcf_contact_captcha_fb').css('top', '0.2em').css('right', '-0.5em');
     }
 
     /* small screens */
@@ -472,7 +472,7 @@ function adjust_for_size() {
     if(gbacWidth<=flip_width) {
 		jQuery('#ddcf_contact_form_top_left').css('width', '100%');
 		jQuery('#ddcf_contact_form_top_right').css('width', '100%').css('float', 'left').css('margin-top', '0em');
-                jQuery('#ddcf_dates_align').css('width','22em');
+//                jQuery('#ddcf_dates_details_row_division').css('width','25em');
                 jQuery('.ddcf_table_span_date').css('float','left').css('margin-left','1.0em');
                 jQuery('.ddcf_table_span_datetime').css('float','left').css('margin-left','1.0em');
                 jQuery('#ddcf_google_recaptcha').css('float', 'none');
@@ -492,7 +492,7 @@ function adjust_for_size() {
                 
 		jQuery('#ddcf_contact_form_top_left').css('width', widthLeft);
 		jQuery('#ddcf_contact_form_top_right').css('width', widthRight).css('float', 'right').css('margin-top', '0em');
-                jQuery('#ddcf_dates_align').css('width','auto');
+//                jQuery('#ddcf_dates_details_row_division').css('width','auto');
                 jQuery('.ddcf_table_span_date').css('float','none').css('margin-left','0em');
                 jQuery('.ddcf_table_span_datetime').css('float','none').css('margin-left','0em');
                 
@@ -506,37 +506,31 @@ function adjust_for_size() {
     var usingDatePicker = jQuery('.ddcf_date_picker').length;
     var usingDateTimePicker = jQuery('.ddcf_datetime_picker').length;
     var usingDropDowns = jQuery('.ddcf_dropdown').length;
+    var usingSimpleAddition = jQuery('#ddcf_simple_add_captcha').length;
     var datePickerWidth = 0;
     var datePickerLabelWidth = 0;
-    var datePickerFBWidth = 0;
+//    var datePickerFBWidth = 0;
     var dropdownWidth = 0;
     var dropdownLabelWidth = 0;
     var dropdownFBWidth = 0;
-    var controlMargin = 16; // 16px between label and control
+    var controlMargin = 10; // 16px between label and control
     
-    /* label and user feedback line height calculation */ 
-    var fontSize = jQuery('#ddcf_contact_name').css('font-size');
-    var lineHeight = Math.floor(parseInt(fontSize.replace('px','')) * 2); 
-    var lineHeightSetting = lineHeight+'px';   
+    if(usingDatePicker||usingDateTimePicker) {          
+        datePickerWidth = jQuery('#ddcf_arrival_date').outerWidth();
+        if(jQuery('#ddcf_departure_date').outerWidth()>datePickerWidth)
+            datePickerWidth = jQuery('#ddcf_departure_date').outerWidth();
+        datePickerLabelWidth = jQuery('label[for="ddcf_arrival_date"]').outerWidth();
+        if(jQuery('label[for="ddcf_departure_date"]').width()>datePickerLabelWidth)
+            datePickerLabelWidth = jQuery('label[for="ddcf_departure_date"]').outerWidth();     
+        if(usingDatePicker)     jQuery('.ddcf_table_span_date').width( datePickerWidth + datePickerLabelWidth  + controlMargin );
+        if(usingDateTimePicker) jQuery('.ddcf_table_span_datetime').width( datePickerWidth + datePickerLabelWidth  + controlMargin );
+        /* align the row */
+        var datesOffset = jQuery("#ddcf_upper_details_row").height()/2;
+        jQuery("#ddcf_upper_details_row").css('margin-top', -datesOffset);
+    }
+    
     
     if(usingDropDowns){
-        /* copy the text input's styling to the dropdown selects, as often the theme doesn't style them explicitly */
-        jQuery('.ddcf_dropdown').css('border-style' , jQuery('#ddcf_contact_name').css('border-top-style'));
-        jQuery('.ddcf_dropdown').css('border-color' , jQuery('#ddcf_contact_name').css('border-top-color'));
-        jQuery('.ddcf_dropdown').css('border-width' , jQuery('#ddcf_contact_message').css('border-top-width'));
-        jQuery('.ddcf_dropdown').css('border-radius' , jQuery('#ddcf_contact_name').css('border-top-left-radius'));    
-        jQuery('.ddcf_dropdown').css('-webkit-transition' , jQuery('#ddcf_contact_name').css('-webkit-transition'));
-        jQuery('.ddcf_dropdown').css('-moz-transition' , jQuery('#ddcf_contact_name').css('-moz-transition'));
-        jQuery('.ddcf_dropdown').css('-o-transition' , jQuery('#ddcf_contact_name').css('-o-transition'));
-        jQuery('.ddcf_dropdown').css('transition' , jQuery('#ddcf_contact_name').css('transition'));
-        jQuery('.ddcf_dropdown').css('color' , jQuery('#ddcf_contact_name').css('color'));
-        jQuery('.ddcf_dropdown').css('height' , jQuery('#ddcf_contact_name').outerHeight());
-        jQuery('.ddcf_dropdown').css('background-color' , jQuery('#ddcf_contact_name').css('background-color'));
-        jQuery('.ddcf_dropdown').css('-webkit-appearance' , jQuery('#ddcf_contact_name').css('-webkit-appearance'));
-        jQuery('.ddcf_dropdown').css('-moz-appearance' , jQuery('#ddcf_contact_name').css('-moz-appearance'));
-        jQuery('.ddcf_dropdown').css('appearance' , jQuery('#ddcf_contact_name').css('appearance'));
-        jQuery('.ddcf_dropdown').css('-o-appearance' , jQuery('#ddcf_contact_name').css('-o-appearance'));
-        
         /* Adjust our control spans to fit label, control and user feedback (ticks / crosses) */     
         dropdownWidth = jQuery('#ddcf_num_adults').outerWidth();
         if(jQuery('#ddcf_num_children').outerWidth()>dropdownWidth)
@@ -544,64 +538,39 @@ function adjust_for_size() {
         dropdownLabelWidth = jQuery('label[for="ddcf_num_adults"]').outerWidth();
         if(jQuery('label[for="ddcf_num_children"]').width()>dropdownLabelWidth)
             dropdownLabelWidth = jQuery('label[for="ddcf_num_children"]').outerWidth();
-        dropdownFBWidth = jQuery('#ddcf_num_adults_fb').outerWidth();
-        if(jQuery('#ddcf_num_children_fb').outerWidth()>dropdownFBWidth)
-            dropdownFBWidth = jQuery('#ddcf_num_children_fb').outerWidth();
-        jQuery('.ddcf_table_span_dropdown').css('width', dropdownLabelWidth + dropdownWidth + dropdownFBWidth + controlMargin );
-        
-        jQuery('label[for="ddcf_num_adults"]').css('line-height', lineHeightSetting);
-        jQuery('#ddcf_num_adults_fb').css('line-height', lineHeightSetting);
-        
-        jQuery('label[for="ddcf_num_children"]').css('line-height', lineHeightSetting);
-        jQuery('#ddcf_num_children_fb').css('line-height', lineHeightSetting);          
-    }
-
-    if(usingDatePicker||usingDateTimePicker) {
-        /*jQuery('label[for="ddcf_arrival_date"]').css('line-height', lineHeightSetting);        
-        jQuery('label[for="ddcf_departure_date"]').css('line-height', lineHeightSetting);             
-         Adjust our control spans to fit labal and control */
-        datePickerWidth = jQuery('#ddcf_arrival_date').outerWidth();
-        if(jQuery('#ddcf_departure_date').outerWidth()>datePickerWidth)
-            datePickerWidth = jQuery('#ddcf_departure_date').outerWidth();
-        datePickerLabelWidth = jQuery('label[for="ddcf_arrival_date"]').outerWidth();
-        if(jQuery('label[for="ddcf_departure_date"]').width()>datePickerLabelWidth)
-            datePickerLabelWidth = jQuery('label[for="ddcf_departure_date"]').outerWidth();
-        datePickerFBWidth = jQuery('#ddcf_arrival_date_fb').outerWidth();
-        if(jQuery('#ddcf_departure_date_fb').width()>datePickerFBWidth)
-            datePickerFBWidth = jQuery('#ddcf_departure_date_fb').outerWidth();        
-        if(usingDatePicker) jQuery('.ddcf_table_span_date').css('width', datePickerWidth + datePickerLabelWidth + datePickerFBWidth + controlMargin );
-        if(usingDateTimePicker) jQuery('.ddcf_table_span_datetime').css('width', datePickerWidth + datePickerLabelWidth + datePickerFBWidth + controlMargin );
-        
-        jQuery('label[for="ddcf_arrival_date"]').css('line-height', lineHeightSetting);
-        jQuery('#ddcf_arrival_date_fb').css('line-height', lineHeightSetting);
-        jQuery('label[for="ddcf_departure_date"]').css('line-height', lineHeightSetting);
-        jQuery('#ddcf_departure_date_fb').css('line-height', lineHeightSetting);             
+        jQuery('.ddcf_table_span_dropdown').css('width', dropdownLabelWidth + dropdownWidth + controlMargin );
+        jQuery('#ddcf_dropdowns_align').css('width', dropdownLabelWidth + dropdownWidth + controlMargin )
+                                       .css('margin', 'auto')
+                                       .css('float','none');
+        /* align the row */
+        var datesOffset = jQuery("#ddcf_upper_details_row").height()/2;
+        jQuery("#ddcf_upper_details_row").css('margin-top', -datesOffset);        
     }
     
-    
+    if(usingSimpleAddition) {
+        var saCaptchaOffset = jQuery("#ddcf_lower_details_row").height()/2;
+        jQuery("#ddcf_lower_details_row").css('margin-top', -saCaptchaOffset);   
+    }
     
     if((usingDatePicker||usingDateTimePicker)&&usingDropDowns) {
         /* need to distribute the available space between the two */
         var reqdDateSpace = datePickerWidth + datePickerLabelWidth + controlMargin;
         var reqdDropdownSpace = dropdownLabelWidth + dropdownWidth + controlMargin;
         var ratio = reqdDateSpace / (reqdDateSpace + reqdDropdownSpace);
-        var availableSpace = jQuery('#ddcf_details_table').outerWidth();
+        var availableSpace = jQuery('#ddcf_contact_form_top_right').outerWidth();
         var datesWidth = ratio * availableSpace;
         var dropdownsWidth = (1 - ratio) * availableSpace;
-        jQuery('#ddcf_dates_row_division').width(datesWidth);
-        jQuery('#ddcf_dropdowns_row_division').width(dropdownsWidth);
-    }
-    
+        jQuery('#ddcf_dates_details_row_division').width(datesWidth-1);
+        jQuery('#ddcf_party_size_details_row_division').width(dropdownsWidth-1);
+    }    
     
     /* finally set top right section height and reposition accordingly */
     var topLeftHeight = jQuery("#ddcf_contact_form_top_left").height();
-    var tableHeight = jQuery("#ddcf_details_table").height();
-    if(tableHeight>topLeftHeight)
-        jQuery("#ddcf_contact_form_top_right").css('height', tableHeight);
-    else
-        jQuery("#ddcf_contact_form_top_right").css('height', topLeftHeight);
-    var tableTop = tableHeight/2.0;
-    jQuery("#ddcf_details_table").css('margin-top', -tableTop);    
+    var topRightHeight = jQuery("#ddcf_contact_form_top_right").height();
+    if(topRightHeight<topLeftHeight) topRightHeight = topLeftHeight;
+    jQuery("#ddcf_contact_form_top_right").css('height', topRightHeight);
+    var topRightOffset = topRightHeight/2.0;
+    jQuery("#ddcf_details_rows_container").css('margin-top', -topRightOffset);    
 }
 
 
