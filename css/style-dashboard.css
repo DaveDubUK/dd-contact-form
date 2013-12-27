@@ -37,30 +37,6 @@
 	text-shadow:1px 1px 1px #FFFFFF;
 }
 
-/* Buttons */
-.ddcf_button {
-	text-shadow:1px 1px 1px #FFFFFF;
-	font-size:0.96em;
-	font-weight:normal;
-	box-shadow:2px 2px 3px #aaaaaa;
-	border: 1px solid #888888 !important;
-	border-radius: 8px;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	background-image:none;
-	height: 30px;
-	line-height:26px;
-	padding-left:0.2em;
-	padding-right:0.2em;
-	padding-bottom:2.2em;
-	text-shadow:0 0 0 #FBFBFB;
-	box-shadow:2px 2px 3px #2B2B2B;
-	outline-color:-moz-use-text-color;
-	outline-style: none;
-	outline-width:medium;
-	vertical-align:middle;
-}
-
 /* decoration */
 .ddcf_pimped {
 	margin:0px;

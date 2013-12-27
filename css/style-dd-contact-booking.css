@@ -64,7 +64,7 @@ label {
     float: left;
     margin: 0em;
     padding: 0em;
-    line-height: 2.4em !important;
+    /*line-height: 2.4em !important;*/
 }
 /* positioning */
 .ddcf_contact_form_slab {
@@ -154,7 +154,7 @@ label {
         vertical-align:middle;
         float:none;
         width: 17.1em;
-        height: 3.7em;
+        /*height: 3.7em;*/
     } 
     .ddcf_table_span_dropdown {
         display: inline-block;
@@ -164,25 +164,24 @@ label {
         width: 9.5em;
 /*        height: 2.5em;*/
     }    
-        /* dates */
+        /* dates 
         .ddcf_dates_container {                
                 position:relative;
-        }
+        }*/
             .ddcf_date_picker {
                     width: 7.5em !important;
-                    /*height: 1.3em;*/
                     text-align:center;
-    /*                margin: 0em 0em 0.75em 0em !important;*/
                     float: right;
             }        
             .ddcf_datetime_picker {
-                    width:9.8em;
-                    height: 2.5em;
+                    width:9.8em !important;
                     text-align:center;
-                    /*margin: 0em 0em 0.75em !important;*/
                     float: right;
             }
             /* timepicker (datepicker addon) */
+            
+            .ui-widget { font-size: 1em; }
+            
             .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
             .ui-timepicker-div dl { text-align: left; }
             .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
@@ -195,8 +194,7 @@ label {
             .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }        
 
         .ddcf_dropdown {
-                padding-left: 0.4em;
-                padding-right: 0.4em;                
+                padding: 0.2em;  /* adjust here to line up text inside dropdown selects */              
                 float:right;    
                 width: auto !important;          
 }        
@@ -227,7 +225,7 @@ label {
         }
         /* text input for simple addition captcha */
         #ddcf_contact_captcha_add {
-                width: 3.5em !important;
+                width: 2em !important;
                 text-align: center;
                 margin-left: 0.5em; 
 }
@@ -271,7 +269,7 @@ label {
             padding:0px;            
     }
         /* Checkbox input */
-        #ddcf_newsletter_signup { width:auto; }
+        #ddcf_newsletter_signup { width:auto !important; }
     
     
 /* User feedback */
@@ -307,6 +305,15 @@ label {
                 right: 0.55em;
                 top: 0.32em;                
         }
+        .ddcf_contact_input_verify_rel {
+                position:relative;
+                width:1.2em; 
+                color:green;
+                font-size:1.0em;
+                background-color:inherit;
+                float: right;
+                margin-left: 0.5em;
+        }        
         .ddcf_contact_input_verify p {
                 text-decoration:none !important;
         }
@@ -316,10 +323,10 @@ label {
             top: 1.4em;            
         }
         #ddcf_contact_captcha_fb {
-            right: 0em; /* initial value - is controlled by jQuery during operation */
-            top: 1.0em; /* initial value - is controlled by jQuery during operation */         
+            right: -0.5em; /* initial value - is controlled by jQuery during operation */
+            top: 0.2em; /* initial value - is controlled by jQuery during operation */         
         }        
-        #ddcf_arrival_date_fb {
+/*        #ddcf_arrival_date_fb {
             right: -1.5em;
             top: 1.3em;
         }
@@ -334,4 +341,7 @@ label {
 	#ddcf_num_children_fb {
             right: -1.7em;
             top: 1.25em;
-	}
+	}*/
+        
+/* media query - fixed dropdown select bug in FF        
+@media screen and (-webkit-min-device-pixel-ratio:0) { .ddcf_dropdown {padding-top:0.5em;}}*/  
