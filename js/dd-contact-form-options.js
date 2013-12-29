@@ -46,17 +46,21 @@ function selectExtraQuestionFilter(isSelected) {
 }
 
 function selectRequestStartDate(isSelected) {
-	if(isSelected) jQuery('#ddcf_start_date_time_check').css("background-color","#ffffff")
-										 .css("opacity","1");
-	else jQuery('#ddcf_start_date_time_check').css("background-color","#ececec")
-										 .css("opacity","0.35");
+	if(isSelected||jQuery('#ddcf_end_date_check').is(":checked")) {
+            jQuery('#ddcf_start_date_time_check').css("background-color","#ffffff").css("opacity","1");
+        }
+	else {
+            jQuery('#ddcf_start_date_time_check').css("background-color","#ececec") .css("opacity","0.35");
+        }
 }
 
 function selectRequestEndDate(isSelected) {
-	if(isSelected) jQuery('#ddcf_end_date_time_check').css("background-color","#ffffff")
-										 .css("opacity","1");
-	else jQuery('#ddcf_end_date_time_check').css("background-color","#ececec")
-										 .css("opacity","0.35");
+	if(isSelected||jQuery('#ddcf_start_date_check').is(":checked")) {
+            jQuery('#ddcf_start_date_time_check').css("background-color","#ffffff").css("opacity","1");
+        }
+	else {
+            jQuery('#ddcf_start_date_time_check').css("background-color","#ececec") .css("opacity","0.35");
+        }
 }
 
 function selectRequestPartySizeFilter(isSelected) {

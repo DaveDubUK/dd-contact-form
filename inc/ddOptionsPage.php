@@ -195,7 +195,7 @@
                                                             <?php
                                                                 _e('Once the user has sucessfully sent their message, you can either send them to a new page or display a thank you messsage on the current page:', 'ddcf_plugin');
                                                                 $thankyouType = (get_option(ddcf_thankyou_type)=='') ? 'ddcf_thankyou_message' : get_option(ddcf_thankyou_type);
-                                                                $thankyouMessage = (get_option(ddcf_thankyou_message)=='') ? _('Thank you for your enquiry. A representative will be in touch shortly.') : get_option(ddcf_thankyou_message);
+                                                                $thankyouMessage = (get_option(ddcf_thankyou_message)=='') ? _('<br /><br />Thank you for your enquiry.<br /><br />A representative will be in touch shortly.<br /><br />') : get_option(ddcf_thankyou_message);
                                                                 $thankyouURL = (get_option(ddcf_thankyou_url)=='') ? '/' : get_option(ddcf_thankyou_url);
                                                             ?>
                                                             <br /><br />
@@ -204,7 +204,7 @@
                                                             <input type="radio" name="ddcf_thankyou_type" id="ddcf_thankyou_type" value="ddcf_thankyou_message" <?php if($thankyouType=='ddcf_thankyou_message') echo ' checked';?>>
                                                           <?php _e('Display thank you message:', 'ddcf_plugin') ?>
                                                             <br />
-                                                            <textarea class="ddcf_textarea_input" name="ddcf_thankyou_message" id="ddcf_thankyou_message" value="<?php echo $thankyouMessage; ?>" ><?php echo $thankyouMessage; ?></textarea>
+                                                            <textarea class="ddcf_textarea_input" name="ddcf_thankyou_message" id="ddcf_thankyou_message" value=""><?php echo $thankyouMessage; ?></textarea>
                                                             <br /><br />
 
 
@@ -315,15 +315,15 @@
 									<?php _e('<strong>Booking Start Date / Time</strong><br /><br />', 'ddcf_plugin'); ?>
 									<input type="checkbox" id="ddcf_start_date_check" name="ddcf_start_date_check" value="ddcf_start_date_check" <?php if(get_option('ddcf_start_date_check')) echo ' checked '; ?>>&nbsp;<?php _e('Request booking start date', 'ddcf_plugin'); ?>
 									<br /><br />
-									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="ddcf_start_date_time_check" name="ddcf_start_date_time_check" value="ddcf_start_date_time_check" <?php if(get_option('ddcf_start_date_time_check')) echo ' checked '; ?>>&nbsp;<?php _e('Request booking start time', 'ddcf_plugin'); ?>
+									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="ddcf_start_date_time_check" name="ddcf_start_date_time_check" value="ddcf_start_date_time_check" <?php if(get_option('ddcf_start_date_time_check')) echo ' checked '; ?>>&nbsp;<?php _e('Request booking times?', 'ddcf_plugin'); ?>
 									<br /><br />
 								</div>
 								<div style="width:50%; float:left;">
 									<?php _e('<strong>Booking End Date / Time</strong><br /><br />', 'ddcf_plugin'); ?>
 									<input type="checkbox" id="ddcf_end_date_check" name="ddcf_end_date_check" value="ddcf_end_date_check" <?php if(get_option('ddcf_end_date_check')) echo ' checked '; ?>>&nbsp;<?php _e('Request booking end date', 'ddcf_plugin'); ?>
-									<br /><br />
+									<!--br /><br />
 									&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="ddcf_end_date_time_check" name="ddcf_end_date_time_check" value="ddcf_end_date_time_check" <?php if(get_option('ddcf_end_date_time_check')) echo ' checked '; ?>>&nbsp;<?php _e('Request booking end time', 'ddcf_plugin'); ?>
-									<br /><br />
+									<br /><br /-->
 								</div>
 							</div>
                                                         <br /><br />

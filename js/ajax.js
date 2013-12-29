@@ -54,11 +54,9 @@ function initialise_session(){
 	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
 				function(php_message){
-                                        jQuery(this).css("display", "none");
-                                        /*jQuery('#screen').css("display", "none");*/
-                                        jQuery("#error_reporting").html(php_message.ddcf_error);
+                                        jQuery(this).css("display", "none");                                
+                                        jQuery("#ddcf_error_reporting").html(php_message.ddcf_error); 
                                         jQuery("#ddcf_session_initialised").val("true");
-                                        jQuery("#ddcf_contact_form_contents").css('visibility','visible');
                                         do_captcha(php_message);
     				});
 }
@@ -68,7 +66,8 @@ function submit(){
 				,
 				function(php_message){
 
-					jQuery("#error_reporting").html('');
+					jQuery("#ddcf_error_reporting").html('');
+                                        jQuery("#ddcf_throbber").css("display", "none");
                                         jQuery("#ddcf_contact_form_contents").fadeIn( "slow");
 
 					if(php_message.ddcf_error==='Success!') {
@@ -86,12 +85,11 @@ function submit(){
                                                             php_message.ddcf_thankyou_message = _('Thank you. A representative will be in touch shortly.');
 
                                                     // hide the form and replace with ddcf_thankyou_message
-                                                    success_report = "<div style='width:100%;text-align:center;min-height:150px;font-size:1.1em;'>\n\
-                                                                        \n\<P>&nbsp;&nbsp;&nbsp;&nbsp;"
-                                                                        +php_message.ddcf_thankyou_message
-                                                                    +"</div>";
+                                                    success_report = "<div style='width:100%;text-align:center;min-height:150px;font-size:1.1em;padding:4em 0 8em;'>"
+                                                                     +php_message.ddcf_thankyou_message
+                                                                     +"</div>";
                                                     jQuery("#ddcf_session_initialised").val("uninitialised");
-                                                    jQuery("#ddcf_contact_form").html(success_report);
+                                                    jQuery("#ddcf_contact_form_contents").html(success_report);
                                                 }
 					} else {
 						// have another go then...
@@ -99,7 +97,7 @@ function submit(){
                                                 jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');
                                                 jQuery("#recaptcha_response_field").val('');
                                                 jQuery('#recaptcha_response_field_fb').html('&nbsp;');
-                                                jQuery("#error_reporting").html(php_message.ddcf_error);
+                                                jQuery("#ddcf_error_reporting").html(php_message.ddcf_error);
 						do_captcha(php_message);
 					}
 				});
@@ -146,7 +144,7 @@ function accordionise(jsonData) {
 
 function doxUser(ui) {
 	var finalOutput = jQuery('.ui-accordion-content-active').html();
-	jQuery('.ui-accordion-content-active').html('<div class="ddcf_image_container"><img class="ddcf_img" /></div>');
+	jQuery('.ui-accordion-content-active').html('<div id="ddcf_image_container" name="ddcf_image_container"><img class="ddcf_img" /></div>');
 	jQuery('#accordion').accordion( "refresh" );
 	jQuery("#ddcf_action").val('ddcf_dox_user');
 	jQuery("#ddcf_action_arg").val(ui.newHeader.text());
@@ -231,7 +229,7 @@ function showPrevious(show) {
 
 
 function showUser(str) {
-	jQuery('#ddcf_contact_information').html('<div class="ddcf_image_container"></div>');
+	jQuery('#ddcf_contact_information').html('<div id="ddcf_image_container" name="ddcf_image_container"></div>');
 	jQuery("#ddcf_action_arg").val(str);
 	jQuery('#ddcf_page_info').html('querying database...');
 	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
