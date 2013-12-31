@@ -26,6 +26,8 @@ The DD Contact Form gives your customers a clear, easy to fill in contact form d
 
 Simple to use and highly configurable, DD Contact Form gives your customers a clear, easy to fill in contact form designed to make the message sending process as painless as possible. The form is fully responsive, automagically optimising the layout for even the smallest of screens. The form look and feel is highly customisable, with the choice of built in css styles or your own. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Also integrated into the plugin is a basic but functional contacts management system. Other features include: multiple contact form recipient email addresses, additional question options, date fields and more.
 
+<br /><br />To use a custom made jQuery UI theme, name your rolled theme jquery-ui-custom.min.css and put it in the css folder in the Contacts and Bookings plugin folder.<br />To use the online theme roller to roll your own theme, see here:<br /><a href="http://jqueryui.com/themeroller/" target="_blank">http://jqueryui.com/themeroller/</a>.
+
 == Installation ==
 
 This section describes how to install the DD Contact Form plugin and get it working.

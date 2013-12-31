@@ -41,27 +41,26 @@ add_action( 'wp_ajax_nopriv_the_ajax_hook', 'receive_jquery_ajax_call' ); // nee
 // Ajax call receiving function
 function receive_jquery_ajax_call(){
 
-	session_start();
+    session_start();
 
-	// check requested session type
-	if($_POST['ddcf_session']=='ddcf_manager_session') {
-		include 'ddManagerSession.php';
-		die();
-	} // end of ddcf_manager_session
-	else if($_POST['ddcf_session']=='ddcf_contact_session') {
-		// Contact form
-		include 'ddContactSession.php';
-		die();
-	} // end if ddcf_contact_session
-	else {
-		// unexpected request
-		$return = array(
-			'ddcf_manager_nonce'=> wp_create_nonce('ddcf_manager_nonce'),
-			'ddcf_contact_information' => 'unknown session type'
-		);
-		wp_send_json($return);
-		die();
-	}
+    // check requested session type
+    if($_POST['ddcf_session']=='ddcf_manager_session') {
+        include 'ddManagerSession.php';
+        die();
+    } // end of ddcf_manager_session
+    else if($_POST['ddcf_session']=='ddcf_contact_session') {
+        // Contact form
+        include 'ddContactSession.php';
+        die();
+    } // end if ddcf_contact_session
+    else {
+        // unexpected request
+        $return = array(
+                'ddcf_error' => 'Unexpected value'
+        );
+        wp_send_json($return);
+        die();
+    }
 }
 
 // contact form shortcode
@@ -74,7 +73,7 @@ function ddcf_contact_form() {
 // management page shortcode
 function ddcf_management_page() {
 	ob_start();// fix formatting
-	include 'ddManagementPage.php';
+	include 'ddManagerPage.php';
 	return ob_get_clean();
 }
 
@@ -85,17 +84,18 @@ function ddcf_options_page() {
 
 // enqueue and localise scripts
 function ddcf_enqueue_front_end_pages () {
-	wp_enqueue_script( 'my-ajax-handle', plugins_url().'/dd-contact-form/js/ajax.js', array( 'jquery' ) );
-	wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+        /* ajax */
+	wp_enqueue_script( 'ddcf_ajax_handle', plugins_url().'/dd-contact-form/js/dd-contact-form-ajax.js', array( 'jquery' ) );
+	wp_localize_script( 'ddcf_ajax_handle','ddcf_ajax_script',array('ajaxurl' => admin_url( 'admin-ajax.php')));
         
-        //if (get_option(ddcf_start_date_time_check) || get_option(ddcf_end_date_time_check)) {
+        /* todo: enqueue conditionally */
         wp_enqueue_script( 'ddcf_datetimepicker_script',
                          plugins_url().'/dd-contact-form/js/jquery-ui-timepicker-addon.js',
                          array( 'jquery',
                                 'jquery-ui-core',
                                 'jquery-ui-datepicker')
                         );
-        //}        
+     
         if (get_option(ddcf_captcha_type)=="reCaptcha") {
             wp_enqueue_script( 'ddcf_google_recaptcha',
                          'http://www.google.com/recaptcha/api/js/recaptcha_ajax.js');
@@ -112,9 +112,9 @@ function ddcf_enqueue_front_end_pages () {
                                 'jquery-ui-datepicker',
                                 'jquery-ui-button' )
                         );
-        if(has_shortcode( $post->post_content, 'dd_management_page' )&&current_user_can(read))                 
+        if(has_shortcode( $post->post_content, 'dd_manager_page' )&&current_user_can(read))                 
             wp_enqueue_script( 'ddcf_dashboard_script',
-                                plugins_url().'/dd-contact-form/js/dd-contact-booking-dashboard.js',
+                                plugins_url().'/dd-contact-form/js/dd-contact-form-manager.js',
                                 array(  'jquery',
                                         'jquery-ui-core',
                                         'jquery-ui-accordion',
@@ -122,44 +122,46 @@ function ddcf_enqueue_front_end_pages () {
                                         'jquery-ui-button' )
                             );                            
 
+        
         /* enqueue css styles */
         
-        /* normalise */
-	wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
-	
         /* jQuery UI */
-        if((get_option(ddcf_jqueryui_theme)!="none")&&
-           (get_option(ddcf_jqueryui_theme)!="custom")&&
-           (get_option(ddcf_jqueryui_theme)!="")) 
-		wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.get_option(ddcf_jqueryui_theme).'/jquery-ui.css');
-	else if (get_option(ddcf_jqueryui_theme)=="custom") 
-		wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-custom.min.css');
-	else    wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css');
+        if(!has_shortcode( $post->post_content, 'dd_manager_page' )) {
+            if((get_option(ddcf_jqueryui_theme)!="none")&&
+               (get_option(ddcf_jqueryui_theme)!="custom")&&
+               (get_option(ddcf_jqueryui_theme)!="")) 
+                    wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/'.get_option(ddcf_jqueryui_theme).'/jquery-ui.css');
+            else if (get_option(ddcf_jqueryui_theme)=="custom") 
+                    wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-custom.min.css');
+            else    wp_enqueue_style('ddcf_jqueryui_theme_style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css');
+        }
       
-        /* contact form base */
+        /* contact form */
         if(has_shortcode( $post->post_content, 'dd_contact_form' ))
-                wp_enqueue_style('ddcf_layout_style', plugins_url().'/dd-contact-form/css/style-dd-contact-booking.css');
+                wp_enqueue_style('ddcf_layout_style', plugins_url().'/dd-contact-form/css/style-dd-contact-page.css');
         
-        /* contact form appearance */
-        if(get_option(ddcf_form_theme)!='') wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-'.get_option(ddcf_form_theme).'.css');
-	else    wp_enqueue_style('ddcf_colorisation_style', plugins_url().'/dd-contact-form/css/style-theme-clean.css');          
-        
-        /* manager page only */
-        if(has_shortcode( $post->post_content, 'dd_management_page' )&&current_user_can(read))                 
-                wp_enqueue_style('ddcf_manager_layout_style', plugins_url().'/dd-contact-form/css/style-dashboard.css');
+        /* manager page */
+        if(has_shortcode( $post->post_content, 'dd_manager_page' )&&current_user_can(read)) {
+                /* jQuery UI */
+                wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-wp-similar.min.css');                  
+                wp_enqueue_style('ddcf_manager_layout_style', plugins_url().'/dd-contact-form/css/style-dd-manager-page.css');
+        }
 }
 
 function ddcf_enqueue_back_end_pages () {
-	wp_enqueue_script( 'my-ajax-handle', plugins_url().'/dd-contact-form/js/ajax.js', array( 'jquery' ) );
-	wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
-        wp_enqueue_script( 'ddcf_dashboard_script',
-                            plugins_url().'/dd-contact-form/js/dd-contact-booking-dashboard.js',
-                            array(  'jquery',
-                                    'jquery-ui-core',
-                                    'jquery-ui-accordion',
-                                    'jquery-ui-dialog',
-                                    'jquery-ui-button' )
-			);        
+	/* ajax */
+        wp_enqueue_script( 'ddcf_ajax_handle', plugins_url().'/dd-contact-form/js/dd-contact-form-ajax.js', array( 'jquery' ) );
+	wp_localize_script( 'ddcf_ajax_handle', 'ddcf_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+        
+        /* options page js */
+        wp_enqueue_script( 'ddcf_options_page_script', plugins_url().'/dd-contact-form/js/dd-contact-form-options.js',
+                                                array( 'jquery', 'jquery-ui-core',  'jquery-ui-accordion',  'jquery-ui-tabs') );
+        
+        //wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
+        wp_enqueue_style('ddcf_options_page_style', plugins_url().'/dd-contact-form/css/style-dd-options-page.css');
+        
+        /* jQuery UI */
+        wp_enqueue_style('ddcf_jqueryui_theme_style', plugins_url().'/dd-contact-form/css/jquery-ui-wp-similar.min.css');       
 }
 
 function add_ddcf_options_to_menu() {
@@ -169,19 +171,15 @@ function add_ddcf_options_to_menu() {
 function ddcf_plugin_settings_link($links, $file) {
         // check to make sure we are on the correct plugin
         if ($file == 'dd-contact-form/ddContactForm.php') {
-            $settings_link = '<a href="' . get_bloginfo('wpurl') . '/wp-admin/admin.php?page=__FILE__">Settings</a>';
+            $settings_link = '<a href="options-general.php?page=__FILE__">Settings</a>';
             array_unshift($links, $settings_link);
         }
         return $links;
 }
 
 function ddcf_admin_init() {
-
-	// enqueue and localise script for ajax query handling
-	wp_enqueue_script( 'my-ajax-handle', plugins_url().'/dd-contact-form/js/ajax.js', array( 'jquery' ) );
-	wp_localize_script( 'my-ajax-handle', 'the_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
-
-	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_one' );
+        /* just register settings */
+        register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_one' );
 	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_two' );
 	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_three');
 	register_setting( 'ddcf_settings_group', 'ddcf_enquiries_email_four' );
@@ -190,10 +188,9 @@ function ddcf_admin_init() {
 	register_setting( 'ddcf_settings_group', 'ddcf_email_confirmation_text' );
 	register_setting( 'ddcf_settings_group', 'ddcf_booking_start' );
 	register_setting( 'ddcf_settings_group', 'ddcf_booking_end' );
-	register_setting( 'ddcf_settings_group', 'ddcf_start_date_check' );
-	register_setting( 'ddcf_settings_group', 'ddcf_start_date_time_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_start_date_check' );	
         register_setting( 'ddcf_settings_group', 'ddcf_end_date_check' );
-	register_setting( 'ddcf_settings_group', 'ddcf_end_date_time_check' );
+	register_setting( 'ddcf_settings_group', 'ddcf_start_date_time_check' );
         register_setting( 'ddcf_settings_group', 'ddcf_dates_compulsory_check' );
         register_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter_check' );
         register_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter' );
@@ -213,9 +210,8 @@ function ddcf_admin_init() {
 	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_category_filter_check' );
 	register_setting( 'ddcf_settings_group', 'ddcf_extra_question_category_filter' );
         register_setting( 'ddcf_settings_group', 'ddcf_questions_compulsory_check' );
-	register_setting( 'ddcf_settings_group', 'ddcf_form_theme' );
+	register_setting( 'ddcf_settings_group', 'ddcf_btn_style' );
 	register_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
-        register_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
 	register_setting( 'ddcf_settings_group', 'ddcf_keep_records_check' );
         register_setting( 'ddcf_settings_group', 'ddcf_geo_ip_option_check' );
         register_setting( 'ddcf_settings_group', 'ddcf_geoloc_key' );
@@ -227,7 +223,6 @@ function ddcf_admin_init() {
         register_setting( 'ddcf_settings_group', 'ddcf_thankyou_url' );
 	register_setting( 'ddcf_settings_group', 'ddcf_tooltips_check' );
 	register_setting( 'ddcf_settings_group', 'ddcf_email_header' );
-	//register_setting( 'ddcf_settings_group', 'ddcf_bookable_category' );
         register_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
 }
 
@@ -364,7 +359,6 @@ function dd_contact_form_uninstall()
 	unregister_setting( 'ddcf_settings_group', 'ddcf_start_date_check' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_start_date_time_check' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_end_date_check' );
-	unregister_setting( 'ddcf_settings_group', 'ddcf_end_date_time_check' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_dates_compulsory_check' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter_check' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_dates_category_filter' );
@@ -384,7 +378,7 @@ function dd_contact_form_uninstall()
         unregister_setting( 'ddcf_settings_group', 'ddcf_recaptcha_public_key' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_recaptcha_private_key' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_recaptcha_theme' );
-	unregister_setting( 'ddcf_settings_group', 'ddcf_form_theme' );
+	unregister_setting( 'ddcf_settings_group', 'ddcf_btn_style' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_jqueryui_theme' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_keep_records_check' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_geo_ip_option_check' );
@@ -397,7 +391,6 @@ function dd_contact_form_uninstall()
         unregister_setting( 'ddcf_settings_group', 'ddcf_thankyou_url' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_tooltips_check' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_email_header' );
-	//unregister_setting( 'ddcf_settings_group', 'ddcf_bookable_category' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
         delete_option('ddcf_settings_group','0.1');
         

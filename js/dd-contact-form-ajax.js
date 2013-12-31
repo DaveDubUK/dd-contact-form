@@ -51,10 +51,10 @@ function do_captcha(php_message) {
 
 
 function initialise_session(){
-	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
 				function(php_message){
-                                        jQuery(this).css("display", "none");                                
+//                                        jQuery(this).css("display", "none");                                
                                         jQuery("#ddcf_error_reporting").html(php_message.ddcf_error); 
                                         jQuery("#ddcf_session_initialised").val("true");
                                         do_captcha(php_message);
@@ -62,7 +62,7 @@ function initialise_session(){
 }
 
 function submit(){
-	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
 				function(php_message){
 
@@ -85,8 +85,8 @@ function submit(){
                                                             php_message.ddcf_thankyou_message = _('Thank you. A representative will be in touch shortly.');
 
                                                     // hide the form and replace with ddcf_thankyou_message
-                                                    success_report = "<div style='width:100%;text-align:center;min-height:150px;font-size:1.1em;padding:4em 0 8em;'>"
-                                                                     +php_message.ddcf_thankyou_message
+                                                    success_report = "<div id='ddcf_thankyou_message_container' name='ddcf_thankyou_message_container'>"
+                                                                     +  php_message.ddcf_thankyou_message
                                                                      +"</div>";
                                                     jQuery("#ddcf_session_initialised").val("uninitialised");
                                                     jQuery("#ddcf_contact_form_contents").html(success_report);
@@ -148,7 +148,7 @@ function doxUser(ui) {
 	jQuery('#accordion').accordion( "refresh" );
 	jQuery("#ddcf_action").val('ddcf_dox_user');
 	jQuery("#ddcf_action_arg").val(ui.newHeader.text());
-	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
 				,
 				function(php_message){
 					jQuery("#ddcf_action").val('');
@@ -232,7 +232,7 @@ function showUser(str) {
 	jQuery('#ddcf_contact_information').html('<div id="ddcf_image_container" name="ddcf_image_container"></div>');
 	jQuery("#ddcf_action_arg").val(str);
 	jQuery('#ddcf_page_info').html('querying database...');
-	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
 				,
 				function(php_message){
                                     
@@ -281,7 +281,7 @@ function showUser(str) {
 
 
 function initialise_manager_session(){
-	jQuery.post(the_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()
 				,
 				function(php_message){
 					jQuery('#ddcf_action').val('ddcf_filter_action');

@@ -40,24 +40,7 @@
 
 #ddcf_contact_form_wrapper input {
         margin-top:0.0em;
-}
-
-/* throbber display */
-#ddcf_throbber {
-        display:block;  /* initial value - is controlled by jQuery during operation */
-	width:100%;
-        height:15em;
-	margin:auto;
-	text-align:center;
-	position:relative;
-        background-image:url('images/dd-contact-form-ajax-loader.gif');
-        background-repeat:no-repeat;
-        background-position:center center;
-}
-
-/* the div that floats so nicely vertically */
-#ddcf_middle_bit {
-        /*margin-bottom: 1em;*/
+        /*background: inherit;*/
 }
 
 #ddcf_contact_form {
@@ -84,13 +67,27 @@ label {
     padding: 0em;
     line-height: 2.2em;
 }
-/* positioning */
-.ddcf_contact_form_slab {
-/*	width:100%;
-	margin-left:auto;
-	margin-right:auto;
+
+/* throbber display */
+#ddcf_throbber {
+        display:block;  /* initial value - is controlled by jQuery during operation */
+	width:100%;
+        height:1.1em;   /* assume ddcf_thankyou_message_container is only 1.1em high */
+        padding:0;
+	margin:2.4em auto 8em !important;
+	text-align:center;
 	position:relative;
-	text-align:center;*/
+        background-image:url('images/dd-contact-form-ajax-loader.gif');
+        background-repeat:no-repeat;
+        background-position:center center;
+}
+
+/* final message to user div */
+#ddcf_thankyou_message_container {
+        width:100%;
+        text-align:center;
+        font-size:1.1em;
+        padding:1.2em 0 17em;
 }
 
 .ddcf_float_left { 
@@ -112,14 +109,14 @@ label {
 /* Section - top right, full width */
 #ddcf_contact_form_top_right {
         position:relative;
-	width: 60%;  /* initial value - is controlled by jQuery during operation */
+	width: 65%;  /* initial value - is controlled by jQuery during operation */
 	float: right;  /* initial value - is controlled by jQuery during operation */      
         margin-top: 0em; 
         margin-bottom: 0em; 
         /*background-color: #eddb62;*/
 }
 #ddcf_dates_details_row_division {
-        max-width:28em;
+        max-width:25em; /* prevent un-stacking in a wide container */
 }
     .ddcf_details_row {   
         position:relative;
@@ -154,6 +151,12 @@ label {
         .ddcf_full_width {
             width:100%;
 /*            display: inline;*/
+            max-width: 100% !important;
+        }
+        
+        #ddcf_dates_container {
+            float: none;
+            margin: auto;            
         }
 
     #ddcf_span_captcha_add {
@@ -196,7 +199,7 @@ label {
                 position:relative;
         }*/
             .ddcf_date_picker {
-                    width: 7.5em !important;
+                    width: 7.0em !important;
                     text-align:center;
                     float: right;
             }        
@@ -261,12 +264,21 @@ label {
                     position: absolute;
                     top: 45%;                    
             }
-        /* override reCaptcha script settings */
+        /* reCaptcha */
+        #ddcf_google_recaptcha {
+            max-width: 32.3em;
+        }
         #recaptcha_area {
                 float: none;
                 margin-left: auto;
                 margin-right: auto;                
-        }        
+        }
+            #recaptcha_response_field {
+                padding-left:0.5em !important;
+                font-size: inherit !important;
+                color:inherit;
+                background-color:white;
+            }
 /* end of top right section */
 
 
@@ -301,22 +313,21 @@ label {
         #ddcf_newsletter_signup { width:auto !important; }
     
     
-/* User feedback */
-/* initially invisible div used for relaying error messages back to user. Unused in nearly all modes, but provided for fallbacks */
-#ddcf_error_reporting {
-	margin:0 0 1em 0; 
-	padding:0;
-	width:100%;
-	text-align:center;
-	color:red;
-	font-size:0.9em;
-}
-/* ticks and crosses containers */
-.ddcf_markable_container {
-	position:relative;
-	width: 100%;
-/*        margin:0 0 1.0em !important;        */
-}
+    /* User feedback */
+    /* initially invisible div used for relaying error messages back to user. Unused in nearly all modes, but provided for fallbacks */
+    #ddcf_error_reporting {
+            margin:0 0 1em 0; 
+            padding:0;
+            width:100%;
+            text-align:center;
+            color:red;
+            font-size:0.9em;
+    }
+    /* ticks and crosses containers */
+    .ddcf_markable_container {
+            position:relative;
+            width: 100%;
+    }
 
         /* wee divs for the ticks and crosses */
         .ddcf_contact_input_verify {
@@ -326,27 +337,21 @@ label {
                 font-size:1.0em;
                 background-color:inherit;
                 right: 0.55em;
-                top: 45%;                
+                top: 45%;    /* adjust here to align ticks and crosses */            
         }    
         .ddcf_contact_input_verify p {
                 text-decoration:none !important;
         }
         /* individual tweaks */
-        #ddcf_contact_message_fb {
-            top: 15px;           
-        }
-       #ddcf_contact_captcha_fb {
+        /*#ddcf_contact_message_fb {
+            top: 11%;           
+        }*/
+        #ddcf_contact_captcha_fb {
             right: 1em; /* start value only - is changed by jQuery at runtime */  
         }        
-        #ddcf_arrival_date_fb {
-            right: -1.6em;
-        }
-	#ddcf_departure_date_fb {
+        #ddcf_arrival_date_fb, #ddcf_departure_date_fb {
             right: -1.6em;
 	}
-	#ddcf_num_adults_fb {
-            right: -1.5em;
-	}
-	#ddcf_num_children_fb {
+	#ddcf_num_adults_fb, #ddcf_num_children_fb {
             right: -1.5em;
 	}

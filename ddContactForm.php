@@ -2,9 +2,9 @@
 /*
 Plugin Name: DD Contact Form
 Plugin URI: http://davedub.co.uk/davedub/wordpress/dd-contact-form/
-Description: Simple to use and highly configurable, DD Contact Form gives your customers a clear, easy to fill in contact form designed to make the message sending process as painless as possible. The form is fully responsive, automagically optimising the layout for even the smallest of screens. The form look and feel is highly customisable, with the choice of built in css styles or your own. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Also integrated into the plugin is a basic but functional contacts management system. Other features include: multiple contact form recipient email addresses, additional question options, date fields and more.
+Description: Simple to use and highly configurable, DD Contact Form gives your website users a clear, easy to fill in contact form designed to make the message sending process as painless as possible. The form is fully responsive, automagically optimising the layout for even the smallest of screens. The form look and feel is driven by the current theme, so it fit's in instantly on most occasions. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Also integrated into the plugin is a basic but functional contacts management system. Other features include: multiple contact form recipient email addresses, additional question options, date fields and more.
 Version: 1.0b
-Author: David Wooldridge
+Author: Dave Wooldridge
 Author URI: http://davedub.co.uk
 License: GNU GPL
 */
@@ -12,7 +12,7 @@ License: GNU GPL
 /*  
     This file is part of Davedub's Contact Form plugin for WordPress
 
-    Author: David Wooldridge
+    Author: Dave Wooldridge
 
     Davedub's Contact Form plugin is free software: you can
     redistribute it and / or modify it under the terms of the
@@ -37,8 +37,8 @@ License: GNU GPL
     // add the shortcode support for [dd_contact_form]
     add_shortcode('dd_contact_form', 'ddcf_contact_form');
 
-    // add the shortcode support for [dd_management_page]   
-    add_shortcode('dd_management_page', 'ddcf_management_page');
+    // add the shortcode support for [dd_manager_page]   
+    add_shortcode('dd_manager_page', 'ddcf_management_page');
 
     // load up scripts and styles for front end
     add_action('wp_enqueue_scripts', 'ddcf_enqueue_front_end_pages');
@@ -46,11 +46,11 @@ License: GNU GPL
     // load up scripts and styles for back end
     add_action('admin_enqueue_scripts', 'ddcf_enqueue_back_end_pages');
 
-    // hook into the 'admin_menu' action to add settings page to WP Settings menu
-    add_action( 'admin_menu', 'add_ddcf_options_to_menu' );
-
     // call register settings and enqueue scripts / styles function
     add_action( 'admin_init', 'ddcf_admin_init' );
+
+    // hook into the 'admin_menu' action to add settings page to WP Settings menu
+    add_action( 'admin_menu', 'add_ddcf_options_to_menu' );
 
     // add a link to the settings page on the installed plugins page 
     add_filter('plugin_action_links', 'ddcf_plugin_settings_link', 10, 2);

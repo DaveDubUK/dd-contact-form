@@ -27,21 +27,20 @@
 	echo '<div id="ddcf_contacts_wrapper">
 			<h2>Contacts</h2>
 			<form id="ddcf_management_form">
-				<div class="ddcf_tools_panel">
-					<div class="ddcf-tool-l">
-						<div>
-							<!--label for="ddcf_search_form">Search: </label-->
-							<input  class="ddcf_pimped" type="text" name="ddcf_search_form" id="ddcf_search_form" value="'.__("Search by name").'">
-						</div>
-					</div><!-- end .ddcf-tool-l -->
-                                </div><!-- .ddcf_tools_panel -->
-                
-                                <div class="ddcf_navigation_bar">
-					<div class="ddcf-tool-l" id="ddcf_previous_page" name="ddcf_previous_page">'.__("<<  Previous  - - -", "ddcf_plugin").'</div>
-					<div class="ddcf-tool-l" id="ddcf_page_info" name="ddcf_page_info"></div>
-					<div class="ddcf-tool-l" id="ddcf_next_page" name="ddcf_next_page">'.__("- - -  Next  >>", "ddcf_plugin").'</div>
+				<div id="ddcf_tools_panel" name="ddcf_tools_panel">
+                                    <div class="ddcf_tool_left">
+                                        <div>
+                                            <input type="text" name="ddcf_search_form" id="ddcf_search_form" value="'.__("Search by name").'">
+                                        </div>
+                                    </div><!-- end .ddcf_tool_left -->
+                                </div><!-- #ddcf_tools_panel -->
+                                
+                                <div id="ddcf_page_info" name="ddcf_page_info"></div>
+                                
+                                <div id="ddcf_navigation_bar" name="ddcf_navigation_bar">
+                                    <div class="ddcf_tool_left" id="ddcf_previous_page" name="ddcf_previous_page">'.__("<<  Previous  - - -", "ddcf_plugin").'</div>
+                                    <div class="ddcf_tool_left" id="ddcf_next_page" name="ddcf_next_page">'.__("- - -  Next  >>", "ddcf_plugin").'</div>
 				</div>
-
 
 				<input type="hidden" name="ddcf_session" id="ddcf_session" value="ddcf_manager_session" />
 				<input type="hidden" name="ddcf_action" id="ddcf_action" value="initialise" />
@@ -51,9 +50,7 @@
 				<input type="hidden" name="action" value="the_ajax_hook" /> <!-- this puts the action the_ajax_hook into the serialized form -->';                                
                                 echo '<input type="hidden" name="ddcf_mgr_nonce" id="ddcf_mgr_nonce" value="'.wp_create_nonce('ddcf_mgr_action').'" >
 			</form>
-                        
                         <div id="ddcf_contact_information" name="ddcf_contact_information"></div>
-                        <div id="ddcf_create_contact_dialog" name="ddcf_create_contact_dialog"></div>
 		</div><!-- end #ddcf_contacts_wrapper -->';
     } else _e('You do not have permission to view this content.');
 ?>

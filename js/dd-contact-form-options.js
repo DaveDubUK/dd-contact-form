@@ -122,18 +122,18 @@ jQuery(document).ready(function ($) {
 
 	// enable accordions
 	jQuery( "#accordion1" ).accordion({
-                                            collapsible: true,
-                                            active : 2
-                                            });
+                                    collapsible: true,
+                                    active : false
+                                    });
 	jQuery( "#accordion2" ).accordion({
-                                            collapsible: true,
-                                            active : 1
-                                            });
+                                    collapsible: true,
+                                    active : false
+                                    });
                                                                 
 	jQuery( "#accordion3" ).accordion({
-                                            collapsible: true,
-                                            active : 2
-                                            });                                                                
+                                    collapsible: true,
+                                    active : false
+                                    });                                                                
 	// enable tabs
 	jQuery( "#tabs" ).tabs();
 

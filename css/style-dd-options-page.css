@@ -22,12 +22,36 @@
 
 /* Options page stuff */
 
+h4 {
+    font-weight: bold !important;
+    font-size:1.05em !important;
+}
+
 /* content div for options page */
 .ddcf-options-div {
 	margin:1.5em 1.0em 2.0em 1.5em;
 	max-width:600px;
 	min-height:800px;
 }
+
+.ui-accordion .ui-accordion-content {
+        overflow:hidden !important; /* workaround for what seems to be this issue: http://bugs.jqueryui.com/ticket/4208 */
+        padding-bottom:auto;
+}
+
+.ui-tabs .ui-tabs-panel {
+        background-color: #333 !important;
+}
+
+.ui-accordion-header{ /*}.ui-widget-content  .ui-state-default, .ui-widget-header .ui-state-default {*/
+        border: 1px solid #333 !important;
+        background: #333 !important;
+        font-size:1.07em !important;
+        font-weight: bold !important;
+}
+
+
+.ui-widget select {margin-left:0.5em}
 
 /* text inputs on options form */
 .ddcf_text_input {  
@@ -36,7 +60,7 @@
 }
 .ddcf_textarea_input {
 	margin-top:1.0em;
-	width:500px;
-	height:4.0em;
+	width:97%;
+	height:5.0em;
 	vertical-align:bottom;
 }
