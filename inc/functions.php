@@ -44,7 +44,7 @@ function receive_jquery_ajax_call(){
     session_start();
 
     // check requested session type
-    if($_POST['ddcf_session']=='ddcf_manager_session') {
+if($_POST['ddcf_session']=='ddcf_manager_session') {
         include 'ddManagerSession.php';
         die();
     } // end of ddcf_manager_session
@@ -52,7 +52,24 @@ function receive_jquery_ajax_call(){
         // Contact form
         include 'ddContactSession.php';
         die();
-    } // end if ddcf_contact_session
+    } 
+    else if($_POST['ddcf_session']=='ddcf_options_session') {
+        // options ajax - updating css
+        if(check_ajax_referer('ddcf_update_css_action', 'ddcf_update_css_nonce', false)) {
+            
+            // put passed 
+            
+            $return = array(
+                    'ddcf_error' => 'options session ok :-)',
+            );
+        } else {
+            $return = array(
+                    'ddcf_error' => '406'
+            );  
+        }
+        wp_send_json($return);
+        die();
+    }
     else {
         // unexpected request
         $return = array(
@@ -64,7 +81,7 @@ function receive_jquery_ajax_call(){
 }
 
 // contact form shortcode
-function ddcf_contact_form() {
+function ddcf_contact_form($attributes) {
 	ob_start();// fix formatting
 	include 'ddContactPage.php';
 	return ob_get_clean();
@@ -149,9 +166,9 @@ function ddcf_enqueue_front_end_pages () {
 }
 
 function ddcf_enqueue_back_end_pages () {
-	/* ajax */
-        wp_enqueue_script( 'ddcf_ajax_handle', plugins_url().'/dd-contact-form/js/dd-contact-form-ajax.js', array( 'jquery' ) );
-	wp_localize_script( 'ddcf_ajax_handle', 'ddcf_ajax_script', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+        /* ajax */
+	wp_enqueue_script( 'ddcf_ajax_handle', plugins_url().'/dd-contact-form/js/dd-contact-form-ajax.js', array( 'jquery' ) );
+	wp_localize_script( 'ddcf_ajax_handle','ddcf_ajax_script',array('ajaxurl' => admin_url( 'admin-ajax.php')));
         
         /* options page js */
         wp_enqueue_script( 'ddcf_options_page_script', plugins_url().'/dd-contact-form/js/dd-contact-form-options.js',
@@ -224,6 +241,7 @@ function ddcf_admin_init() {
 	register_setting( 'ddcf_settings_group', 'ddcf_tooltips_check' );
 	register_setting( 'ddcf_settings_group', 'ddcf_email_header' );
         register_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
+        register_setting( 'ddcf_settings_group', 'ddcf_custom_css_check' );
 }
 
 
@@ -337,6 +355,15 @@ function dd_contact_form_activation()
 											   (null, 'all contact types')";
 		if(!dbDelta($sql)) trigger_error ("Unable to update database");
 	}
+        
+        
+	// stores the custom css specified on the settings page
+	$table_name = $wpdb->prefix . "custom_css";
+	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
+		custom_css_index INTEGER(10) NOT NULL AUTO_INCREMENT,
+		custom_css_text TEXT,
+		PRIMARY KEY (custom_css_index) )';
+	if(!dbDelta($sql)) trigger_error ("Unable to update database");        
 }
 
 //function dd_contact_form_deactivation()
@@ -392,6 +419,7 @@ function dd_contact_form_uninstall()
 	unregister_setting( 'ddcf_settings_group', 'ddcf_tooltips_check' );
 	unregister_setting( 'ddcf_settings_group', 'ddcf_email_header' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_custom_css_check' );
         delete_option('ddcf_settings_group','0.1');
         
         // remove all tables from DB
@@ -408,5 +436,7 @@ function dd_contact_form_uninstall()
 	$wpdb->query($sql);
 	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'contact_roles;';
 	$wpdb->query($sql);
+	$sql = "DROP TABLE IF EXISTS " . $wpdb->prefix .'custom_css;';
+	$wpdb->query($sql);        
 }
 ?>

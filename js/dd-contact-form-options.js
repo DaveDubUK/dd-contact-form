@@ -136,6 +136,13 @@ jQuery(document).ready(function ($) {
                                     });                                                                
 	// enable tabs
 	jQuery( "#tabs" ).tabs();
+        
+	// update css button
+	jQuery('#ddcf_update_css_btn')
+                .click(function( event ) {
+                            event.preventDefault();
+                            submitCSS();
+                    });    
 
 	// keep extra question text boxes updated
 	selectTextareaOne(jQuery('#ddcf_extra_question_one_check').is(":checked")); // first run through

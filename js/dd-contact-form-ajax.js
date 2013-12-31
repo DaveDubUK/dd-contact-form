@@ -61,6 +61,8 @@ function initialise_session(){
     				});
 }
 
+
+
 function submit(){
 	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
@@ -101,10 +103,18 @@ function submit(){
 						do_captcha(php_message);
 					}
 				});
-}
+                        }
 
 
 
+/* Options page stuff */
+function submitCSS(){
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_options_form").serializeArray()
+				,
+				function(php_message){
+                                    
+                                        });
+                     }
 
 
 /* Manager page stuff */

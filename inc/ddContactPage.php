@@ -22,8 +22,37 @@
 */
 -->
 
-<!-- clear POST data -->
-<?php unset($_POST); ?>
+<!-- prepare php vars -->
+<?php
+    // clear any POST data
+    unset($_POST); 
+    // get any shortcode attributes
+    extract(shortcode_atts(array(
+            'num_adults' => 'unset',
+            'num_children' => 'unset',        
+            'arrival_date' => 'unset',
+            'departure_date' => 'unset',            
+            'question_one' => 'unset',
+            'question_two' => 'unset',
+    ),$attributes));
+    // user prefs, with defaults
+    $start_date_check = get_option(ddcf_start_date_check);
+    if(!$start_date_check) $start_date_check = false;
+    $start_date_check = $start_date_check && ($arrival_date!='false');
+    $end_date_check = get_option(ddcf_end_date_check);
+    if(!$end_date_check) $end_date_check = false;
+    $end_date_check = $end_date_check && ($departure_date!='false');
+    $extra_dropdown_one_check = get_option(ddcf_extra_dropdown_one_check);
+    if(!$extra_dropdown_one_check) $extra_dropdown_one_check = false;
+    $extra_dropdown_one_check = $extra_dropdown_one_check && ($num_adults!='false');
+    $extra_dropdown_two_check = get_option(ddcf_extra_dropdown_two_check);
+    if(!$extra_dropdown_two_check) $extra_dropdown_two_check = false;
+    $extra_dropdown_two_check = $extra_dropdown_two_check && ($num_children!='false');    
+    $ddcf_captcha_type = get_option(ddcf_captcha_type);
+    if(!$ddcf_captcha_type) $ddcf_captcha_type = "Simple Addition";
+    // local vars
+    $ddcf_form_density = 0;    
+?>
 
 <!--[if gte IE 9]><style type="text/css">.gradient { filter: none; }</style><![endif]-->
 
@@ -61,20 +90,7 @@
 
 			<!-- top right -->
 			
-                            <?php
-                            	    // assign some user prefs
-                                    $start_date_check = get_option(ddcf_start_date_check);
-                                    if(!$start_date_check) $start_date_check = false;
-                                    $end_date_check   = get_option(ddcf_end_date_check);
-                                    if(!$end_date_check) $end_date_check = false;
-                                    $extra_dropdown_one_check = get_option(ddcf_extra_dropdown_one_check);
-                                    if(!$extra_dropdown_one_check) $extra_dropdown_one_check = false;
-                                    $extra_dropdown_two_check = get_option(ddcf_extra_dropdown_two_check);
-                                    if(!$extra_dropdown_two_check) $extra_dropdown_two_check = false;
-                                    $ddcf_captcha_type = get_option(ddcf_captcha_type);
-                                    if(!$ddcf_captcha_type) $ddcf_captcha_type = "Simple Addition";
-                                    $ddcf_form_density = 0;
-                                    
+                            <?php                                    
                                     if($start_date_check
                                         ||$end_date_check
                                         ||$extra_dropdown_one_check
@@ -212,160 +228,166 @@
 
 
 
-                                             // start of dropdowns
-                                             if($extra_dropdown_one_check||$extra_dropdown_two_check) {
+                                        // start of dropdowns
+                                        if($extra_dropdown_one_check||$extra_dropdown_two_check) {
 
-                                                    if($start_date_time_check||$end_date_time_check||$start_date_check||$end_date_check)
-                                                         echo '<div class="ddcf_details_row_division ddcf_half_width" name="ddcf_party_size_details_row_division" id="ddcf_party_size_details_row_division">';
-                                                    else echo '<div class="ddcf_details_row_division ddcf_full_width" name="ddcf_party_size_details_row_division" id="ddcf_party_size_details_row_division">';                                             
+                                               if($start_date_time_check||$end_date_time_check||$start_date_check||$end_date_check)
+                                                    echo '<div class="ddcf_details_row_division ddcf_half_width" name="ddcf_party_size_details_row_division" id="ddcf_party_size_details_row_division">';
+                                               else echo '<div class="ddcf_details_row_division ddcf_full_width" name="ddcf_party_size_details_row_division" id="ddcf_party_size_details_row_division">';                                             
 
 
-                                                 // gather necessary user prefs                                      
-                                                 $ddcf_num_adults = get_option(ddcf_num_adults);
-                                                 if(!$ddcf_num_adults) $ddcf_num_adults = false;
-                                                 $ddcf_num_children = get_option(ddcf_num_children);
-                                                 if(!$ddcf_num_children) $ddcf_num_children = false;                                                                                         
+                                            // gather necessary user prefs                                           
+                                               
+                                               
+                                            $ddcf_num_adults = get_option(ddcf_num_adults);
+                                            if(!$ddcf_num_adults) $ddcf_num_adults = false;
+                                            $ddcf_num_adults = $ddcf_num_adults && ($num_adults!='false');
+                                            
+                                            $ddcf_num_children = get_option(ddcf_num_children);
+                                            if(!$ddcf_num_children) $ddcf_num_children = false;
+                                            $ddcf_num_children = $ddcf_num_children && ($num_children!='false');
 
-                                                 // first check if limited to certain category
-                                                 $wrong_category = true;
-                                                 if(get_option(ddcf_party_size_category_filter_check)) {
-                                                     // is this page / post in the correct category?
-                                                     $selected_cat = get_option(ddcf_party_size_category_filter);
-                                                     //$selected_category = get_category($selected_cat);
-                                                     global $post;
-                                                     $cats = wp_get_post_categories($post->ID);
-                                                     if ($cats) {
-                                                       foreach ($cats as $cat) {
-                                                         $category = get_category($cat);
-                                                         if ($selected_cat == $category->term_id ) {
-                                                           $wrong_category = false;
-                                                         }
-                                                       }
-                                                     }
-                                                 } else $wrong_category = false;
+                                            // first check if limited to certain category
+                                            $wrong_category = true;
+                                            if(get_option(ddcf_party_size_category_filter_check)) {
+                                                // is this page / post in the correct category?
+                                                $selected_cat = get_option(ddcf_party_size_category_filter);
+                                                //$selected_category = get_category($selected_cat);
+                                                global $post;
+                                                $cats = wp_get_post_categories($post->ID);
+                                                if ($cats) {
+                                                  foreach ($cats as $cat) {
+                                                    $category = get_category($cat);
+                                                    if ($selected_cat == $category->term_id ) {
+                                                      $wrong_category = false;
+                                                    }
+                                                  }
+                                                }
+                                            } else $wrong_category = false;
 
-                                                 if(!$wrong_category) {                     
+                                            if(!$wrong_category) {                     
 
-                                                     if($extra_dropdown_one_check&&$extra_dropdown_two_check) {
-                                                         echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
-                                                                 <span class="ddcf_table_span_dropdown ddcf_input_base">
-                                                                         <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
-                                                                         <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown wpcf7-text">
-                                                                                         <option value="0" '; if($ddcf_num_adults==0) echo "selected"; echo '>'.__("None").'</option>
-                                                                                         <option value="1" '; if($ddcf_num_adults==1) echo "selected"; echo '>1</option>
-                                                                                         <option value="2" '; if($ddcf_num_adults==2) echo "selected"; echo '>2</option>
-                                                                                         <option value="3" '; if($ddcf_num_adults==3) echo "selected"; echo '>3</option>
-                                                                                         <option value="4" '; if($ddcf_num_adults==4) echo "selected"; echo '>4</option>
-                                                                                         <option value="5" '; if($ddcf_num_adults==5) echo "selected"; echo '>5</option>
-                                                                                         <option value="6" '; if($ddcf_num_adults==6) echo "selected"; echo '>6</option>
-                                                                                         <option value="7" '; if($ddcf_num_adults==7) echo "selected"; echo '>7</option>
-                                                                                         <option value="8" '; if($ddcf_num_adults==8) echo "selected"; echo '>8</option>
-                                                                                         <option value="9" '; if($ddcf_num_adults==9) echo "selected"; echo '>9</option>
-                                                                                         <option value="10" '; if($ddcf_num_adults==10) echo "selected"; echo '>10+</option>
-                                                                         </select>
-                                                                         <label for="ddcf_num_adults">'.__("Adults:", "ddcf_plugin").'</label>
-                                                                 </span>
-                                                                 <span class="ddcf_table_span_dropdown ddcf_input_base">
-                                                                         <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
-                                                                         <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown wpcf7-text">
-                                                                                         <option value="0" '; if($ddcf_num_children==0) echo "selected"; echo '>'.__("None").'</option>
-                                                                                         <option value="1" '; if($ddcf_num_children==1) echo "selected"; echo '>1</option>
-                                                                                         <option value="2" '; if($ddcf_num_children==2) echo "selected"; echo '>2</option>
-                                                                                         <option value="3" '; if($ddcf_num_children==3) echo "selected"; echo '>3</option>
-                                                                                         <option value="4" '; if($ddcf_num_children==4) echo "selected"; echo '>4</option>
-                                                                                         <option value="5" '; if($ddcf_num_children==5) echo "selected"; echo '>5</option>
-                                                                                         <option value="6" '; if($ddcf_num_children==6) echo "selected"; echo '>6</option>
-                                                                                         <option value="7" '; if($ddcf_num_children==7) echo "selected"; echo '>7</option>
-                                                                                         <option value="8" '; if($ddcf_num_children==8) echo "selected"; echo '>8</option>
-                                                                                         <option value="9" '; if($ddcf_num_children==9) echo "selected"; echo '>9</option>
-                                                                                         <option value="10" '; if($ddcf_num_children==10) echo "selected"; echo '>10+</option>
-                                                                         </select>
-                                                                         <label for="ddcf_num_children">'.__("Children:","ddcf_plugin").'</label>
-                                                                 </span>
-                                                         </div>';
-                                                     }
-                                                     else if($extra_dropdown_one_check) {
-                                                         echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
-                                                                 <span class="ddcf_table_span_dropdown ddcf_input_base">
-                                                                         <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
-                                                                         <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown wpcf7-text">
-                                                                                         <option value="0" '; if($ddcf_num_adults==0) echo "selected"; echo '>'.__("None").'</option>
-                                                                                         <option value="1" '; if($ddcf_num_adults==1) echo "selected"; echo '>1</option>
-                                                                                         <option value="2" '; if($ddcf_num_adults==2) echo "selected"; echo '>2</option>
-                                                                                         <option value="3" '; if($ddcf_num_adults==3) echo "selected"; echo '>3</option>
-                                                                                         <option value="4" '; if($ddcf_num_adults==4) echo "selected"; echo '>4</option>
-                                                                                         <option value="5" '; if($ddcf_num_adults==5) echo "selected"; echo '>5</option>
-                                                                                         <option value="6" '; if($ddcf_num_adults==6) echo "selected"; echo '>6</option>
-                                                                                         <option value="7" '; if($ddcf_num_adults==7) echo "selected"; echo '>7</option>
-                                                                                         <option value="8" '; if($ddcf_num_adults==8) echo "selected"; echo '>8</option>
-                                                                                         <option value="9" '; if($ddcf_num_adults==9) echo "selected"; echo '>9</option>
-                                                                                         <option value="10" '; if($ddcf_num_adults==10) echo "selected"; echo '>10+</option>
-                                                                         </select>
-                                                                         <label for="ddcf_num_adults">'.__("Adults:", "ddcf_plugin").'</label>
-                                                                 </span>
-                                                         </div>';
-                                                     }
-                                                     else if($extra_dropdown_two_check) {
-                                                         echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
-                                                                 <span class="ddcf_table_span_dropdown ddcf_input_base">
-                                                                         <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
-                                                                         <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown wpcf7-text">
-                                                                                         <option value="0" '; if($ddcf_num_children==0) echo "selected"; echo '>'.__("None").'</option>
-                                                                                         <option value="1" '; if($ddcf_num_children==1) echo "selected"; echo '>1</option>
-                                                                                         <option value="2" '; if($ddcf_num_children==2) echo "selected"; echo '>2</option>
-                                                                                         <option value="3" '; if($ddcf_num_children==3) echo "selected"; echo '>3</option>
-                                                                                         <option value="4" '; if($ddcf_num_children==4) echo "selected"; echo '>4</option>
-                                                                                         <option value="5" '; if($ddcf_num_children==5) echo "selected"; echo '>5</option>
-                                                                                         <option value="6" '; if($ddcf_num_children==6) echo "selected"; echo '>6</option>
-                                                                                         <option value="7" '; if($ddcf_num_children==7) echo "selected"; echo '>7</option>
-                                                                                         <option value="8" '; if($ddcf_num_children==8) echo "selected"; echo '>8</option>
-                                                                                         <option value="9" '; if($ddcf_num_children==9) echo "selected"; echo '>9</option>
-                                                                                         <option value="10" '; if($ddcf_num_children==10) echo "selected"; echo '>10+</option>
-                                                                         </select>
-                                                                         <label for="ddcf_num_children">'.__("Children:","ddcf_plugin").'</label>
-                                                                 </span>
-                                                         </div>';
-                                                     }
-
-                                                     echo '<input type="hidden" name="ddcf_party_size_category_filter" id="ddcf_party_size_category_filter" value="'; 
-                                                     if(get_option('ddcf_party_size_category_filter_check')) 
-                                                         echo get_option('ddcf_party_size_category_filter').'" />';
-                                                     else echo 'unset" />';
-                                                     echo '</div>';
-
-                                                     if($row_density==2) $row_density = 6;
-                                                     else if($row_density==4) $row_density = 7;
-                                                     else if($row_density<1) $row_density = 1;
-                                                 } // end of dropdowns
-                                             } // endif($extra_dropdown_one_check||$extra_dropdown_two_check)
-                                         echo '</div>'; // end #ddcf_extra_details_row
-                                        }//if($start_date_check||$end_date_check||$extra_dropdown_one_check||$extra_dropdown_two_check) 
-                                        
-                                        if($ddcf_form_density<$row_density) $ddcf_form_density = $row_density; 
-
-                                        // Simple Add Captcha
-                                        if($ddcf_captcha_type=='Simple Addition') {
-                                                // default to Simple Addition
-                                                echo '<div class="ddcf_details_row" name="ddcf_captcha_details_row" id="ddcf_captcha_details_row">
-                                                        <div class="ddcf_details_row_division ddcf_full_width">
-                                                            <span name="ddcf_span_captcha_add" id="ddcf_span_captcha_add">
-                                                                <!--div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right"-->
-                                                                    <!--div id="ddcf_simple_add_captcha" name="ddcf_simple_add_captcha"-->
-                                                                    <div name="ddcf_captcha_question" id="ddcf_captcha_question">What is <span id="ddcf_captcha_one">?</span> plus <span id="ddcf_captcha_two">?</span> ?</div>
-                                                                        <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="wpcf7-text" title="Please add the two numbers"/>
-                                                                        <div id="ddcf_contact_captcha_fb" name="ddcf_contact_captcha_fb" class="ddcf_contact_input_verify"></div>
-                                                                    
-                                                                    <!--/div-->
-                                                                <!--/div-->
+                                                if($extra_dropdown_one_check&&$extra_dropdown_two_check) {
+                                                    echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
+                                                            <span class="ddcf_table_span_dropdown ddcf_input_base">
+                                                                    <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
+                                                                    <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown wpcf7-text">
+                                                                                    <option value="0" '; if($ddcf_num_adults==0) echo "selected"; echo '>'.__("None").'</option>
+                                                                                    <option value="1" '; if($ddcf_num_adults==1) echo "selected"; echo '>1</option>
+                                                                                    <option value="2" '; if($ddcf_num_adults==2) echo "selected"; echo '>2</option>
+                                                                                    <option value="3" '; if($ddcf_num_adults==3) echo "selected"; echo '>3</option>
+                                                                                    <option value="4" '; if($ddcf_num_adults==4) echo "selected"; echo '>4</option>
+                                                                                    <option value="5" '; if($ddcf_num_adults==5) echo "selected"; echo '>5</option>
+                                                                                    <option value="6" '; if($ddcf_num_adults==6) echo "selected"; echo '>6</option>
+                                                                                    <option value="7" '; if($ddcf_num_adults==7) echo "selected"; echo '>7</option>
+                                                                                    <option value="8" '; if($ddcf_num_adults==8) echo "selected"; echo '>8</option>
+                                                                                    <option value="9" '; if($ddcf_num_adults==9) echo "selected"; echo '>9</option>
+                                                                                    <option value="10" '; if($ddcf_num_adults==10) echo "selected"; echo '>10+</option>
+                                                                    </select>
+                                                                    <label for="ddcf_num_adults">'.__("Adults:", "ddcf_plugin").'</label>
                                                             </span>
-                                                        </div>
+                                                            <span class="ddcf_table_span_dropdown ddcf_input_base">
+                                                                    <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
+                                                                    <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown wpcf7-text">
+                                                                                    <option value="0" '; if($ddcf_num_children==0) echo "selected"; echo '>'.__("None").'</option>
+                                                                                    <option value="1" '; if($ddcf_num_children==1) echo "selected"; echo '>1</option>
+                                                                                    <option value="2" '; if($ddcf_num_children==2) echo "selected"; echo '>2</option>
+                                                                                    <option value="3" '; if($ddcf_num_children==3) echo "selected"; echo '>3</option>
+                                                                                    <option value="4" '; if($ddcf_num_children==4) echo "selected"; echo '>4</option>
+                                                                                    <option value="5" '; if($ddcf_num_children==5) echo "selected"; echo '>5</option>
+                                                                                    <option value="6" '; if($ddcf_num_children==6) echo "selected"; echo '>6</option>
+                                                                                    <option value="7" '; if($ddcf_num_children==7) echo "selected"; echo '>7</option>
+                                                                                    <option value="8" '; if($ddcf_num_children==8) echo "selected"; echo '>8</option>
+                                                                                    <option value="9" '; if($ddcf_num_children==9) echo "selected"; echo '>9</option>
+                                                                                    <option value="10" '; if($ddcf_num_children==10) echo "selected"; echo '>10+</option>
+                                                                    </select>
+                                                                    <label for="ddcf_num_children">'.__("Children:","ddcf_plugin").'</label>
+                                                            </span>
                                                     </div>';
-                                                if($ddcf_form_density<3) $ddcf_form_density = 3;
-                                        }  //<!-- end simple addition captcha -->                                         
-   
-                                    echo'   </div>'; // end #ddcf_middle_bit
-                                    echo'</div> '; // end #ddcf_contact_form_top_right
-                                    }  // end if($start_date_check||$end_date_check||$extra_dropdown_one_check||$extra_dropdown_two_check||$ddcf_captcha_type!="none")
+                                                }
+                                                else if($extra_dropdown_one_check) {
+                                                    echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
+                                                            <span class="ddcf_table_span_dropdown ddcf_input_base">
+                                                                    <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
+                                                                    <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown wpcf7-text">
+                                                                                    <option value="0" '; if($ddcf_num_adults==0) echo "selected"; echo '>'.__("None").'</option>
+                                                                                    <option value="1" '; if($ddcf_num_adults==1) echo "selected"; echo '>1</option>
+                                                                                    <option value="2" '; if($ddcf_num_adults==2) echo "selected"; echo '>2</option>
+                                                                                    <option value="3" '; if($ddcf_num_adults==3) echo "selected"; echo '>3</option>
+                                                                                    <option value="4" '; if($ddcf_num_adults==4) echo "selected"; echo '>4</option>
+                                                                                    <option value="5" '; if($ddcf_num_adults==5) echo "selected"; echo '>5</option>
+                                                                                    <option value="6" '; if($ddcf_num_adults==6) echo "selected"; echo '>6</option>
+                                                                                    <option value="7" '; if($ddcf_num_adults==7) echo "selected"; echo '>7</option>
+                                                                                    <option value="8" '; if($ddcf_num_adults==8) echo "selected"; echo '>8</option>
+                                                                                    <option value="9" '; if($ddcf_num_adults==9) echo "selected"; echo '>9</option>
+                                                                                    <option value="10" '; if($ddcf_num_adults==10) echo "selected"; echo '>10+</option>
+                                                                    </select>
+                                                                    <label for="ddcf_num_adults">'.__("Adults:", "ddcf_plugin").'</label>
+                                                            </span>
+                                                    </div>';
+                                                }
+                                                else if($extra_dropdown_two_check) {
+                                                    echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
+                                                            <span class="ddcf_table_span_dropdown ddcf_input_base">
+                                                                    <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
+                                                                    <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown wpcf7-text">
+                                                                                    <option value="0" '; if($ddcf_num_children==0) echo "selected"; echo '>'.__("None").'</option>
+                                                                                    <option value="1" '; if($ddcf_num_children==1) echo "selected"; echo '>1</option>
+                                                                                    <option value="2" '; if($ddcf_num_children==2) echo "selected"; echo '>2</option>
+                                                                                    <option value="3" '; if($ddcf_num_children==3) echo "selected"; echo '>3</option>
+                                                                                    <option value="4" '; if($ddcf_num_children==4) echo "selected"; echo '>4</option>
+                                                                                    <option value="5" '; if($ddcf_num_children==5) echo "selected"; echo '>5</option>
+                                                                                    <option value="6" '; if($ddcf_num_children==6) echo "selected"; echo '>6</option>
+                                                                                    <option value="7" '; if($ddcf_num_children==7) echo "selected"; echo '>7</option>
+                                                                                    <option value="8" '; if($ddcf_num_children==8) echo "selected"; echo '>8</option>
+                                                                                    <option value="9" '; if($ddcf_num_children==9) echo "selected"; echo '>9</option>
+                                                                                    <option value="10" '; if($ddcf_num_children==10) echo "selected"; echo '>10+</option>
+                                                                    </select>
+                                                                    <label for="ddcf_num_children">'.__("Children:","ddcf_plugin").'</label>
+                                                            </span>
+                                                    </div>';
+                                                }
+
+                                                echo '<input type="hidden" name="ddcf_party_size_category_filter" id="ddcf_party_size_category_filter" value="'; 
+                                                if(get_option('ddcf_party_size_category_filter_check')) 
+                                                    echo get_option('ddcf_party_size_category_filter').'" />';
+                                                else echo 'unset" />';
+                                                echo '</div>';
+
+                                                if($row_density==2) $row_density = 6;
+                                                else if($row_density==4) $row_density = 7;
+                                                else if($row_density<1) $row_density = 1;
+                                            } // end of dropdowns
+                                        } // endif($extra_dropdown_one_check||$extra_dropdown_two_check)
+                                    echo '</div>'; // end #ddcf_extra_details_row
+                                   }//if($start_date_check||$end_date_check||$extra_dropdown_one_check||$extra_dropdown_two_check) 
+                                   if($ddcf_form_density<$row_density) $ddcf_form_density = $row_density; 
+
+                                   
+                                   
+                                   // Simple Add Captcha
+                                   if($ddcf_captcha_type=='Simple Addition') {
+                                           // default to Simple Addition
+                                           echo '<div class="ddcf_details_row" name="ddcf_captcha_details_row" id="ddcf_captcha_details_row">
+                                                   <div class="ddcf_details_row_division ddcf_full_width">
+                                                       <span name="ddcf_span_captcha_add" id="ddcf_span_captcha_add">
+                                                           <!--div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right"-->
+                                                               <!--div id="ddcf_simple_add_captcha" name="ddcf_simple_add_captcha"-->
+                                                               <div name="ddcf_captcha_question" id="ddcf_captcha_question">What is <span id="ddcf_captcha_one">?</span> plus <span id="ddcf_captcha_two">?</span> ?</div>
+                                                                   <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="wpcf7-text" title="Please add the two numbers"/>
+                                                                   <div id="ddcf_contact_captcha_fb" name="ddcf_contact_captcha_fb" class="ddcf_contact_input_verify"></div>
+
+                                                               <!--/div-->
+                                                           <!--/div-->
+                                                       </span>
+                                                   </div>
+                                               </div>';
+                                           if($ddcf_form_density<3) $ddcf_form_density = 3;
+                                   }  //<!-- end simple addition captcha -->                                         
+
+                               echo'   </div>'; // end #ddcf_middle_bit
+                               echo'</div> '; // end #ddcf_contact_form_top_right
+                               }  // end if($start_date_check||$end_date_check||$extra_dropdown_one_check||$extra_dropdown_two_check||$ddcf_captcha_type!="none")
                           
                         
 
@@ -373,83 +395,89 @@
                         
                         
                         
-                                   if($ddcf_captcha_type=='reCaptcha'
-                                            &&($start_date_check
-                                            ||$end_date_check
-                                            ||$extra_dropdown_one_check
-                                            ||$extra_dropdown_two_check)) {
-                                            echo '<div class="ddcf_float_left">';
-                                            if(get_option(ddcf_recaptcha_public_key)) {
-                                                    echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right">
-                                                            <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha" ></div>
-                                                            <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
-                                                         </div>';
-                                            }
-                                            else    _e('Missing Google reCaptcha keys - please see plugin options', 'ddcf_plugin');
-                                            // finish off row and row division
-                                            echo '</div>';
-                                    } // end reCaptcha                          
+                                if($ddcf_captcha_type=='reCaptcha'
+                                         &&($start_date_check
+                                         ||$end_date_check
+                                         ||$extra_dropdown_one_check
+                                         ||$extra_dropdown_two_check)) {
+                                         echo '<div class="ddcf_float_left">';
+                                         if(get_option(ddcf_recaptcha_public_key)) {
+                                                 echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right">
+                                                         <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha" ></div>
+                                                         <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
+                                                      </div>';
+                                         }
+                                         else    _e('Missing Google reCaptcha keys - please see plugin options', 'ddcf_plugin');
+                                         // finish off row and row division
+                                         echo '</div>';
+                                 } // end reCaptcha                          
 
 
                                 //<!-- extra questions -->
 				
-                                        // first check if limited to certain category
-                                        $wrong_category = true;
-                                        $ddcf_party_size_category_filter = '';
-                                        if(get_option(ddcf_extra_question_category_filter_check)) {
-                                            // is this page / post in the correct category?
-                                            $selected_cat = get_option(ddcf_extra_question_category_filter);
-                                            //$selected_category = get_category($selected_cat);
-                                            global $post;
-                                            $cats = wp_get_post_categories($post->ID);
-                                            if ($cats) {
-                                              foreach ($cats as $cat) {
-                                                $category = get_category($cat);
-                                                if ($selected_cat == $category->term_id ) {
-                                                  $wrong_category = false;
-                                                  $ddcf_party_size_category_filter = $selected_cat;
-                                                }
-                                              }
-                                            }
-                                        } else $wrong_category = false;
+                                // first check if limited to certain category
+                                $wrong_category = true;
+                                $ddcf_party_size_category_filter = '';
+                                if(get_option(ddcf_extra_question_category_filter_check)) {
+                                    // is this page / post in the correct category?
+                                    $selected_cat = get_option(ddcf_extra_question_category_filter);
+                                    //$selected_category = get_category($selected_cat);
+                                    global $post;
+                                    $cats = wp_get_post_categories($post->ID);
+                                    if ($cats) {
+                                      foreach ($cats as $cat) {
+                                        $category = get_category($cat);
+                                        if ($selected_cat == $category->term_id ) {
+                                          $wrong_category = false;
+                                          $ddcf_party_size_category_filter = $selected_cat;
+                                        }
+                                      }
+                                    }
+                                } else $wrong_category = false;
 
-                                        if(!$wrong_category) {
-                                            if(get_option(ddcf_extra_question_one_check)||get_option(ddcf_extra_question_two_check))
-                                            {
-                                                if(get_option(ddcf_extra_question_one_check) && get_option(ddcf_extra_question_two_check)) echo '
-                                                <div class="ddcf_float_left ddcf_markable_container">
-                                                    <div style="position:relative; width:100%; overflow:hidden">
-                                                        <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
-                                                        <div name="ddcf_question_one_fb" id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
-                                                    </div>
-                                                </div>
-                                                <div class="ddcf_float_left ddcf_markable_container">
-                                                    <div style="position:relative; width:100%; overflow:hidden">
-                                                        <input type="text" id="ddcf_question_two" name="ddcf_question_two" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_two).'" title="'.get_option(ddcf_extra_question_two).'" />
-                                                        <div name="ddcf_question_two_fb" id="ddcf_question_two_fb" class="ddcf_contact_input_verify"></div>
-                                                    </div>
-                                                </div><!-- both questions --> ';
+                                if(!$wrong_category) {
+                                    if(get_option(ddcf_extra_question_one_check)||get_option(ddcf_extra_question_two_check))
+                                    {
+                                        if(get_option(ddcf_extra_question_one_check) && get_option(ddcf_extra_question_two_check)
+                                         && $question_one!='false' && $question_two!='false')
 
-                                                else if(get_option(ddcf_extra_question_one_check)) echo '
-                                                <div class="ddcf_float_left ddcf_markable_container">
-                                                        <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
-                                                        <div name="ddcf_question_two_fb" id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
-                                                </div><!-- extra question 1 -->';
+                                            echo '
+                                        <div class="ddcf_float_left ddcf_markable_container">
+                                            <div style="position:relative; width:100%; overflow:hidden">
+                                                <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
+                                                <div name="ddcf_question_one_fb" id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
+                                            </div>
+                                        </div>
+                                        <div class="ddcf_float_left ddcf_markable_container">
+                                            <div style="position:relative; width:100%; overflow:hidden">
+                                                <input type="text" id="ddcf_question_two" name="ddcf_question_two" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_two).'" title="'.get_option(ddcf_extra_question_two).'" />
+                                                <div name="ddcf_question_two_fb" id="ddcf_question_two_fb" class="ddcf_contact_input_verify"></div>
+                                            </div>
+                                        </div><!-- both questions --> ';
+
+                                        else if(get_option(ddcf_extra_question_one_check) && $question_one!='false') echo '
+                                        <div class="ddcf_float_left ddcf_markable_container">
+                                                <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
+                                                <div name="ddcf_question_two_fb" id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
+                                        </div><!-- extra question 1 -->';
 
 
-                                                else if(get_option(ddcf_extra_question_two_check)) echo '
-                                                <div class="ddcf_float_left ddcf_markable_container">
-                                                        <input type="text" id="ddcf_question_two" name="ddcf_question_two" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_two).'" title="'.get_option(ddcf_extra_question_two).'" />
-                                                        <div id="ddcf_question_two_fb" class="ddcf_contact_input_verify"></div>
-                                                </div><!-- extra question 2 -->';
-                                                
+                                        else if(get_option(ddcf_extra_question_two_check) && $question_two!='false') echo '
+                                        <div class="ddcf_float_left ddcf_markable_container">
+                                                <input type="text" id="ddcf_question_two" name="ddcf_question_two" class="ddcf_input_base ddcf_question wpcf7-text" value="'.get_option(ddcf_extra_question_two).'" title="'.get_option(ddcf_extra_question_two).'" />
+                                                <div id="ddcf_question_two_fb" class="ddcf_contact_input_verify"></div>
+                                        </div><!-- extra question 2 -->';
+
+                                        if((get_option(ddcf_extra_question_one_check) && $question_one!='false')
+                                         ||(get_option(ddcf_extra_question_two_check) && $question_two!='false')) {
                                                 echo '<input type="hidden" name="ddcf_extra_question_category_filter" id="ddcf_extra_question_category_filter" value="'; 
                                                 if(get_option('ddcf_extra_question_category_filter_check')) 
                                                     echo get_option('ddcf_extra_question_category_filter').'" />';
-                                                else echo 'unset" />';                                                   
-                                            }
-                                        }
-				?>
+                                                else echo 'unset" />';
+                                         }
+                                    }
+                                }
+                        ?>
 
                         
                         
@@ -479,7 +507,7 @@
                             <?php
                             $buttons_theme = get_option(ddcf_btn_style);
                             if($buttons_theme=='ddcf_btn_style_themed') echo'
-                                <input class="ddcf_button wpcf7-submit" id="ddcf_contact_reset" name="ddcf_contact_reset" type="reset" value="'.__('Reset','ddcf_plugin').'">
+                                <input class="ddcf_button wpcf7-submit" id="ddcf_contact_reset" name="ddcf_contact_reset" type="submit" value="'.__('Reset','ddcf_plugin').'">
                                 <input class="ddcf_button wpcf7-submit" id="ddcf_contact_send" name="ddcf_contact_send" type="submit" value="'.__('Send','ddcf_plugin').'">';
                             else echo'
                                 <button class="ddcf_button" id="ddcf_contact_reset" name="ddcf_contact_reset" type="reset" value="" >'.__('Reset','ddcf_plugin').'</button>
@@ -551,11 +579,20 @@
 			<input type="hidden" name="ddcf_session_initialised" id="ddcf_session_initialised" value="uninitialised">
                         <input type="hidden" name="ddcf_form_density" id="ddcf_form_density" value="<?php echo $ddcf_form_density ?>">
                         <input type="hidden" name="ddcf_referrer_id" id="ddcf_referrer_id" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
+                        
+                        <!-- shortcode attributes -->
+                        <input type="hidden" name="num_adults" id="num_adults" value="<?php echo $num_adults ?>">                        
+                        <input type="hidden" name="num_children" id="num_children" value="<?php echo $num_children ?>">
+                        <input type="hidden" name="arrival_date" id="arrival_date" value="<?php echo $arrival_date ?>">
+                        <input type="hidden" name="departure_date" id="departure_date" value="<?php echo $departure_date ?>">
+                        <input type="hidden" name="question_one" id="question_one" value="<?php echo $question_one ?>">
+                        <input type="hidden" name="question_two" id="question_two" value="<?php echo $question_two ?>">
 
 			<?php
                             /* create nonces */
                             echo '<input type="hidden" name="ddcf_init_nonce" id="ddcf_init_nonce" value="'.wp_create_nonce('ddcf_contact_initialise_action').'" >';	
                             echo '<input type="hidden" name="ddcf_submit_nonce" id="ddcf_submit_nonce" value="'.wp_create_nonce('ddcf_contact_submit_action').'" >';
+                            
                             
                             /* set the error checking method as per options */
                             if(get_settings(ddcf_error_checking_method)=="")

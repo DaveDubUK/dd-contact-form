@@ -156,18 +156,20 @@ function set_html_content_type()
             if(isset($_POST['ddcf_arrival_date'])&&!empty($_POST["ddcf_arrival_date"])) $ddcf_arrival_date = filter_var($_POST['ddcf_arrival_date'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_dates_compulsory_check)
                     && get_option(ddcf_start_date_check)
-                    && get_option(ddcf_dates_category_filter)==$_POST["ddcf_dates_category_filter"]) 
+                    && get_option(ddcf_dates_category_filter)==$_POST["ddcf_dates_category_filter"]
+                    && $_POST['arrival_date']!='false') 
                         $errors.='The booking start date was not set<br />';
             if(isset($_POST['ddcf_departure_date'])&&!empty($_POST["ddcf_departure_date"])) $ddcf_departure_date = filter_var($_POST['ddcf_departure_date'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_dates_compulsory_check)
                     && get_option(ddcf_end_date_check)
-                    && get_option(ddcf_dates_category_filter)==$_POST["ddcf_dates_category_filter"])
+                    && get_option(ddcf_dates_category_filter)==$_POST["ddcf_dates_category_filter"]
+                    && $_POST['departure_date']!='false')
                         $errors.='The booking end date was not set<br />';    
         } else {
             if(isset($_POST['ddcf_arrival_date'])&&!empty($_POST["ddcf_arrival_date"])) $ddcf_arrival_date = filter_var($_POST['ddcf_arrival_date'], FILTER_SANITIZE_STRING);
-            else if(get_option(ddcf_dates_compulsory_check)&&get_option(ddcf_start_date_check)) $errors.='The booking start date was not set<br />';
+            else if(get_option(ddcf_dates_compulsory_check)&&get_option(ddcf_start_date_check)&& $_POST['arrival_date']!='false') $errors.='The booking start date was not set<br />';
             if(isset($_POST['ddcf_departure_date'])&&!empty($_POST["ddcf_departure_date"])) $ddcf_departure_date = filter_var($_POST['ddcf_departure_date'], FILTER_SANITIZE_STRING);
-            else if(get_option(ddcf_dates_compulsory_check)&&get_option(ddcf_end_date_check)) $errors.='The booking end date was not set<br />';    
+            else if(get_option(ddcf_dates_compulsory_check)&&get_option(ddcf_end_date_check)&& $_POST['departure_date']!='false') $errors.='The booking end date was not set<br />';    
         }
         
         /* ddcf_num_children not compulsory */
@@ -178,11 +180,12 @@ function set_html_content_type()
             if(isset($_POST['ddcf_num_adults'])&&!empty($_POST["ddcf_num_adults"])) $ddcf_num_adults = filter_var($_POST['ddcf_num_adults'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_party_size_compulsory_check)
                     &&get_option(ddcf_extra_dropdown_one_check)
-                    &&(get_option(ddcf_party_size_category_filter)==$_POST["ddcf_party_size_category_filter"]))
+                    &&(get_option(ddcf_party_size_category_filter)==$_POST["ddcf_party_size_category_filter"])
+                    && $_POST['num_adults']!='false')
                         $errors.=__('The number of adults was not set<br />');
         } else {
             if(isset($_POST['ddcf_num_adults'])&&!empty($_POST["ddcf_num_adults"])) $ddcf_num_adults = filter_var($_POST['ddcf_num_adults'], FILTER_SANITIZE_STRING);
-            else if(get_option(ddcf_party_size_compulsory_check)&&get_option(ddcf_extra_dropdown_one_check)) $errors.=__('The number of adults was not set<br />');
+            else if(get_option(ddcf_party_size_compulsory_check)&&get_option(ddcf_extra_dropdown_one_check) && $_POST['num_children']!='false') $errors.=__('The number of adults was not set<br />');
         }
 
         
@@ -191,19 +194,21 @@ function set_html_content_type()
                         $ddcf_question_one = filter_var($_POST['ddcf_question_one'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_questions_compulsory_check)
                     && get_option(ddcf_extra_question_one_check)
-                    && get_option(ddcf_extra_question_category_filter)==$_POST["ddcf_extra_question_category_filter"]) 
+                    && get_option(ddcf_extra_question_category_filter)==$_POST["ddcf_extra_question_category_filter"]
+                    && $_POST['question_one']!='false') 
                         $errors.='Question one was not answered.<br />';
             if(isset($_POST['ddcf_question_two'])&&!empty($_POST["ddcf_question_two"]))
                         $ddcf_question_two = filter_var($_POST['ddcf_question_two'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_dates_compulsory_check)
                     && get_option(ddcf_extra_question_two_check)
-                    && get_option(ddcf_extra_question_category_filter)==$_POST["ddcf_extra_question_category_filter"])
+                    && get_option(ddcf_extra_question_category_filter)==$_POST["ddcf_extra_question_category_filter"]
+                    && $_POST['question_two']!='false')
                         $errors.='Question two was not answered.<br />';    
         } else {
             if(isset($_POST['ddcf_question_one'])&&!empty($_POST["ddcf_question_one"])) $ddcf_question_one = filter_var($_POST['ddcf_question_one'], FILTER_SANITIZE_STRING);
-            else if(get_option(ddcf_questions_compulsory_check)&&get_option(ddcf_extra_question_one_check)) $errors.=_e('Question one was not answered<br />');
+            else if(get_option(ddcf_questions_compulsory_check)&&get_option(ddcf_extra_question_one_check)&&$_POST['question_one']!='false') $errors.=_e('Question one was not answered<br />');
             if(isset($_POST['ddcf_question_two'])&&!empty($_POST["ddcf_question_two"])) filter_var($ddcf_question_two = $_POST['ddcf_question_two'], FILTER_SANITIZE_STRING);
-            else if(get_option(ddcf_questions_compulsory_check)&&get_option(ddcf_extra_question_two_check)) $errors.=_e('Question two was not answered<br />');
+            else if(get_option(ddcf_questions_compulsory_check)&&get_option(ddcf_extra_question_two_check)&& $_POST['question_two']!='false') $errors.=_e('Question two was not answered<br />');
         }
         
  

@@ -441,7 +441,7 @@ function checkForm(andSubmit,makeChanges)
         }
         if (bChecksOut) {
             jQuery('#ddcf_error_reporting').html('');
-            jQuery("#ddcf_contact_form_contents").fadeOut("fast");
+            jQuery("#ddcf_contact_form_contents").hide();
             jQuery("#ddcf_throbber").css("display", "block");
             submit();
         }
@@ -574,7 +574,15 @@ function adjust_for_size() {
     var usingSimpleAddition = jQuery('#ddcf_span_captcha_add').length;
     
     /* gap between label and control, px */
-    var controlMargin = 10; 
+    var controlMargin = 10;
+    
+    /* copy the text input's font and padding to the message box, as often the theme doesn't seem to style textareas explicitly */
+    jQuery('#ddcf_contact_message').css('font-family' , jQuery('#ddcf_contact_name').css('font-family'));
+    jQuery('#ddcf_contact_message').css('font-size' , jQuery('#ddcf_contact_name').css('font-size'));
+    jQuery('#ddcf_contact_message').css('font-color' , jQuery('#ddcf_contact_name').css('font-color'));
+    jQuery('#ddcf_contact_message').css('padding-left' , jQuery('#ddcf_contact_name').css('padding-left'));
+    jQuery('#ddcf_contact_message').css('padding-top' , jQuery('#ddcf_contact_name').css('padding-top'));
+   
     
     if(usingDatePicker||usingDateTimePicker) {
         /* set the width of the containers */
@@ -590,7 +598,8 @@ function adjust_for_size() {
     }
     
     if(usingDropDowns){
-        /* copy the text input's styling to the dropdown selects, as often the theme doesn't seem to style them explicitly */
+        /* copy the text input's styling to the dropdown selects, as often the theme doesn't seem to style them explicitly 
+        jQuery('.ddcf_dropdown').css('padding-top' , jQuery('#ddcf_contact_name').css('padding-top'));*/
         jQuery('.ddcf_dropdown').css('border-style' , jQuery('#ddcf_contact_name').css('border-top-style'));
         jQuery('.ddcf_dropdown').css('border-color' , jQuery('#ddcf_contact_name').css('border-top-color'));
         jQuery('.ddcf_dropdown').css('border-width' , jQuery('#ddcf_contact_message').css('border-top-width'));
@@ -737,8 +746,8 @@ jQuery(document).ready(function ($) {
                                     .focus(function() {if(jQuery("#ddcf_arrival_date").val()===ddcfArrivalDateDefault)
                                         jQuery("#ddcf_arrival_date").val("");});
 	jQuery("#ddcf_departure_date").focusout(function(){checkForm(false,true);})
-                                      .focus(function() {if(jQuery("#ddcf_departure_date").val()===ddcfDepartureDateDefault)
-                                        jQuery("#ddcf_departure_date").val("");});
+                                    .focus(function() {if(jQuery("#ddcf_departure_date").val()===ddcfDepartureDateDefault)
+                                      jQuery("#ddcf_departure_date").val("");});
 
 	// bind unfocus event for num adults / children
 	jQuery('#ddcf_num_adults').focusout(function(){checkForm(false,true);});

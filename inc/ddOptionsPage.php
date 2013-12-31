@@ -24,7 +24,6 @@
 
                 <!--[if gte IE 9]><style type="text/css">.gradient { filter: none; }</style><![endif]-->
 
-
 		<?php screen_icon(); ?>
 
 		<h2><div id="icon-plugins" class="icon32"></div><?php _e('DD Contact Form Settings', 'ddcf_plugin') ?></h2>
@@ -45,9 +44,11 @@
 					<li><a href="#tabs-1">General Settings</a></li>
 					<li><a href="#tabs-2">User Interface</a></li>
 					<li><a href="#tabs-3">Extra Information</a></li>
+                                        <li><a href="#tabs-4">Custom CSS</a></li>
 				</ul>
 
-				<form method="POST" action="options.php">
+				<form method="POST" action="options.php" id="ddcf_options_form" name="ddcf_options_form">
+                                    
 				<?php 
                                     settings_fields( 'ddcf_settings_group' ); // render the hidden input fields and handles the security aspects
                                     do_settings_fields( 'ddcf_settings_group', 'ddcf_settings_section_id' ); 
@@ -67,47 +68,41 @@
                                                                     <option value="Simple Addition" <?php if(get_option(ddcf_captcha_type, 'Simple Addition')=='Simple Addition') echo 'selected';?>>Simple Addition</option>
                                                                     <option value="None" <?php if(get_option(ddcf_captcha_type)=='None') echo 'selected';?>>None (not recommended)</option>
                                                     </select>
-                                                    <br /><br />
+                                                    <br /><br /><br />
                                                     <h4><?php _e('Google reCaptcha keys', 'ddcf_plugin') ?></h4>
                                                     <?php _e('To use the Google reCaptcha, you will need to sign up and get private and public keys. Signup is extremely quick and easy - see here: <a href="https://www.google.com/recaptcha/admin/create" target="_blank">https://www.google.com/recaptcha/admin/create</a>', 'ddcf_plugin') ?>
                                                     <br /><br />
                                                     <?php _e('Paste public key here:', 'ddcf_plugin') ?>
                                                     <br />
                                                     <textarea class="ddcf_textarea_input" name="ddcf_recaptcha_public_key" id="ddcf_recaptcha_public_key" value="<?php echo get_option(ddcf_recaptcha_public_key); ?>" ><?php echo get_option('ddcf_recaptcha_public_key'); ?></textarea>
-                                                    <br />
+                                                    <br /><br />
                                                     <?php _e('Paste private key here:', 'ddcf_plugin') ?>
                                                     <br />
                                                     <textarea class="ddcf_textarea_input" name="ddcf_recaptcha_private_key" id="ddcf_recaptcha_private_key" value="<?php echo get_option(ddcf_recaptcha_private_key); ?>" ><?php echo get_option('ddcf_recaptcha_private_key'); ?></textarea>
                                                 </div>
 						<h3>Privacy</h3>
                                                     <div>
-                                                        <p>
                                                                 <h4><?php _e('Keep a record of each enquiry', 'ddcf_plugin') ?></h4>
                                                                 <?php _e('Save details of each message sent from the contact form to your Wordpress database.', 'ddcf_plugin') ?>
                                                                 <br /><br />
                                                                 <input type="checkbox" id="ddcf_keep_records_check" name="ddcf_keep_records_check" value="ddcf_keep_records_check" <?php if(get_option(ddcf_keep_records_check, 'true')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Save details') ?>
-                                                        </p>
-                                                        <br />
-							<p>
+                                                                <br /><br /><br />
                                                                 <h4><?php _e('Future Contact Permission', 'ddcf_plugin') ?></h4>
-                                                                <?php _e('Offer to save user permission to send newsletters or other updates in the future.', 'ddcf_plugin') ?>                                                                       <br /><br />
+                                                                <?php _e('Offer to save user permission to send newsletters or other updates in the future.', 'ddcf_plugin') ?>                                                                                   <br /><br />
 								<input type="checkbox" id="ddcf_rec_updates_option_check" name="ddcf_rec_updates_option_check" value="ddcf_rec_updates_option_check" <?php if(get_option('ddcf_rec_updates_option_check')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Offer to register contact form users') ?>
 								<br /><br />
                                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="ddcf_rec_updates_message_check" name="ddcf_rec_updates_message_check" value="ddcf_rec_updates_message_check" <?php if(get_option('ddcf_rec_updates_message_check')) echo ' checked '; ?>>&nbsp;&nbsp;<?php _e('Custom message:'); ?>
 								<br />
 <textarea class="ddcf_textarea_input" name="ddcf_rec_updates_message" value="<?php echo get_option('ddcf_rec_updates_message'); ?>" id="ddcf_rec_updates_message" ><?php echo get_option('ddcf_rec_updates_message'); ?></textarea>
-							</p>
-                                                        <br />
-                                                        <p>
+                                                                <br /><br /><br />
                                                                 <h4><?php _e('Geolocation', 'ddcf_plugin') ?></h4>
-                                                                <?php _e('Save the IP address and geolocation information for each contact form user. Please ensure there are no legal issues using this in your area before enabling.<br /><br />To use the geolocation services, you will need to register with IPinfoDB - see here: <a href="http://www.ipinfodb.com/register.php" target="_blank">http://www.ipinfodb.com/register.php</a>.', 'ddcf_plugin') ?>
+                                                                <?php _e('Save the IP address and geolocation information for each contact form user.<br />To use the geolocation services, you will need to register with IPinfoDB - see here: <a href="http://www.ipinfodb.com/register.php" target="_blank">http://www.ipinfodb.com/register.php</a>.', 'ddcf_plugin') ?>
                                                                 <br /><br /><input type="checkbox" id="ddcf_geo_ip_option_check" name="ddcf_geo_ip_option_check" value="ddcf_geo_ip_option_check" <?php if(get_option('ddcf_geo_ip_option_check', false)) echo ' checked '; ?>>
                                                                 <?php _e('Save contact form user&#39;s IP address and geolocation information', 'ddcf_plugin') ?>
                                                                 <br /><br />
                                                                 <?php _e('Paste key here:', 'ddcf_plugin') ?>
                                                                 <br />
                                                                 <textarea class="ddcf_textarea_input" name="ddcf_geoloc_key" id="ddcf_geoloc_key" value="<?php echo get_option(ddcf_geoloc_key); ?>" ><?php echo get_option('ddcf_geoloc_key'); ?></textarea>
-                                                        </p>
                                                 </div>
                                                 <h3>Email</h3>
 						<div>
@@ -166,7 +161,6 @@
 					<div id="accordion2">
 						<h3>User Feedback</h3>
 						<div>
-                                                    <p>
                                                             <h4><?php _e('Form sent action', 'ddcf_plugin') ?></h4>
                                                             <?php
                                                                 _e('Once the user has sucessfully sent their message, you can either send them to a new page or display a thank you messsage on the current page:', 'ddcf_plugin');
@@ -189,9 +183,7 @@
                                                             <br />
                                                             <textarea class="ddcf_textarea_input" name="ddcf_thankyou_url" id="ddcf_thankyou_url" value="<?php echo $thankyouURL; ?>" ><?php echo $thankyouURL; ?></textarea>
 
-                                                    </p>
-                                                    <br />
-                                                    <p>
+                                                        <br /><br />
                                                         <h4><?php _e('Error checking', 'ddcf_plugin') ?></h4>
                                                         <?php
                                                             _e('Choose whether to check for user input errors either on the fly (ticks and crosses) or on submit button press.', 'ddcf_plugin');
@@ -203,11 +195,9 @@
                                                         <br /><br />
                                                         <input type="radio" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="onsubmit" <?php if($error_checking_method=='onsubmit') echo ' checked';?>>
                                                         <?php _e('Check for errors on form submit button press', 'ddcf_plugin'); ?>
-                                                    </p>
                                                 </div>
 						<h3>Appearance</h3>
 						<div>
-                                                    <p>
                                                         <h4><?php _e('Button Styling', 'ddcf_plugin') ?></h4>
                                                         <?php _e('Choose between theme styled buttons or premade ones from the jQueryUI library.', 'ddcf_plugin') ?>
                                                         <br /><br />
@@ -216,13 +206,10 @@
                                                                         <option value="ddcf_btn_style_themed" <?php if(get_option(ddcf_btn_style)!='ddcf_btn_style_jqueryui') echo 'selected';?>>WordPress</option>
                                                                         <option value="ddcf_btn_style_jqueryui" <?php if(get_option(ddcf_btn_style)=='ddcf_btn_style_jqueryui') echo 'selected';?>>jQueryUI</option>
                                                         </select>
-                                                   </p>
-                                                    <br /><br />
-                                                    <p>                                                         
+                                                        <br /><br /><br />                                                     
                                                     <?php _e('<h4>jQuery UI Theme</h4>
                                                               Select a theme for jQueryUI widgets.
-                                                              <br /><br />This only affects the datepickers and buttons. The buttons are only affected if jQueryUI button Styling is selected above.
-                                                              <br /><br />Select a premade jQuery UI theme:', 'ddcf_plugin') ?>                                                           
+                                                              <br /><br />This only affects the datepickers and buttons. The buttons are only affected if jQueryUI button styling is selected above.<br /><br />Select a premade jQuery UI theme:', 'ddcf_plugin') ?>                                                           
                                                             <select name="ddcf_jqueryui_theme" id="ddcf_jqueryui_theme">
                                                                             <option value="none" <?php if(get_option(ddcf_jqueryui_theme)=='none') echo 'selected';?>>None</option>
                                                                             <option value="custom" <?php if(get_option(ddcf_jqueryui_theme)=='custom') echo 'selected';?>>Custom</option>
@@ -252,23 +239,20 @@
                                                                             <option value="ui-lightness" <?php if(get_option(ddcf_jqueryui_theme)=='ui-lightness') echo 'selected';?>>UI Lightness</option>
                                                                             <option value="vader" <?php if(get_option(ddcf_jqueryui_theme)=='vader') echo 'selected';?>>Vader</option>
                                                             </select>
-                                                    </p>
-                                                    <br /><br />
+                                                    <br /><br /><br />
                                                     
 
                                                     <div id="ddcf_captcha_options">
-                                                        <p>
-                                                            <h4><?php _e('reCaptcha theme', 'ddcf_plugin') ?></h4>
-                                                            <?php _e('Select the theme for the google reCaptcha:', 'ddcf_plugin') ?>
-                                                            <select name="ddcf_recaptcha_theme" id="ddcf_recaptcha_theme">
-                                                                <option value="red" <?php if(get_option(ddcf_recaptcha_theme)=='red') echo 'selected';?>>Red (default)</option>
-                                                                <option value="white" <?php if(get_option(ddcf_recaptcha_theme)=='white') echo 'selected';?>>White</option>
-                                                                <option value="blackglass" <?php if(get_option(ddcf_recaptcha_theme)=='blackglass') echo 'selected';?>>Black Glass</option>
-                                                                <option value="clean" <?php if(get_option(ddcf_recaptcha_theme)=='clean') echo 'selected';?>>Clean</option-->
-                                                            </select>
-                                                        </p>
+                                                        <h4><?php _e('reCaptcha theme', 'ddcf_plugin') ?></h4>
+                                                        <?php _e('Select the theme for the google reCaptcha:', 'ddcf_plugin') ?>
+                                                        <select name="ddcf_recaptcha_theme" id="ddcf_recaptcha_theme">
+                                                            <option value="red" <?php if(get_option(ddcf_recaptcha_theme)=='red') echo 'selected';?>>Red (default)</option>
+                                                            <option value="white" <?php if(get_option(ddcf_recaptcha_theme)=='white') echo 'selected';?>>White</option>
+                                                            <option value="blackglass" <?php if(get_option(ddcf_recaptcha_theme)=='blackglass') echo 'selected';?>>Black Glass</option>
+                                                            <option value="clean" <?php if(get_option(ddcf_recaptcha_theme)=='clean') echo 'selected';?>>Clean</option-->
+                                                        </select>
                                                     </div>
-                                                    <br /><br />
+                                                    <br /><br /><br />
                                                     <br /><br />
                                                 </div>
 					</div> <!-- #accordion2 -->
@@ -298,34 +282,29 @@
 									<br /><br /-->
 								</div>
 							</div>
-                                                        <br /><br />
+                                                        <br /><br /><br />
                                                         <div  style="width:100%; height:65px;;">
                                                             <?php _e('<h4>Required Field</h4>', 'ddcf_plugin'); ?>
-                                                            <p>
                                                                 <input type="checkbox" id="ddcf_dates_compulsory_check" name="ddcf_dates_compulsory_check" value="ddcf_dates_compulsory_check" <?php if(get_option('ddcf_dates_compulsory_check')) echo ' checked '; ?>>
                                                                 <?php _e('Dates are a required field', 'ddcf_plugin'); ?>
-                                                            </p>
                                                         </div>
                                                         <br /><br />
 							<div>
 								<?php _e('<h4>Apply to posts in a specific category</h4>', 'ddcf_plugin'); ?>
-								<p>
-									<?php _e('You may want to only ask for dates on posts with a certain category. You can specify which category here.<br /><br />', 'ddcf_plugin'); ?>
+								<?php _e('You may want to only ask for dates on posts with a certain category. You can specify which category here.<br /><br />', 'ddcf_plugin'); ?>
 								<input type="checkbox" id="ddcf_dates_category_filter_check" name="ddcf_dates_category_filter_check" value="ddcf_dates_category_filter_check" <?php if(get_option('ddcf_dates_category_filter_check')) echo ' checked '; ?>>&nbsp;
 								<?php
                                                                     _e('Apply these settings to only one category: ', 'ddcf_plugin');
                                                                     wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'ddcf_dates_category_filter', 'id' => 'ddcf_dates_category_filter', 'class' => 'ddcf-category-filter-check', 'orderby' => 'name', 'selected' => get_option('ddcf_dates_category_filter'), 'hierarchical' => true, 'show_option_none' => __('None')));
 								?>
-								</p>
 							</div>
                                                 </div>
 						<h3>Party Size</h3>
                                                 <div>
                                                     <div style="width:100%; height:160px; margin-top:0.7em;">
                                                         <?php _e('<h4>Request Party Size</h4>', 'ddcf_plugin'); ?>
-                                                        <p>
                                                                 <?php _e('If your contact form is being used to collect bookings, you may want to request the number of people - for example, a restaurant or hotel room booking. You can ask for the number of adults and children on the contact form using these settings.', 'ddcf_plugin'); ?>
-                                                        </p><br />
+                                                        <br /><br />
                                                         <input type="checkbox" id="ddcf_extra_dropdown_one_check" name="ddcf_extra_dropdown_one_check" value="ddcf_extra_dropdown_one_check" <?php if(get_option('ddcf_extra_dropdown_one_check')) echo ' checked '; ?>>&nbsp;<?php _e('Include dropdown menu for number of adults', 'ddcf_plugin'); ?>
                                                         <br />
                                                         <br />
@@ -334,30 +313,25 @@
                                                         <br /><br />
                                                         <div  style="width:100%; margin-top: 3em;;">
                                                             <?php _e('<h4>Required Field</h4>', 'ddcf_plugin'); ?>
-                                                            <p>
                                                                 <input type="checkbox" id="ddcf_party_size_compulsory_check" name="ddcf_party_size_compulsory_check" value="ddcf_party_size_compulsory_check" <?php if(get_option('ddcf_party_size_compulsory_check')) echo ' checked '; ?>>
                                                                 <?php _e('Party size is a required field', 'ddcf_plugin'); ?>
-                                                            </p>
                                                         </div>
                                                         <br /><br />
 							<div>
 								<?php _e('<h4>Apply to posts in a specific category</h4>', 'ddcf_plugin'); ?>
-								<p>
 									<?php _e('You may want to only ask for party sizes on posts with a certain category. You can specify which category here.<br /><br />', 'ddcf_plugin'); ?>
 								<input type="checkbox" id="ddcf_party_size_category_filter_check" name="ddcf_party_size_category_filter_check" value="ddcf_party_size_category_filter_check" <?php if(get_option('ddcf_party_size_category_filter_check')) echo ' checked '; ?>>&nbsp;
 								<?php
                                                                     _e('Apply these settings to only one category: ', 'ddcf_plugin');
                                                                     wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'ddcf_party_size_category_filter', 'id' => 'ddcf_party_size_category_filter', 'class' => 'ddcf-category-filter-check', 'orderby' => 'name', 'selected' => get_option('ddcf_party_size_category_filter'), 'hierarchical' => true, 'show_option_none' => __('None')));
 								?>
-								</p>
 							</div>
                                                 </div>
 						<?php _e('<h3>Additional Questions</h3>', 'ddcf_plugin'); ?>
 						<div>
-							<p>
+
 								<?php _e('If you want to add extra questions to the contact form, you can specify them here.', 'ddcf_plugin'); ?>
 								<br /><br />
-							</p>
 
 							<h4>Optional Questions</h4>
 							<input type="checkbox" id="ddcf_extra_question_one_check" name="ddcf_extra_question_one_check" value="ddcf_extra_question_one_check" <?php if(get_option('ddcf_extra_question_one_check')) echo ' checked '; ?>>&nbsp; <?php _e('Include question 1'); ?>
@@ -369,23 +343,19 @@
                                                         <br /><br />
 
 
-                                                        <div  style="width:100%; height:85px;">
+                                                        <div>
                                                             <?php _e('<h4>Required Field</h4>', 'ddcf_plugin'); ?>
-                                                            <p>
                                                                 <input type="checkbox" id="ddcf_questions_compulsory_check" name="ddcf_questions_compulsory_check" value="ddcf_questions_compulsory_check" <?php if(get_option('ddcf_questions_compulsory_check')) echo ' checked '; ?>>
                                                                 <?php _e('Additional questions are a required field', 'ddcf_plugin'); ?>
-                                                            </p>
                                                         </div>
 							<div>
 								<?php _e('<h4>Apply to posts in a specific category</h4><br />', 'ddcf_plugin'); ?>
-								<p>
 									<?php _e('You may want to only add extra question requests to posts within a certain category. You can specify which category here.<br /><br />', 'ddcf_plugin'); ?>
 								<input type="checkbox" id="ddcf_extra_question_category_filter_check" name="ddcf_extra_question_category_filter_check" value="ddcf_extra_question_category_filter_check" <?php if(get_option('ddcf_extra_question_category_filter_check')) echo ' checked '; ?>>&nbsp;
 								<?php
                                                                     _e('Apply these settings to only one category:', 'ddcf_plugin');
                                                                     wp_dropdown_categories(array('hide_empty' => 0, 'name' => 'ddcf_extra_question_category_filter', 'id' => 'ddcf_extra_question_category_filter', 'class' => 'ddcf-category-filter-check', 'orderby' => 'name', 'selected' => get_option('ddcf_extra_question_category_filter'), 'hierarchical' => true, 'show_option_none' => __('None')));
 								?>
-								</p>
 							</div>
                                                         <br /><br />
 						</div>
@@ -393,6 +363,22 @@
 				</div><!-- tabs-3 -->
 
 
+                                <div id="tabs-4">
+                                    <br />
+                                    CSS entered here will only appear on pages with a contact form.
+                                    <br /><br />
+                                    Use custom CSS: <input type="checkbox" id="ddcf_custom_css_check" name="ddcf_custom_css_check" value="ddcf_custom_css_check" <?php if(get_option('ddcf_custom_css_check')) echo ' checked '; ?>><br /><br />
+                                    <textarea class="ddcf_textarea_input" name="ddcf_custom_css" value="<?php echo get_option('ddcf_custom_css_check'); ?>" id="ddcf_custom_css" ><?php echo '/* Enter any custom CSS here */'; ?></textarea>
+                                    <br /><br />
+                                    <div id="ddcf_update_css_btn_container" name="ddcf_update_css_btn_container">
+                                        <input class="wpcf7-submit" id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" value="<?php _e('Update','ddcf_plugin') ?>" action="">
+                                    </div>
+                                    <input type="hidden" name="ddcf_session" id="ddcf_session" value="ddcf_options_session" />
+                                    <input type="hidden" name="action" value="the_ajax_hook" />                          
+                                    <?php wp_nonce_field( 'ddcf_update_css_action' ); ?>
+                                </div><!-- tabs-4 -->
+                                
+                                
 			</div> <!-- tabs -->
 			<?php submit_button(); ?>
 		</form>

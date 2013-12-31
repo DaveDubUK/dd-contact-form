@@ -53,6 +53,23 @@ h4 {
 
 .ui-widget select {margin-left:0.5em}
 
+#ddcf_custom_css {
+        height:100%;
+        min-height:30em;
+        width:100%;
+        max-width:100%;
+}
+        #ddcf_update_css_btn_container {
+                width:100%;
+                position:relative;
+        }
+
+        #ddcf_update_css_btn {
+                float: none;
+                margin: auto;
+                display: block;
+        }
+
 /* text inputs on options form */
 .ddcf_text_input {  
 	min-width:20em;
