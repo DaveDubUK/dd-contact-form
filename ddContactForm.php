@@ -51,6 +51,9 @@ License: GNU GPL
 
     // hook into the 'admin_menu' action to add settings page to WP Settings menu
     add_action( 'admin_menu', 'add_ddcf_options_to_menu' );
+    
+    // for injecting css specified on settings page 
+    add_action('wp_head', 'ddcf_css_inject');
 
     // add a link to the settings page on the installed plugins page 
     add_filter('plugin_action_links', 'ddcf_plugin_settings_link', 10, 2);

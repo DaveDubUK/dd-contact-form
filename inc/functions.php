@@ -44,7 +44,7 @@ function receive_jquery_ajax_call(){
     session_start();
 
     // check requested session type
-if($_POST['ddcf_session']=='ddcf_manager_session') {
+    if($_POST['ddcf_session']=='ddcf_manager_session') {
         include 'ddManagerSession.php';
         die();
     } // end of ddcf_manager_session
@@ -57,16 +57,33 @@ if($_POST['ddcf_session']=='ddcf_manager_session') {
         // options ajax - updating css
         if(check_ajax_referer('ddcf_update_css_action', 'ddcf_update_css_nonce', false)) {
             
-            // put passed 
+            // put passed css into db ready for next contact form load
+            global $wpdb;
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            $errors = '';
+            $table_name = $wpdb->prefix."custom_css";
             
-            $return = array(
-                    'ddcf_error' => 'options session ok :-)',
-            );
-        } else {
-            $return = array(
-                    'ddcf_error' => '406'
-            );  
+            /* no sanitisation - because they're entering code whilst signed in, it's allowed. Just this once. */
+            /* todo: see if any sanitisation methods work ok on CSS code */
+            if(isset($_POST['ddcf_custom_css'])) {
+                
+                $data = filter_var($_POST['ddcf_custom_css'],FILTER_SANITIZE_STRING);
+                $sql = "UPDATE ".$table_name ." SET custom_css_index = 1, custom_css_text = '".$data."'";
+                
+                $success = $wpdb->update( $table_name, 
+                                            array( 'custom_css_text' => $data), 
+                                            array( 'custom_css_index' => 1 ));                
+                if(!$success) {
+                    $errors.='Unable to update database';     
+                }
+            }
+            else $errors.='No CSS?';
+            
+            if(!$errors) $errors = 'CSS updated';
+            $return = array('ddcf_error' => $errors);
         }
+        else $return = array('ddcf_error' => '406');  
+
         wp_send_json($return);
         die();
     }
@@ -97,6 +114,24 @@ function ddcf_management_page() {
 // dd contact form options pages
 function ddcf_options_page() {
 	include 'ddOptionsPage.php';
+}
+
+// wp_head action
+function ddcf_css_inject() {
+        global $post;
+        $check = get_option(ddcf_custom_css_check);
+        if (get_option(ddcf_custom_css_check)
+                && has_shortcode( $post->post_content,'dd_contact_form')){
+            /* inject any custom css specified in the settings */
+            global $wpdb;
+            require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+            $table_name = $wpdb->prefix . "custom_css";
+            $query = "SELECT custom_css_text FROM ".$table_name." WHERE custom_css_index = 1";
+            $custom_css = $wpdb->get_row($query);                
+            echo '<style type="text/css">'
+                    .$custom_css->custom_css_text.
+                  '</style>';
+        }
 }
 
 // enqueue and localise scripts
@@ -154,8 +189,10 @@ function ddcf_enqueue_front_end_pages () {
         }
       
         /* contact form */
-        if(has_shortcode( $post->post_content, 'dd_contact_form' ))
+        if(has_shortcode( $post->post_content, 'dd_contact_form' )) {
                 wp_enqueue_style('ddcf_layout_style', plugins_url().'/dd-contact-form/css/style-dd-contact-page.css');
+        }
+        
         
         /* manager page */
         if(has_shortcode( $post->post_content, 'dd_manager_page' )&&current_user_can(read)) {
@@ -172,7 +209,12 @@ function ddcf_enqueue_back_end_pages () {
         
         /* options page js */
         wp_enqueue_script( 'ddcf_options_page_script', plugins_url().'/dd-contact-form/js/dd-contact-form-options.js',
-                                                array( 'jquery', 'jquery-ui-core',  'jquery-ui-accordion',  'jquery-ui-tabs') );
+                                                array( 'jquery', 'jquery-ui-core',
+                                                                 'jquery-effects-core', 
+                                                                 'jquery-ui-core', 
+                                                                 'jquery-effects-fade', 
+                                                                 'jquery-ui-accordion',
+                                                                 'jquery-ui-tabs'));
         
         //wp_enqueue_style('ddcf_normalise_style', plugins_url().'/dd-contact-form/css/normalise.css');
         wp_enqueue_style('ddcf_options_page_style', plugins_url().'/dd-contact-form/css/style-dd-options-page.css');
@@ -360,10 +402,12 @@ function dd_contact_form_activation()
 	// stores the custom css specified on the settings page
 	$table_name = $wpdb->prefix . "custom_css";
 	$sql = 'CREATE TABLE IF NOT EXISTS ' .$table_name . '(
-		custom_css_index INTEGER(10) NOT NULL AUTO_INCREMENT,
-		custom_css_text TEXT,
+		custom_css_index INTEGER(10) NOT NULL,
+		custom_css_text MEDIUMTEXT,
 		PRIMARY KEY (custom_css_index) )';
-	if(!dbDelta($sql)) trigger_error ("Unable to update database");        
+	if(!dbDelta($sql)) trigger_error ("Unable to update database");      
+        $sql = "INSERT INTO ".$table_name ." ('custom_css_index', 'custom_css_text') VALUES ('0', '/* custom css */')";
+        if(!dbDelta($sql)) trigger_error ("Unable to update database");      
 }
 
 //function dd_contact_form_deactivation()

@@ -374,7 +374,7 @@
                                                            <!--div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right"-->
                                                                <!--div id="ddcf_simple_add_captcha" name="ddcf_simple_add_captcha"-->
                                                                <div name="ddcf_captcha_question" id="ddcf_captcha_question">What is <span id="ddcf_captcha_one">?</span> plus <span id="ddcf_captcha_two">?</span> ?</div>
-                                                                   <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="wpcf7-text" title="Please add the two numbers"/>
+                                                                   <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="wpcf7-text ddcf_input_base" title="'.__('Please add the two numbers').'"/>
                                                                    <div id="ddcf_contact_captcha_fb" name="ddcf_contact_captcha_fb" class="ddcf_contact_input_verify"></div>
 
                                                                <!--/div-->

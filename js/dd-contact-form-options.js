@@ -20,29 +20,32 @@
     If not, see <http://www.gnu.org/licenses/>.
 */
 
+var ddcfSneakyAjax;
+
+function selectCustomCSS(isSelected) {
+	if(isSelected) {
+            jQuery('#ddcf_custom_css').css("background-color","#ffffff").css("opacity","1");
+            jQuery('#ddcf_update_css_btn').prop('disabled', false); 
+        }
+	else {
+            jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","0.35");
+            jQuery('#ddcf_update_css_btn').prop('disabled', true); 
+        }
+}
+
 function selectTextareaOne(isSelected) {
-	if(isSelected) jQuery('#ddcf_extra_question_one').css("background-color","#ffffff")
-										 .css("color","#000000");
-										 //.prop('disabled', false);
-	else jQuery('#ddcf_extra_question_one').css("background-color","#ececec")
-										 .css("color","#cccccc");
-										 //.prop('disabled', true);
+	if(isSelected) jQuery('#ddcf_extra_question_one').css("background-color","#ffffff").css("opacity","1");
+	else jQuery('#ddcf_extra_question_one').css("background-color","#ececec").css("opacity","0.35");
 }
 
 function selectTextareaTwo(isSelected) {
-	if(isSelected) jQuery('#ddcf_extra_question_two').css("background-color","#ffffff")
-										 .css("color","#000000");
-										 //.prop('disabled', false);
-	else jQuery('#ddcf_extra_question_two').css("background-color","#ececec")
-										 .css("color","#cccccc");
-										 //.prop('disabled', true);
+	if(isSelected) jQuery('#ddcf_extra_question_two').css("background-color","#ffffff").css("opacity","1");
+	else jQuery('#ddcf_extra_question_two').css("background-color","#ececec").css("opacity","0.35");
 }
 
 function selectExtraQuestionFilter(isSelected) {
-	if(isSelected) jQuery('#ddcf_extra_question_category_filter').css("background-color","#ffffff")
-										 .css("color","#000000");
-	else jQuery('#ddcf_extra_question_category_filter').css("background-color","#ececec")
-										 .css("color","#cccccc");
+	if(isSelected) jQuery('#ddcf_extra_question_category_filter').css("background-color","#ffffff").css("opacity","1");
+	else jQuery('#ddcf_extra_question_category_filter').css("background-color","#ececec").css("opacity","0.35");
 }
 
 function selectRequestStartDate(isSelected) {
@@ -50,7 +53,7 @@ function selectRequestStartDate(isSelected) {
             jQuery('#ddcf_start_date_time_check').css("background-color","#ffffff").css("opacity","1");
         }
 	else {
-            jQuery('#ddcf_start_date_time_check').css("background-color","#ececec") .css("opacity","0.35");
+            jQuery('#ddcf_start_date_time_check').css("background-color","#ececec").css("opacity","0.35");
         }
 }
 
@@ -64,17 +67,13 @@ function selectRequestEndDate(isSelected) {
 }
 
 function selectRequestPartySizeFilter(isSelected) {
-	if(isSelected) jQuery('#ddcf_party_size_category_filter').css("background-color","#ffffff")
-										 .css("opacity","1");
-	else jQuery('#ddcf_party_size_category_filter').css("background-color","#ececec")
-										 .css("opacity","0.35");    
+	if(isSelected) jQuery('#ddcf_party_size_category_filter').css("background-color","#ffffff").css("opacity","1");
+	else jQuery('#ddcf_party_size_category_filter').css("background-color","#ececec").css("opacity","0.35");
 }
 
 function selectRequestDatesFilter(isSelected) {
-	if(isSelected) jQuery('#ddcf_dates_category_filter').css("background-color","#ffffff")
-										 .css("opacity","1");
-	else jQuery('#ddcf_dates_category_filter').css("background-color","#ececec")
-										 .css("opacity","0.35");    
+	if(isSelected) jQuery('#ddcf_dates_category_filter').css("background-color","#ffffff").css("opacity","1");
+	else jQuery('#ddcf_dates_category_filter').css("background-color","#ececec").css("opacity","0.35");
 }
 
 function selectSaveUserDetails(isSelected) {
@@ -137,9 +136,21 @@ jQuery(document).ready(function ($) {
 	// enable tabs
 	jQuery( "#tabs" ).tabs();
         
+        jQuery( "#ddcf_contact_form" ).submit(function( event ) {
+            alert( "Handler for .submit() called." );
+        });
+        
+        // have to hide the ajax related inputs otherwise WP won't submit the settings form properly */
+        ddcfSneakyAjax = jQuery('#ddcf_sneaky_ajax').html();
+        jQuery('#ddcf_sneaky_ajax').html('');  
+        
 	// update css button
 	jQuery('#ddcf_update_css_btn')
                 .click(function( event ) {
+                            jQuery('#ddcf_sneaky_ajax').html(ddcfSneakyAjax); /* pop the ajax related inputs back in at the last moment */          
+                            jQuery('#ddcf_options_feedback').css('display', 'block');
+                            jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","0.35");
+                            jQuery('#ddcf_update_css_btn').prop('disabled', true);
                             event.preventDefault();
                             submitCSS();
                     });    
@@ -195,5 +206,11 @@ jQuery(document).ready(function ($) {
         selectSaveUserDetails(jQuery('#ddcf_keep_records_check').is(":checked")); // first run through
 	jQuery('#ddcf_keep_records_check').change(function() {
 		selectSaveUserDetails(jQuery(this).is(":checked"));
-	});        
+	});
+        
+        /* grey out custom css if not selected */
+        selectCustomCSS(jQuery('#ddcf_custom_css_check').is(":checked")); // first run through
+	jQuery('#ddcf_custom_css_check').change(function() {
+		selectCustomCSS(jQuery(this).is(":checked"));
+	});
 });

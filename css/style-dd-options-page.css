@@ -34,8 +34,28 @@ h4 {
 	min-height:800px;
 }
 
+/* throbber for custom css ajax update */
+#ddcf_custom_css_container {
+    position:relative;
+    width:100%;
+}
+#ddcf_options_feedback {
+    display:none; /* controlled by jQuery at runtime */
+    position:absolute;
+    height: 1.5em;
+    font-size:1.2em;
+    width:100%;
+    top:50%;
+    float:none;
+    margin:auto;
+    text-align:center;
+    background-image:url('images/dd-contact-form-ajax-loader.gif'); /* controlled by jQuery at runtime  */
+    background-repeat:no-repeat;
+    background-position:center center;    
+}
+
 .ui-accordion .ui-accordion-content {
-        overflow:hidden !important; /* workaround for what seems to be this issue: http://bugs.jqueryui.com/ticket/4208 */
+        overflow:hidden !important; /* workaround cludge for what seems to be this issue: http://bugs.jqueryui.com/ticket/4208 */
         padding-bottom:auto;
 }
 

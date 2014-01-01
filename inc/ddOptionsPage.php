@@ -368,14 +368,32 @@
                                     CSS entered here will only appear on pages with a contact form.
                                     <br /><br />
                                     Use custom CSS: <input type="checkbox" id="ddcf_custom_css_check" name="ddcf_custom_css_check" value="ddcf_custom_css_check" <?php if(get_option('ddcf_custom_css_check')) echo ' checked '; ?>><br /><br />
-                                    <textarea class="ddcf_textarea_input" name="ddcf_custom_css" value="<?php echo get_option('ddcf_custom_css_check'); ?>" id="ddcf_custom_css" ><?php echo '/* Enter any custom CSS here */'; ?></textarea>
-                                    <br /><br />
-                                    <div id="ddcf_update_css_btn_container" name="ddcf_update_css_btn_container">
-                                        <input class="wpcf7-submit" id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" value="<?php _e('Update','ddcf_plugin') ?>" action="">
+                                    <div id="ddcf_custom_css_container" name="ddcf_custom_css_container">
+                                        <div id="ddcf_options_feedback" name="ddcf_options_feedback"></div>
+                                        <textarea class="ddcf_textarea_input" name="ddcf_custom_css" value="" id="ddcf_custom_css" ><?php 
+                                        global $wpdb;
+                                        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+                                        $table_name = $wpdb->prefix . "custom_css";
+                                        $query = "SELECT custom_css_text FROM ".$table_name." WHERE custom_css_index = 1";
+                                        $custom_css = $wpdb->get_row($query);                                       
+                                        echo $custom_css->custom_css_text;
+                                    ?></textarea>
                                     </div>
-                                    <input type="hidden" name="ddcf_session" id="ddcf_session" value="ddcf_options_session" />
-                                    <input type="hidden" name="action" value="the_ajax_hook" />                          
-                                    <?php wp_nonce_field( 'ddcf_update_css_action' ); ?>
+                                    <br />
+                                    <div id="ddcf_update_css_btn_container" name="ddcf_update_css_btn_container">
+                                        <input id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" value="<?php _e('Update','ddcf_plugin') ?>" action="the_ajax_hook">
+                                    </div>
+                                    
+                                    <!-- this div holds the inputs needed for the ajax call to update the css -->
+                                    <!-- however, the inputs will conflict with the normal operation of the settings form -->
+                                    <!-- so we hide this div using jQuery until there is an 'Update CSS' button press -->
+                                    <!-- then hide the div again when the ajax call returns -->
+                                    <div id="ddcf_sneaky_ajax" name="ddcf_sneaky_ajax">
+                                        <input type="hidden" name="ddcf_session" id="ddcf_session" value="ddcf_options_session" />
+                                        <input type="hidden" name="action" value="the_ajax_hook" />
+                                        <?php wp_nonce_field( 'ddcf_update_css_action' ); ?>
+                                    </div>
+                                    
                                 </div><!-- tabs-4 -->
                                 
                                 

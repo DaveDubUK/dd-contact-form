@@ -109,12 +109,14 @@ function submit(){
 
 /* Options page stuff */
 function submitCSS(){
-	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_options_form").serializeArray()
-				,
-				function(php_message){
-                                    
-                                        });
-                     }
+	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_options_form").serializeArray(),
+            function(php_message){
+                    jQuery('#ddcf_sneaky_ajax').html(''); /* hide the ajax related inputs again */
+                    jQuery('#ddcf_options_feedback').css('display', 'none');                    
+                    jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","1.0");
+                    jQuery('#ddcf_update_css_btn').prop('disabled', false);
+                });
+             }
 
 
 /* Manager page stuff */
