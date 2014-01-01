@@ -136,11 +136,7 @@ jQuery(document).ready(function ($) {
 	// enable tabs
 	jQuery( "#tabs" ).tabs();
         
-        jQuery( "#ddcf_contact_form" ).submit(function( event ) {
-            alert( "Handler for .submit() called." );
-        });
-        
-        // have to hide the ajax related inputs otherwise WP won't submit the settings form properly */
+        // have to hide the ajax related inputs otherwise WP won't submit the settings form properly
         ddcfSneakyAjax = jQuery('#ddcf_sneaky_ajax').html();
         jQuery('#ddcf_sneaky_ajax').html('');  
         

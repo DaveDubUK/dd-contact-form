@@ -381,7 +381,7 @@
                                     </div>
                                     <br />
                                     <div id="ddcf_update_css_btn_container" name="ddcf_update_css_btn_container">
-                                        <input id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" value="<?php _e('Update','ddcf_plugin') ?>" action="the_ajax_hook">
+                                        <input id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" class="button button-primary" value="<?php _e('Update CSS','ddcf_plugin') ?>" action="the_ajax_hook">
                                     </div>
                                     
                                     <!-- this div holds the inputs needed for the ajax call to update the css -->

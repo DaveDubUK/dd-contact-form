@@ -406,8 +406,11 @@ function dd_contact_form_activation()
 		custom_css_text MEDIUMTEXT,
 		PRIMARY KEY (custom_css_index) )';
 	if(!dbDelta($sql)) trigger_error ("Unable to update database");      
-        $sql = "INSERT INTO ".$table_name ." ('custom_css_index', 'custom_css_text') VALUES ('0', '/* custom css */')";
-        if(!dbDelta($sql)) trigger_error ("Unable to update database");      
+        $populated = mysql_result(mysql_query('SELECT COUNT(*) FROM '.$table_name), 0);
+	if(!$populated) {
+            $sql = "INSERT INTO ".$table_name ." VALUES ('1', '/* you can add your own custom css here */')";
+            if(!dbDelta($sql)) trigger_error ("Unable to update database");  
+        }
 }
 
 //function dd_contact_form_deactivation()

@@ -109,7 +109,7 @@
                                                 echo '<div class="ddcf_details_row" name="ddcf_captcha_details_row" id="ddcf_captcha_details_row">
                                                         <div class="ddcf_details_row_division ddcf_full_width">';
                                                 if(get_option(ddcf_recaptcha_public_key)) {
-                                                    echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right">
+                                                    echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_float_right">
                                                             <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha" ></div>
                                                             <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
                                                          </div>';
@@ -371,7 +371,7 @@
                                            echo '<div class="ddcf_details_row" name="ddcf_captcha_details_row" id="ddcf_captcha_details_row">
                                                    <div class="ddcf_details_row_division ddcf_full_width">
                                                        <span name="ddcf_span_captcha_add" id="ddcf_span_captcha_add">
-                                                           <!--div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right"-->
+                                                           <!--div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_float_right"-->
                                                                <!--div id="ddcf_simple_add_captcha" name="ddcf_simple_add_captcha"-->
                                                                <div name="ddcf_captcha_question" id="ddcf_captcha_question">What is <span id="ddcf_captcha_one">?</span> plus <span id="ddcf_captcha_two">?</span> ?</div>
                                                                    <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="wpcf7-text ddcf_input_base" title="'.__('Please add the two numbers').'"/>
@@ -402,7 +402,7 @@
                                          ||$extra_dropdown_two_check)) {
                                          echo '<div class="ddcf_float_left">';
                                          if(get_option(ddcf_recaptcha_public_key)) {
-                                                 echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_input_base ddcf_float_right">
+                                                 echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_float_right">
                                                          <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha" ></div>
                                                          <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
                                                       </div>';
@@ -497,9 +497,8 @@
                                 <?php
                                 if(get_option(ddcf_rec_updates_option_check)) {
                                         $updates_message = get_option('ddcf_rec_updates_message');
-                                        if($updates_message)
-                                            echo $updates_message.'&nbsp;&nbsp;<input type="checkbox" name="ddcf_newsletter_signup" id="ddcf_newsletter_signup" class="ddcf_input_base" value="ddcf_newsletter_signup" checked>';
-                                        else echo _('Receive email updates from us in the future?','ddcf_plugin').'&nbsp;&nbsp;<input type="checkbox" name="ddcf_newsletter_signup" id="ddcf_newsletter_signup" class="ddcf_input_base" value="ddcf_newsletter_signup" checked>';
+                                        if(!$updates_message) $updates_message = __('Receive updates? ','ddcf_plugin');
+                                        echo $updates_message.'&nbsp;&nbsp;<input type="checkbox" name="ddcf_newsletter_signup" id="ddcf_newsletter_signup" class="ddcf_input_base" value="ddcf_newsletter_signup" checked>';
                                 }?>
                             </div> <!-- #ddcf_checkbox_area -->
                             

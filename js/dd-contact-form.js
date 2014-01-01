@@ -526,6 +526,7 @@ function adjust_for_size() {
                 jQuery('.ddcf_span_date').css('float','left').css('margin-left','0.5em');                
                 jQuery('.ddc_span_datetime').css('float','left').css('margin-left','1.0em');
                 jQuery('#ddcf_google_recaptcha').css('float', 'none').css('margin', 'auto');
+                jQuery('#ddcf_span_captcha_add').css('margin-bottom', '1.0em');
     }
     else { // width > flipWidth                
                 /* tweak top right and left section width ratio */                
@@ -548,6 +549,9 @@ function adjust_for_size() {
                 jQuery('#ddcf_dates_container').css('float','none');
                 jQuery('.ddcf_span_date').css('float','none').css('margin-left','0em');
                 jQuery('.ddc_span_datetime').css('float','none').css('margin-left','0em');
+                
+                /* don't double up the margin */
+                jQuery('#ddcf_span_captcha_add').css('margin-bottom', '0px');
                 
                 /* make the reCaptcha look a bit tidier */
                 if(ddcfWidth<750&&jQuery('#ddcf_google_recaptcha').length>0&&formDensity===5) jQuery('#ddcf_google_recaptcha').css('float', 'right').css('margin', '0');
@@ -609,7 +613,7 @@ function adjust_for_size() {
         jQuery('.ddcf_dropdown').css('-o-transition' , jQuery('#ddcf_contact_name').css('-o-transition'));
         jQuery('.ddcf_dropdown').css('transition' , jQuery('#ddcf_contact_name').css('transition'));
         jQuery('.ddcf_dropdown').css('color' , jQuery('#ddcf_contact_name').css('color'));
-        jQuery('.ddcf_dropdown').css('height' , jQuery('#ddcf_contact_name').css('height'));
+        jQuery('.ddcf_dropdown').css('height' , jQuery('#ddcf_contact_name').innerHeight());
         jQuery('.ddcf_dropdown').css('background-color' , jQuery('#ddcf_contact_name').css('background-color'));
         jQuery('.ddcf_dropdown').css('-webkit-appearance' , jQuery('#ddcf_contact_name').css('-webkit-appearance'));
         jQuery('.ddcf_dropdown').css('-moz-appearance' , jQuery('#ddcf_contact_name').css('-moz-appearance'));
@@ -654,21 +658,31 @@ function adjust_for_size() {
         }
     }
     
-    /* set top right section's vertical alignment  */
-    var topLeftHeight = jQuery("#ddcf_contact_form_top_left").height();
-    var topRightHeight = jQuery("#ddcf_contact_form_top_right").height();
-    if(topRightHeight<topLeftHeight) topRightHeight = topLeftHeight;
-    jQuery("#ddcf_contact_form_top_right").css('height', topRightHeight);
-    var topRightOffset = topRightHeight/2.0;
-    jQuery("#ddcf_details_rows_container").css('margin-top', -topRightOffset);  
+ 
     
-    /* set the rhs form elements container vertical alignment */
-    /* first a wee cludge to account for a miscounted bottom margin of 1em on the lhs  */
-    var div = jQuery('<div style="width:1em;margin:0 !important;padding:0 !important;border:0 !important;"></div>').appendTo('body');
-    var marginError = div.width(); div.remove(); 
-    var middleBitOffset = ((topRightHeight-jQuery("#ddcf_middle_bit").height())-marginError)/2;
-    if(ddcfWidth<750&&ddcfWidth>flipWidth&&jQuery('#ddcf_google_recaptcha').length>0&&formDensity===5) jQuery("#ddcf_middle_bit").css('margin-top', '0' );      
-    else jQuery("#ddcf_middle_bit").css('margin-top', middleBitOffset );      
+    if(ddcfWidth>flipWidth) {
+        
+        /* vertically align the top rhs section */
+        
+        /* set top right section's vertical alignment  */
+        var topLeftHeight = jQuery("#ddcf_contact_form_top_left").height();
+        var topRightHeight = jQuery("#ddcf_contact_form_top_right").height();
+        if(topRightHeight<topLeftHeight) topRightHeight = topLeftHeight;
+        jQuery("#ddcf_contact_form_top_right").css('height', topRightHeight);
+        var topRightOffset = topRightHeight/2.0;
+        jQuery("#ddcf_details_rows_container").css('margin-top', -topRightOffset);         
+        
+        /* set the rhs form elements container vertical alignment */
+        /* first a wee cludge to account for a miscounted bottom margin of 1em on the lhs  */
+        var div = jQuery('<div style="width:1em;margin:0 !important;padding:0 !important;border:0 !important;"></div>').appendTo('body');
+        var marginError = div.width(); div.remove();
+        var middleBitOffset = ((topRightHeight-jQuery("#ddcf_middle_bit").height())-marginError)/2;
+        if(ddcfWidth<750&&ddcfWidth>flipWidth&&jQuery('#ddcf_google_recaptcha').length>0&&formDensity===5) jQuery("#ddcf_middle_bit").css('margin-top', '0' );      
+        else jQuery("#ddcf_middle_bit").css('margin-top', middleBitOffset );
+    } else {
+        jQuery("#ddcf_middle_bit").css('margin-top', '0' );
+        jQuery("#ddcf_contact_form_top_right").css('height', 'auto');
+    }
 }
 
 
@@ -793,6 +807,11 @@ jQuery(document).ready(function ($) {
                 if(inputs.index(this)<inputs.length-2) {
                     e.preventDefault();
                     inputs.eq(nextInput).focus();
+                    /* pressing return when autocomplete is active in FF is borked */
+                    /* The code below showed signs of a fix, but ran out of time */
+//                    if(self.menu.active) e.preventDefault();
+//                    if(jQuery(this).val()!=ui.item.value) jQuery(this).val(ui.item.value);
+//                    else inputs.eq(nextInput).focus();                    
                 }
             }
         });    

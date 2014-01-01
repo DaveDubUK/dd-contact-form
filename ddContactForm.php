@@ -2,7 +2,7 @@
 /*
 Plugin Name: DD Contact Form
 Plugin URI: http://davedub.co.uk/davedub/wordpress/dd-contact-form/
-Description: Simple to use and highly configurable, DD Contact Form gives your website users a clear, easy to fill in contact form designed to make the message sending process as painless as possible. The form is fully responsive, automagically optimising the layout for even the smallest of screens. The form look and feel is driven by the current theme, so it fit's in instantly on most occasions. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Also integrated into the plugin is a basic but functional contacts management system. Other features include: multiple contact form recipient email addresses, additional question options, date fields and more.
+Description: Simple to use and highly configurable, DD Contact Form gives your website users a clear, easy to fill in contact form designed to make the message sending process as painless as possible. The form is fully responsive, automagically optimising the layout for even the smallest of screens. The form look and feel is driven by the current theme, so it fits in instantly with most themes. For detailed configuration there is a built in css editor. The captcha options offer a choice of built in Simple Addition or Google reCaptcha (Google reCaptcha id required). Also integrated into the plugin is a basic but functional contacts management system. Other features include: multiple contact form recipient email addresses, additional question options, date fields and more.
 Version: 1.0b
 Author: Dave Wooldridge
 Author URI: http://davedub.co.uk
