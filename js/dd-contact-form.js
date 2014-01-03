@@ -468,9 +468,9 @@ function adjust_for_size() {
     /* tiny screens */
     if(ddcfWidth<=250){
                 /* just nudge the Simple Add captcha feedback div out the way */
-                jQuery('#ddcf_contact_captcha_fb').css('top', 'auto').css('bottom', '0px').css('right', '50%');                
+                jQuery('#ddcf_contact_captcha_fb').css('top', 'auto').css('bottom', '-3px').css('right', '50%');                
     } else {
-                jQuery('#ddcf_contact_captcha_fb').css('top', '47%').css('bottom', 'auto').css('right', '-1.5em');
+                jQuery('#ddcf_contact_captcha_fb').css('top', '47%').css('bottom', 'auto').css('right', '-2em');
     }
 
     /* small screens */
@@ -525,7 +525,7 @@ function adjust_for_size() {
                 jQuery('#ddcf_dates_container').css('float','left');
                 jQuery('.ddcf_span_date').css('float','left').css('margin-left','0.5em');                
                 jQuery('.ddc_span_datetime').css('float','left').css('margin-left','1.0em');
-                jQuery('#ddcf_google_recaptcha').css('float', 'none').css('margin', 'auto');
+                jQuery('#ddcf_google_recaptcha').css('float', 'none').css('margin', 'auto auto 1.0em auto');
                 jQuery('#ddcf_span_captcha_add').css('margin-bottom', '1.0em');
     }
     else { // width > flipWidth                
@@ -560,17 +560,7 @@ function adjust_for_size() {
     }   
     
     /* tidy up form elements */
-    
-    /* vertically align FB divs (ticks and crosses) */
-    var fBOffset = jQuery('#ddcf_contact_name').height()/2;
-    //jQuery("#ddcf_contact_name_fb").css('margin-top', -fBOffset );
-    jQuery("#ddcf_contact_name_fb").css('margin-top', -fBOffset );
-    jQuery("#ddcf_contact_email_fb").css('margin-top', -fBOffset );
-    jQuery("#ddcf_contact_subject_fb").css('margin-top', -fBOffset );
-    jQuery("#ddcf_question_one_fb").css('margin-top', -fBOffset );
-    jQuery("#ddcf_question_two_fb").css('margin-top', -fBOffset );
-    jQuery("#ddcf_contact_message_fb").css('top', fBOffset );
-    
+
     /* do we have additional fields we need to consider now? */
     var usingDatePicker = jQuery('.ddcf_date_picker').length;
     var usingDateTimePicker = jQuery('.ddcf_datetime_picker').length;
@@ -580,6 +570,31 @@ function adjust_for_size() {
     /* gap between label and control, px */
     var controlMargin = 16;
     
+    /* get our target values */
+    var borderWidthTop = jQuery('#ddcf_contact_message').css('border-top-width');
+    var borderWidthBottom = jQuery('#ddcf_contact_message').css('border-bottom-width');
+    var paddingTop = jQuery('#ddcf_contact_name').css('padding-top');
+    var paddingBottom = jQuery('#ddcf_contact_name').css('padding-bottom');
+    var inputHeight = jQuery('#ddcf_contact_name').height();
+    
+    /* calculate our standard line height */
+    
+    var lineHeight = inputHeight + 
+                     parseInt(borderWidthTop.replace(token,'')) + 
+                     parseInt(borderWidthBottom.replace(token,'')) + 
+                     parseInt(paddingTop.replace(token,'')) + 
+                     parseInt(paddingBottom.replace(token,''));        
+    
+    /* vertically align FB divs (ticks and crosses) */
+    var token = 'px';
+    var fBOffset = jQuery('#ddcf_contact_name_fb').innerHeight()/2;
+    jQuery("#ddcf_contact_name_fb").css('margin-top', -fBOffset );
+    jQuery("#ddcf_contact_email_fb").css('margin-top', -fBOffset );
+    jQuery("#ddcf_contact_subject_fb").css('margin-top', -fBOffset );
+    jQuery("#ddcf_question_one_fb").css('margin-top', -fBOffset );
+    jQuery("#ddcf_question_two_fb").css('margin-top', -fBOffset );
+    jQuery("#ddcf_contact_message_fb").css('margin-top', (fBOffset)/2 );    
+    
     /* copy the text input's font and padding to the message box, as often the theme doesn't seem to style textareas explicitly */
     jQuery('#ddcf_contact_message').css('font-family' , jQuery('#ddcf_contact_name').css('font-family'));
     jQuery('#ddcf_contact_message').css('font-size' , jQuery('#ddcf_contact_name').css('font-size'));
@@ -587,6 +602,7 @@ function adjust_for_size() {
     jQuery('#ddcf_contact_message').css('padding-left' , jQuery('#ddcf_contact_name').css('padding-left'));
     jQuery('#ddcf_contact_message').css('padding-top' , jQuery('#ddcf_contact_name').css('padding-top'));
    
+    jQuery('.ddcf_label').css('line-height', lineHeight + 'px');
     
     if(usingDatePicker||usingDateTimePicker) {
         /* set the width of the containers */
@@ -597,49 +613,57 @@ function adjust_for_size() {
         if(jQuery('label[for="ddcf_departure_date"]').width()>datePickerLabelWidth)
             datePickerLabelWidth = jQuery('label[for="ddcf_departure_date"]').outerWidth();
         jQuery('#ddcf_dates_container').width( datePickerWidth + datePickerLabelWidth  + controlMargin );
-        if(usingDatePicker)     jQuery('.ddcf_span_date').width( datePickerWidth + datePickerLabelWidth  + controlMargin );
-        if(usingDateTimePicker) jQuery('.ddc_span_datetime').width( datePickerWidth + datePickerLabelWidth  + controlMargin );
+        if(usingDatePicker)     {
+            jQuery('.ddcf_span_date').width( datePickerWidth + datePickerLabelWidth  + controlMargin )
+                                     .css('height', lineHeight );
+        }
+        if(usingDateTimePicker) {
+            jQuery('.ddc_span_datetime').width( datePickerWidth + datePickerLabelWidth  + controlMargin )
+                                        .css('height' , lineHeight);            
+        }
+        jQuery('#ddcf_arrival_date').css('height' , lineHeight).css('margin-bottom', jQuery('#ddcf_contact_name').css('margin-bottom') )
+        jQuery('#ddcf_departure_date').css('height' , lineHeight);
+        
     }
     
     if(usingDropDowns){
-        /* copy the text input's styling to the dropdown selects, as often the theme doesn't seem to style them explicitly 
-        jQuery('.ddcf_dropdown').css('padding-top' , jQuery('#ddcf_contact_name').css('padding-top'));*/
+        /* copy the text input's styling to the dropdown selects, as often the theme doesn't seem to style them explicitly */
+        jQuery('.ddcf_dropdown').css('border-width' , borderWidthTop );
+//        jQuery('.ddcf_dropdown').css('padding-top' , paddingTop);
+//        jQuery('.ddcf_dropdown').css('padding-bottom' , paddingBottom);        
         jQuery('.ddcf_dropdown').css('border-style' , jQuery('#ddcf_contact_name').css('border-top-style'));
-        jQuery('.ddcf_dropdown').css('border-color' , jQuery('#ddcf_contact_name').css('border-top-color'));
-        jQuery('.ddcf_dropdown').css('border-width' , jQuery('#ddcf_contact_message').css('border-top-width'));
+        jQuery('.ddcf_dropdown').css('border-color' , jQuery('#ddcf_contact_name').css('border-top-color'));        
         jQuery('.ddcf_dropdown').css('border-radius' , jQuery('#ddcf_contact_name').css('border-top-left-radius'));
         jQuery('.ddcf_dropdown').css('-webkit-transition' , jQuery('#ddcf_contact_name').css('-webkit-transition'));
         jQuery('.ddcf_dropdown').css('-moz-transition' , jQuery('#ddcf_contact_name').css('-moz-transition'));
         jQuery('.ddcf_dropdown').css('-o-transition' , jQuery('#ddcf_contact_name').css('-o-transition'));
         jQuery('.ddcf_dropdown').css('transition' , jQuery('#ddcf_contact_name').css('transition'));
-        jQuery('.ddcf_dropdown').css('color' , jQuery('#ddcf_contact_name').css('color'));
-        jQuery('.ddcf_dropdown').css('height' , jQuery('#ddcf_contact_name').height());
+        jQuery('.ddcf_dropdown').css('color' , jQuery('#ddcf_contact_name').css('color'));        
         jQuery('.ddcf_dropdown').css('background-color' , jQuery('#ddcf_contact_name').css('background-color'));
-        jQuery('.ddcf_dropdown').css('-webkit-appearance' , jQuery('#ddcf_contact_name').css('-webkit-appearance'));
-        jQuery('.ddcf_dropdown').css('-moz-appearance' , jQuery('#ddcf_contact_name').css('-moz-appearance'));
-        jQuery('.ddcf_dropdown').css('appearance' , jQuery('#ddcf_contact_name').css('appearance'));
-        jQuery('.ddcf_dropdown').css('-o-appearance' , jQuery('#ddcf_contact_name').css('-o-appearance'));
-        jQuery('.ddcf_dropdown').css('margin-top' , '0px');
+        jQuery('.ddcf_dropdown').css('margin-top' , '0px').css('height' , lineHeight);
+       
         
         /* set the width of the container */
-        controlMargin = 20;
+        controlMargin = 18;
         var dropdownWidth = jQuery('#ddcf_num_adults').outerWidth();
         var dropdownLabelWidth = jQuery('label[for="ddcf_num_adults"]').outerWidth();
         if(jQuery('#ddcf_num_children').outerWidth()>dropdownWidth)
             dropdownWidth = jQuery('#ddcf_num_children').outerWidth();
         if(jQuery('label[for="ddcf_num_children"]').width()>dropdownLabelWidth)
             dropdownLabelWidth = jQuery('label[for="ddcf_num_children"]').outerWidth();
-        jQuery('.ddcf_table_span_dropdown').outerWidth( dropdownLabelWidth + dropdownWidth + controlMargin );
+        jQuery('.ddcf_span_dropdown').outerWidth( dropdownLabelWidth + dropdownWidth + controlMargin );
         jQuery('#ddcf_dropdowns_align').outerWidth( dropdownLabelWidth + dropdownWidth + controlMargin )
                                        .css('margin', 'auto')
                                        .css('float','none');      
     }
     
     if(usingSimpleAddition) {
-        /* set the width of the captcha */
+        /* set the width & height */
         var captchaTextWidth = jQuery('#ddcf_captcha_question').outerWidth(); 
         var captchaInputWidth = jQuery('#ddcf_contact_captcha_add').outerWidth(); 
-        jQuery('#ddcf_span_captcha_add').width( captchaTextWidth + captchaInputWidth  + controlMargin );
+        jQuery('#ddcf_span_captcha_add').width( captchaTextWidth + captchaInputWidth  + controlMargin )
+                                        .css('height' , lineHeight);
+        jQuery('#ddcf_contact_captcha_add').css('height' , lineHeight);        
     }    
     
     if((usingDatePicker||usingDateTimePicker)&&usingDropDowns) {
@@ -678,7 +702,7 @@ function adjust_for_size() {
         var div = jQuery('<div style="width:1em;margin:0 !important;padding:0 !important;border:0 !important;"></div>').appendTo('body');
         var marginError = div.width(); div.remove();
         var middleBitOffset = ((topRightHeight-jQuery("#ddcf_middle_bit").height())-marginError)/2;
-        if(ddcfWidth<750&&ddcfWidth>flipWidth&&jQuery('#ddcf_google_recaptcha').length>0&&formDensity===5) jQuery("#ddcf_middle_bit").css('margin-top', '0' );      
+        if((middleBitOffset<5) || (ddcfWidth<750 && ddcfWidth>flipWidth&&jQuery('#ddcf_google_recaptcha').length>0&&formDensity===5)) jQuery("#ddcf_middle_bit").css('margin-top', '0' );      
         else jQuery("#ddcf_middle_bit").css('margin-top', middleBitOffset );
     } else {
         jQuery("#ddcf_middle_bit").css('margin-top', '0' );

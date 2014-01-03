@@ -19,7 +19,7 @@
     along with the Contacts and Bookings plugin.
     If not, see <http://www.gnu.org/licenses/>.
 */
-
+                session_start();
 
                 // nonce ok?
                 $check = check_ajax_referer('ddcf_mgr_action','ddcf_mgr_nonce',false);

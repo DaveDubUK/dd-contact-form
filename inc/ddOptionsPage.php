@@ -11,7 +11,7 @@
     or (at your option) any later version.
 
     Davedub's Contact Form plugin is distributed in the hope
-    that it will be useful, but WITHOUT ANY WARRANTY; without
+    that it will be useful, but WITHOUT ANY WARRANTY; without   
     even the implied warranty of MERCHANTABILITY or FITNESS FOR
     A PARTICULAR PURPOSE.  See the GNU General Public License
     for more details.
@@ -85,6 +85,17 @@
                                                     <?php _e('Paste private key here:', 'ddcf_plugin') ?>
                                                     <br />
                                                     <textarea class="ddcf_textarea_input" name="ddcf_recaptcha_private_key" id="ddcf_recaptcha_private_key" value="<?php echo get_option(ddcf_recaptcha_private_key); ?>" ><?php echo get_option('ddcf_recaptcha_private_key'); ?></textarea>
+                                                    <br /><br /><br />                                                   
+                                                    <div id="ddcf_captcha_options">
+                                                        <h4><?php _e('reCaptcha theme', 'ddcf_plugin') ?></h4>
+                                                        <?php _e('Select the theme for the google reCaptcha:', 'ddcf_plugin') ?>
+                                                        <select name="ddcf_recaptcha_theme" id="ddcf_recaptcha_theme">
+                                                            <option value="red" <?php if(get_option(ddcf_recaptcha_theme)=='red') echo 'selected';?>>Red (default)</option>
+                                                            <option value="white" <?php if(get_option(ddcf_recaptcha_theme)=='white') echo 'selected';?>>White</option>
+                                                            <option value="blackglass" <?php if(get_option(ddcf_recaptcha_theme)=='blackglass') echo 'selected';?>>Black Glass</option>
+                                                            <option value="clean" <?php if(get_option(ddcf_recaptcha_theme)=='clean') echo 'selected';?>>Clean</option-->
+                                                        </select>
+                                                    </div>                                                    
                                                 </div>
 						<h3>Privacy</h3>
                                                     <div>
@@ -156,6 +167,8 @@
                                                                 <?php _e('Image URL:', 'ddcf_plugin') ?>
                                                                 <br /><textarea class="ddcf_textarea_input" name="ddcf_email_header" value="<?php echo get_option(ddcf_email_header); ?>" id="ddcf_email_header" ><?php echo get_option('ddcf_email_header'); ?></textarea>
 							</div>
+                                                        <br /><br />
+                                                        <br /><br />
                                                 </div>
 					</div> <!-- #accordion1 -->
 				</div><!-- tabs-1 -->
@@ -164,104 +177,102 @@
 					<!--p>
 						<!--?php _e('View or change user feedback options or make changes to the UI appearance.', 'ddcf_plugin') ?><br />
 					</p-->
-					<div id="accordion2">
-						<h3>User Feedback</h3>
-						<div>
-                                                            <h4><?php _e('Form sent action', 'ddcf_plugin') ?></h4>
-                                                            <?php
-                                                                _e('Once the user has sucessfully sent their message, you can either send them to a new page or display a thank you messsage on the current page:', 'ddcf_plugin');
-                                                                $thankyouType = (get_option(ddcf_thankyou_type)=='') ? 'ddcf_thankyou_message' : get_option(ddcf_thankyou_type);
-                                                                $thankyouMessage = (get_option(ddcf_thankyou_message)=='') ? _('Thank you for your enquiry.<br /><br />A representative will be in touch shortly.') : get_option(ddcf_thankyou_message);
-                                                                $thankyouURL = (get_option(ddcf_thankyou_url)=='') ? '/' : get_option(ddcf_thankyou_url);
-                                                            ?>
-                                                            <br /><br />
-
-
-                                                            <input type="radio" name="ddcf_thankyou_type" id="ddcf_thankyou_type" value="ddcf_thankyou_message" <?php if($thankyouType=='ddcf_thankyou_message') echo ' checked';?>>
-                                                          <?php _e('Display thank you message:', 'ddcf_plugin') ?>
-                                                            <br />
-                                                            <textarea class="ddcf_textarea_input" name="ddcf_thankyou_message" id="ddcf_thankyou_message" value=""><?php echo $thankyouMessage; ?></textarea>
-                                                            <br /><br />
-
-
-                                                            <input type="radio" name="ddcf_thankyou_type" id="ddcf_thankyou_type" value="ddcf_thankyou_url" <?php if($thankyouType=='ddcf_thankyou_url') echo ' checked';?>>
-                                                            <?php _e('Display contact form thank you page. Enter URL here:', 'ddcf_plugin') ?>
-                                                            <br />
-                                                            <textarea class="ddcf_textarea_input" name="ddcf_thankyou_url" id="ddcf_thankyou_url" value="<?php echo $thankyouURL; ?>" ><?php echo $thankyouURL; ?></textarea>
-
-                                                        <br /><br />
-                                                        <h4><?php _e('Error checking', 'ddcf_plugin') ?></h4>
-                                                        <?php
-                                                            _e('Choose whether to check for user input errors either on the fly (ticks and crosses) or on submit button press.', 'ddcf_plugin');
-                                                            $error_checking_method = (get_option(ddcf_error_checking_method)=='') ? 'realtime' : get_option(ddcf_error_checking_method);
-                                                        ?>
-                                                        <br /><br />
-                                                        <input type="radio" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="realtime" <?php if($error_checking_method=='realtime') echo ' checked';?>>
-                                                        <?php _e('Check for errors on the fly', 'ddcf_plugin'); ?>
-                                                        <br /><br />
-                                                        <input type="radio" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="onsubmit" <?php if($error_checking_method=='onsubmit') echo ' checked';?>>
-                                                        <?php _e('Check for errors on form submit button press', 'ddcf_plugin'); ?>
-                                                </div>
-						<h3>Appearance</h3>
-						<div>
-                                                        <h4><?php _e('Button Styling', 'ddcf_plugin') ?></h4>
-                                                        <?php _e('Choose between theme styled buttons or premade ones from the jQueryUI library.', 'ddcf_plugin') ?>
-                                                        <br /><br />
-                                                        <?php _e('Button styling:', 'ddcf_plugin') ?>
-                                                        <select name="ddcf_btn_style" id="ddcf_btn_style">
-                                                                        <option value="ddcf_btn_style_themed" <?php if(get_option(ddcf_btn_style)!='ddcf_btn_style_jqueryui') echo 'selected';?>>WordPress</option>
-                                                                        <option value="ddcf_btn_style_jqueryui" <?php if(get_option(ddcf_btn_style)=='ddcf_btn_style_jqueryui') echo 'selected';?>>jQueryUI</option>
-                                                        </select>
-                                                        <br /><br /><br />                                                     
-                                                    <?php _e('<h4>jQuery UI Theme</h4>
-                                                              Select a theme for jQueryUI widgets.
-                                                              <br /><br />This only affects the datepickers and buttons. The buttons are only affected if jQueryUI button styling is selected above.<br /><br />Select a premade jQuery UI theme:', 'ddcf_plugin') ?>                                                           
-                                                            <select name="ddcf_jqueryui_theme" id="ddcf_jqueryui_theme">
-                                                                            <option value="none" <?php if(get_option(ddcf_jqueryui_theme)=='none') echo 'selected';?>>None</option>
-                                                                            <option value="custom" <?php if(get_option(ddcf_jqueryui_theme)=='custom') echo 'selected';?>>Custom</option>
-                                                                            <option value="black-tie" <?php if(get_option(ddcf_jqueryui_theme)=='black-tie') echo 'selected';?>>Black Tie</option>
-                                                                            <option value="blitzer" <?php if(get_option(ddcf_jqueryui_theme)=='blitzer') echo 'selected';?>>Blitzer</option>
-                                                                            <option value="cupertino" <?php if(get_option(ddcf_jqueryui_theme)=='cupertino') echo 'selected';?>>Cupertino</option>
-                                                                            <option value="dark-hive" <?php if(get_option(ddcf_jqueryui_theme)=='dark-hive') echo 'selected';?>>Dark Hive</option>
-                                                                            <option value="dot-luv" <?php if(get_option(ddcf_jqueryui_theme)=='dot-luv') echo 'selected';?>>Dot Luv</option>
-                                                                            <option value="eggplant" <?php if(get_option(ddcf_jqueryui_theme)=='eggplant') echo 'selected';?>>Eggplant</option>
-                                                                            <option value="excite-bike" <?php if(get_option(ddcf_jqueryui_theme)=='excite-bike') echo 'selected';?>>Excite Bike</option>
-                                                                            <option value="flick" <?php if(get_option(ddcf_jqueryui_theme)=='flick') echo 'selected';?>>Flick</option>
-                                                                            <option value="hot-sneaks" <?php if(get_option(ddcf_jqueryui_theme)=='hot-sneaks') echo 'selected';?>>Hot Sneaks</option>
-                                                                            <option value="humanity" <?php if(get_option(ddcf_jqueryui_theme)=='humanity') echo 'selected';?>>Humanity</option>
-                                                                            <option value="le-frog" <?php if(get_option(ddcf_jqueryui_theme)=='le-frog') echo 'selected';?>>Le Frog</option>
-                                                                            <option value="mint-choc" <?php if(get_option(ddcf_jqueryui_theme)=='mint-choc') echo 'selected';?>>Mint Choc</option>
-                                                                            <option value="overcast" <?php if(get_option(ddcf_jqueryui_theme)=='overcast') echo 'selected';?>>Overcast</option>
-                                                                            <option value="pepper-grinder" <?php if(get_option(ddcf_jqueryui_theme)=='pepper-grinder') echo 'selected';?>>Pepper Grinder</option>
-                                                                            <option value="redmond" <?php if(get_option(ddcf_jqueryui_theme)=='redmond') echo 'selected';?>>Redmond</option>
-                                                                            <option value="smoothness" <?php if(get_option(ddcf_jqueryui_theme)=='smoothness'||get_option(ddcf_jqueryui_theme)=='') 
-                                                                                echo 'selected';?>>Smoothness</option>
-                                                                            <option value="south-street" <?php if(get_option(ddcf_jqueryui_theme)=='south-street') echo 'selected';?>>South Street</option>
-                                                                            <option value="start" <?php if(get_option(ddcf_jqueryui_theme)=='start') echo 'selected';?>>Start</option>
-                                                                            <option value="sunny" <?php if(get_option(ddcf_jqueryui_theme)=='sunny') echo 'selected';?>>Sunny</option>
-                                                                            <option value="swanky-purse" <?php if(get_option(ddcf_jqueryui_theme)=='swanky-purse') echo 'selected';?>>Swanky Purse</option>
-                                                                            <option value="trontastic" <?php if(get_option(ddcf_jqueryui_theme)=='trontastic') echo 'selected';?>>Trontastic</option>
-                                                                            <option value="ui-darkness" <?php if(get_option(ddcf_jqueryui_theme)=='ui-darkness') echo 'selected';?>>UI Darkness</option>
-                                                                            <option value="ui-lightness" <?php if(get_option(ddcf_jqueryui_theme)=='ui-lightness') echo 'selected';?>>UI Lightness</option>
-                                                                            <option value="vader" <?php if(get_option(ddcf_jqueryui_theme)=='vader') echo 'selected';?>>Vader</option>
-                                                            </select>
-                                                    <br /><br /><br />
-                                                    
-
-                                                    <div id="ddcf_captcha_options">
-                                                        <h4><?php _e('reCaptcha theme', 'ddcf_plugin') ?></h4>
-                                                        <?php _e('Select the theme for the google reCaptcha:', 'ddcf_plugin') ?>
-                                                        <select name="ddcf_recaptcha_theme" id="ddcf_recaptcha_theme">
-                                                            <option value="red" <?php if(get_option(ddcf_recaptcha_theme)=='red') echo 'selected';?>>Red (default)</option>
-                                                            <option value="white" <?php if(get_option(ddcf_recaptcha_theme)=='white') echo 'selected';?>>White</option>
-                                                            <option value="blackglass" <?php if(get_option(ddcf_recaptcha_theme)=='blackglass') echo 'selected';?>>Black Glass</option>
-                                                            <option value="clean" <?php if(get_option(ddcf_recaptcha_theme)=='clean') echo 'selected';?>>Clean</option-->
-                                                        </select>
-                                                    </div>
-                                                    <br /><br /><br />
-                                                    <br /><br />
-                                                </div>
-					</div> <!-- #accordion2 -->
+                                        <div id="accordion2">
+                                            <h3>User Feedback</h3>
+                                            <div>
+                                                <h4><?php _e('Form sent action', 'ddcf_plugin') ?></h4>
+                                                <?php
+                                                    _e('Once the user has sucessfully sent their message, you can either send them to a new page or display a thank you messsage on the current page:', 'ddcf_plugin');
+                                                    $thankyouType = (get_option(ddcf_thankyou_type)=='') ? 'ddcf_thankyou_message' : get_option(ddcf_thankyou_type);
+                                                    $thankyouMessage = (get_option(ddcf_thankyou_message)=='') ? _('Thank you for your enquiry.<br /><br />A representative will be in touch shortly.') : get_option(ddcf_thankyou_message);
+                                                    $thankyouURL = (get_option(ddcf_thankyou_url)=='') ? '/' : get_option(ddcf_thankyou_url);
+                                                ?>
+                                                <br /><br />
+                                                <input type="radio" name="ddcf_thankyou_type" id="ddcf_thankyou_type" value="ddcf_thankyou_message" <?php if($thankyouType=='ddcf_thankyou_message') echo ' checked';?>>
+                                              <?php _e('Display thank you message:', 'ddcf_plugin') ?>
+                                                <br />
+                                                <textarea class="ddcf_textarea_input" name="ddcf_thankyou_message" id="ddcf_thankyou_message" value=""><?php echo $thankyouMessage; ?></textarea>
+                                                <br /><br />
+                                                <input type="radio" name="ddcf_thankyou_type" id="ddcf_thankyou_type" value="ddcf_thankyou_url" <?php if($thankyouType=='ddcf_thankyou_url') echo ' checked';?>>
+                                                <?php _e('Display contact form thank you page. Enter URL here:', 'ddcf_plugin') ?>
+                                                <br />
+                                                <textarea class="ddcf_textarea_input" name="ddcf_thankyou_url" id="ddcf_thankyou_url" value="<?php echo $thankyouURL; ?>" ><?php echo $thankyouURL; ?></textarea>
+                                            <br /><br /><br />
+                                            <h4><?php _e('Error checking', 'ddcf_plugin') ?></h4>
+                                            <?php
+                                                _e('Choose whether to check for user input errors either on the fly (ticks and crosses) or on submit button press.', 'ddcf_plugin');
+                                                $error_checking_method = (get_option(ddcf_error_checking_method)=='') ? 'realtime' : get_option(ddcf_error_checking_method);
+                                            ?>
+                                            <br /><br />
+                                            <input type="radio" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="realtime" <?php if($error_checking_method=='realtime') echo ' checked';?>>
+                                            <?php _e('Check for errors on the fly', 'ddcf_plugin'); ?>
+                                            <br /><br />
+                                            <input type="radio" name="ddcf_error_checking_method" id="ddcf_error_checking_method" value="onsubmit" <?php if($error_checking_method=='onsubmit') echo ' checked';?>>
+                                            <?php _e('Check for errors on form submit button press', 'ddcf_plugin'); ?>
+                                            <br /><br />
+                                            <br /><br />
+                                         </div>
+                                                
+                                                
+					
+                                        <h3>Appearance</h3>
+                                        <div>
+                                            <h4><?php _e('Input CSS classes', 'ddcf_plugin') ?></h4>
+                                            <?php _e('CSS classes listed here will be applied to the text, date and dropdown form elements.', 'ddcf_plugin') ?>
+                                            <br />
+                                            <textarea class="ddcf_textarea_input" name="ddcf_input_css_classes" value="<?php echo get_option(ddcf_input_css_classes); ?>" id="ddcf_input_css_classes" ><?php echo get_option('ddcf_input_css_classes'); ?></textarea>
+                                            <br /><br />                                            
+                                            <h4><?php _e('Button CSS classes', 'ddcf_plugin') ?></h4>
+                                            <?php _e('CSS classes listed here will be applied to the submit and reset buttons.', 'ddcf_plugin') ?>
+                                            <br />
+                                            <textarea class="ddcf_textarea_input" name="ddcf_button_css_classes" value="<?php echo get_option(ddcf_button_css_classes); ?>" id="ddcf_button_css_classes" ><?php echo get_option('ddcf_button_css_classes'); ?></textarea>
+                                            <br /><br />
+                                            <h4><?php _e('Button Styling', 'ddcf_plugin') ?></h4>
+                                            <?php _e('Choose between theme styled buttons or premade ones from the jQueryUI library.', 'ddcf_plugin') ?>
+                                            <br /><br />
+                                            <?php _e('Button styling:', 'ddcf_plugin') ?>
+                                            <select name="ddcf_btn_style" id="ddcf_btn_style">
+                                                <option value="ddcf_btn_style_themed" <?php if(get_option(ddcf_btn_style)!='ddcf_btn_style_jqueryui') echo 'selected';?>>WordPress</option>
+                                                <option value="ddcf_btn_style_jqueryui" <?php if(get_option(ddcf_btn_style)=='ddcf_btn_style_jqueryui') echo 'selected';?>>jQueryUI</option>
+                                            </select>
+                                            <br /><br />                                            
+                                            <?php _e('<h4>jQuery UI Theme</h4>
+                                                      Select a theme for jQueryUI widgets.
+                                                      <br /><br />This only affects the datepickers and buttons. The buttons are only affected if jQueryUI button styling is selected above.<br /><br />Select a premade jQuery UI theme:', 'ddcf_plugin') ?>                                                           
+                                            <select name="ddcf_jqueryui_theme" id="ddcf_jqueryui_theme">
+                                                <option value="none" <?php if(get_option(ddcf_jqueryui_theme)=='none') echo 'selected';?>>None</option>
+                                                <option value="custom" <?php if(get_option(ddcf_jqueryui_theme)=='custom') echo 'selected';?>>Custom</option>
+                                                <option value="black-tie" <?php if(get_option(ddcf_jqueryui_theme)=='black-tie') echo 'selected';?>>Black Tie</option>
+                                                <option value="blitzer" <?php if(get_option(ddcf_jqueryui_theme)=='blitzer') echo 'selected';?>>Blitzer</option>
+                                                <option value="cupertino" <?php if(get_option(ddcf_jqueryui_theme)=='cupertino') echo 'selected';?>>Cupertino</option>
+                                                <option value="dark-hive" <?php if(get_option(ddcf_jqueryui_theme)=='dark-hive') echo 'selected';?>>Dark Hive</option>
+                                                <option value="dot-luv" <?php if(get_option(ddcf_jqueryui_theme)=='dot-luv') echo 'selected';?>>Dot Luv</option>
+                                                <option value="eggplant" <?php if(get_option(ddcf_jqueryui_theme)=='eggplant') echo 'selected';?>>Eggplant</option>
+                                                <option value="excite-bike" <?php if(get_option(ddcf_jqueryui_theme)=='excite-bike') echo 'selected';?>>Excite Bike</option>
+                                                <option value="flick" <?php if(get_option(ddcf_jqueryui_theme)=='flick') echo 'selected';?>>Flick</option>
+                                                <option value="hot-sneaks" <?php if(get_option(ddcf_jqueryui_theme)=='hot-sneaks') echo 'selected';?>>Hot Sneaks</option>
+                                                <option value="humanity" <?php if(get_option(ddcf_jqueryui_theme)=='humanity') echo 'selected';?>>Humanity</option>
+                                                <option value="le-frog" <?php if(get_option(ddcf_jqueryui_theme)=='le-frog') echo 'selected';?>>Le Frog</option>
+                                                <option value="mint-choc" <?php if(get_option(ddcf_jqueryui_theme)=='mint-choc') echo 'selected';?>>Mint Choc</option>
+                                                <option value="overcast" <?php if(get_option(ddcf_jqueryui_theme)=='overcast') echo 'selected';?>>Overcast</option>
+                                                <option value="pepper-grinder" <?php if(get_option(ddcf_jqueryui_theme)=='pepper-grinder') echo 'selected';?>>Pepper Grinder</option>
+                                                <option value="redmond" <?php if(get_option(ddcf_jqueryui_theme)=='redmond') echo 'selected';?>>Redmond</option>
+                                                <option value="smoothness" <?php if(get_option(ddcf_jqueryui_theme)=='smoothness'||get_option(ddcf_jqueryui_theme)=='') 
+                                                    echo 'selected';?>>Smoothness</option>
+                                                <option value="south-street" <?php if(get_option(ddcf_jqueryui_theme)=='south-street') echo 'selected';?>>South Street</option>
+                                                <option value="start" <?php if(get_option(ddcf_jqueryui_theme)=='start') echo 'selected';?>>Start</option>
+                                                <option value="sunny" <?php if(get_option(ddcf_jqueryui_theme)=='sunny') echo 'selected';?>>Sunny</option>
+                                                <option value="swanky-purse" <?php if(get_option(ddcf_jqueryui_theme)=='swanky-purse') echo 'selected';?>>Swanky Purse</option>
+                                                <option value="trontastic" <?php if(get_option(ddcf_jqueryui_theme)=='trontastic') echo 'selected';?>>Trontastic</option>
+                                                <option value="ui-darkness" <?php if(get_option(ddcf_jqueryui_theme)=='ui-darkness') echo 'selected';?>>UI Darkness</option>
+                                                <option value="ui-lightness" <?php if(get_option(ddcf_jqueryui_theme)=='ui-lightness') echo 'selected';?>>UI Lightness</option>
+                                                <option value="vader" <?php if(get_option(ddcf_jqueryui_theme)=='vader') echo 'selected';?>>Vader</option>
+                                            </select>
+                                            <br /><br />
+                                            <br /><br />
+                                            <br /><br />
+                                        </div>                                                                                          
+                                    </div> <!-- #accordion2 -->
 				</div><!-- tabs-2 -->
 
 

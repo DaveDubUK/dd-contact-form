@@ -24,6 +24,10 @@
 
 // helper functions
 function initialise_form($message) {
+    
+    $ssID = session_id();
+    session_start();
+    $ssID = session_id();    
 
         // Which Captcha are we using? 
         $captcha_type = get_option(ddcf_captcha_type);
@@ -67,15 +71,14 @@ function initialise_form($message) {
         }
 }
 // helper funtion to set the mail type after sending
-function set_html_content_type()
-{
-        return 'text/html';
-}
+function set_html_content_type() { return 'text/html'; }
 
 
 //////////////////////////////////////////////////////////
 /* 			Start Here			*/
 //////////////////////////////////////////////////////////
+
+
 
    	if($_POST['ddcf_session_initialised']=='uninitialised') {
 		$check = check_ajax_referer('ddcf_contact_initialise_action', 'ddcf_init_nonce', false);
@@ -119,7 +122,7 @@ function set_html_content_type()
 			break;
 		default:
 		        // default to 'Simple Addition':
-			if($_POST["ddcf_contact_captcha_add"] == ($_SESSION['bacc_one'] +$_SESSION['bacc_two']) )
+			if($_POST["ddcf_contact_captcha_add"] == ($_SESSION['bacc_one'] + $_SESSION['bacc_two']) )
 			{
 				$return = array(
 					'ddcf_error' => 'Success!',

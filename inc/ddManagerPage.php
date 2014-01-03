@@ -24,6 +24,9 @@
 
 <?php
     if(current_user_can(read)) {
+        
+        session_start();
+        
 	echo '<div id="ddcf_contacts_wrapper">
 			<h2>Contacts</h2>
 			<form id="ddcf_management_form">

@@ -82,7 +82,6 @@
         font-weight: bold !important;
 }
 
-
 .ui-widget select {margin-left:0.5em}
 
 #ddcf_custom_css {
@@ -110,6 +109,6 @@
 .ddcf_textarea_input {
 	margin-top:1.0em;
 	width:97%;
-	height:5.0em;
+	min-height:4.0em;
 	vertical-align:bottom;
 }

@@ -40,7 +40,7 @@
 
 #ddcf_contact_form_wrapper input {
         margin-top:0.0em;
-        /*background: inherit;*/
+        margin-bottom:0;
 }
 
 #ddcf_contact_form {
@@ -56,21 +56,22 @@
 /* base styling for most elements (not jQueryUI dat/time pickers) */
 .ddcf_input_base {	
         width:100% !important;
-        min-height:2.4em;
+        /*min-height:2.4em;*/
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */        
 }
 
 .ddcf_contact_text_input {
-    padding-left: 0.8em !important;
+    padding-left: 0.5em !important;
+    margin-bottom:0;
 }
 
 label {
     float: left;
-    margin: 0em;
+    margin: 0em !important;
     padding: 0em;
-    line-height: 2.4em;
+    line-height: 2.4em; /* initial value - is controlled by jQuery during operation */
 }
 
 
@@ -179,7 +180,7 @@ label {
         vertical-align:middle;
         float:none;
         width: 17.1em;
-        height: 2.4em;
+        height: 2.4em;  /* initial value - controlled during runtime by jQuery */
         margin-bottom: 1.0em;
     }
     .ddc_span_datetime {
@@ -191,15 +192,21 @@ label {
         height: 2.4em;
         margin-bottom: 1.0em;
     } 
-    .ddcf_table_span_dropdown {
-        margin-bottom:1em;
+    .ddcf_span_dropdown {
+        margin: 0 0 1em 0 !important;
         display: inline-block;
         position: relative;
         vertical-align:middle;
-        float:none; 
+        float:none !important;
         width: 9.5em;
 /*        height: 2.5em;*/
     }    
+    
+    #ddcf_question_two, #ddcf_question_two {
+        padding-left:0.8em !important;
+    }
+    
+    
         /* dates 
         .ddcf_dates_container {                
                 position:relative;
@@ -208,6 +215,7 @@ label {
                     width: 7.0em !important;
                     text-align:center;
                     float: right;
+                    margin-bottom: 0;
             }   
             
             .ddcf_date_picker:hover {
@@ -217,12 +225,20 @@ label {
                     width:9.8em !important;
                     text-align:center;
                     float: right;
+                    margin-bottom: 0;
             }
             .ddcf_datetime_picker:hover {
                 cursor: pointer;
             }            
             /* timepicker (datepicker addon) */        
-            .ui-widget { font-size: 1em; }            
+            .ui-widget { 
+                font-size: 1em; 
+                font-weight: normal;
+            }            
+            .ui-datepicker-close {
+                font-weight: normal !important;
+            }      
+            
             .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
             .ui-timepicker-div dl { text-align: left; }
             .ui-timepicker-div dl dt { height: 25px; margin-bottom: -25px; }
@@ -234,9 +250,13 @@ label {
             .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }        
 
         .ddcf_dropdown {
-                padding: 0.6em 0.5em 0.1em 0em;         
+                /* padding: 0.6em 0.5em 0.1em 0.2em;  */
+                padding-left:0.2em;
+                padding-right:0em;
                 float:right;    
                 width: auto !important;
+                border-style:outset;
+                margin-bottom:0;
         }
         .ddcf_dropdown:hover {
             cursor: pointer;
@@ -274,12 +294,13 @@ label {
                     width: 2.8em !important;
                     text-align: center;
                     float:right;
+                    margin-bottom:0;
             }
             /* question text */
             #ddcf_captcha_question {
                     float:left;
                     position: absolute;
-                    top: 45%;                    
+                    top: 50%;                    
             }
         /* reCaptcha */
         #ddcf_google_recaptcha {
@@ -303,6 +324,7 @@ label {
 /* Section - bottom, full width */     
 #ddcf_contact_message {
         min-height:11.0em;
+        margin-top:0;
 }
 /* buttons and options bar */
 #ddcf_opts_and_buttons {
@@ -354,15 +376,15 @@ label {
                 font-size:1.0em;
                 background-color:inherit;
                 right: 0.55em;
-                top: 45%;    /* adjust here to align ticks and crosses */            
+                top: 50%;    /* adjust here to align ticks and crosses */            
         }    
         .ddcf_contact_input_verify p {
                 text-decoration:none !important;
         }
         /* individual tweaks */
-        /*#ddcf_contact_message_fb {
-            top: 11%;           
-        }*/
+        #ddcf_contact_message_fb {
+            top: 0;           
+        }
         #ddcf_contact_captcha_fb {
             right: 1em; /* start value only - is changed by jQuery at runtime */  
         }        

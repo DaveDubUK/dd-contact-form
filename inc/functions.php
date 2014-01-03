@@ -41,7 +41,9 @@ add_action( 'wp_ajax_nopriv_the_ajax_hook', 'receive_jquery_ajax_call' ); // nee
 // Ajax call receiving function
 function receive_jquery_ajax_call(){
 
+    $ssID = session_id();
     session_start();
+    $ssID = session_id();
 
     // check requested session type
     if($_POST['ddcf_session']=='ddcf_manager_session') {
@@ -62,7 +64,7 @@ function receive_jquery_ajax_call(){
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             $errors = '';
             $table_name = $wpdb->prefix."custom_css";
-            $data = filter_var($_POST['ddcf_custom_css'],FILTER_SANITIZE_STRING); //$_POST['ddcf_custom_css'];
+            $data = stripslashes($_POST['ddcf_custom_css']); // filter_var($_POST['ddcf_custom_css'],FILTER_SANITIZE_STRING); //
 
             if(isset($_POST['ddcf_custom_css'])&&current_user_can('edit_post')) {
                 /* no sanitisation - because they're entering code whilst signed in, it's allowed. Just this once. */
@@ -77,8 +79,6 @@ function receive_jquery_ajax_call(){
                 }
             }
             else $errors.='No CSS?';
-            
-            $data = stripslashes($data);
             
             $return = array('ddcf_error' => $errors,
                             'ddcf_custom_css' => $data);
@@ -285,6 +285,8 @@ function ddcf_admin_init() {
 	register_setting( 'ddcf_settings_group', 'ddcf_email_header' );
         register_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
         register_setting( 'ddcf_settings_group', 'ddcf_custom_css_check' );
+        register_setting( 'ddcf_settings_group', 'ddcf_button_css_classes' );
+        register_setting( 'ddcf_settings_group', 'ddcf_input_css_classes' );
 }
 
 
@@ -468,6 +470,8 @@ function dd_contact_form_uninstall()
 	unregister_setting( 'ddcf_settings_group', 'ddcf_email_header' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_error_checking_method' );
         unregister_setting( 'ddcf_settings_group', 'ddcf_custom_css_check' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_button_css_classes' );
+        unregister_setting( 'ddcf_settings_group', 'ddcf_input_css_classes' );
         delete_option('ddcf_settings_group','0.1');
         
         // remove all tables from DB
