@@ -498,7 +498,7 @@
                                 if(get_option(ddcf_rec_updates_option_check)) {
                                         $updates_message = get_option('ddcf_rec_updates_message');
                                         if(!$updates_message) $updates_message = __('Receive updates? ','ddcf_plugin');
-                                        echo $updates_message.'&nbsp;&nbsp;<input type="checkbox" name="ddcf_newsletter_signup" id="ddcf_newsletter_signup" class="ddcf_input_base" value="ddcf_newsletter_signup" checked>';
+                                        echo $updates_message.'&nbsp;&nbsp;<input type="checkbox" name="ddcf_newsletter_signup" id="ddcf_newsletter_signup" value="ddcf_newsletter_signup" checked>';
                                 }?>
                             </div> <!-- #ddcf_checkbox_area -->
                             

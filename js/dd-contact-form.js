@@ -578,7 +578,7 @@ function adjust_for_size() {
     var usingSimpleAddition = jQuery('#ddcf_span_captcha_add').length;
     
     /* gap between label and control, px */
-    var controlMargin = 10;
+    var controlMargin = 16;
     
     /* copy the text input's font and padding to the message box, as often the theme doesn't seem to style textareas explicitly */
     jQuery('#ddcf_contact_message').css('font-family' , jQuery('#ddcf_contact_name').css('font-family'));
@@ -613,7 +613,7 @@ function adjust_for_size() {
         jQuery('.ddcf_dropdown').css('-o-transition' , jQuery('#ddcf_contact_name').css('-o-transition'));
         jQuery('.ddcf_dropdown').css('transition' , jQuery('#ddcf_contact_name').css('transition'));
         jQuery('.ddcf_dropdown').css('color' , jQuery('#ddcf_contact_name').css('color'));
-        jQuery('.ddcf_dropdown').css('height' , jQuery('#ddcf_contact_name').innerHeight());
+        jQuery('.ddcf_dropdown').css('height' , jQuery('#ddcf_contact_name').height());
         jQuery('.ddcf_dropdown').css('background-color' , jQuery('#ddcf_contact_name').css('background-color'));
         jQuery('.ddcf_dropdown').css('-webkit-appearance' , jQuery('#ddcf_contact_name').css('-webkit-appearance'));
         jQuery('.ddcf_dropdown').css('-moz-appearance' , jQuery('#ddcf_contact_name').css('-moz-appearance'));
@@ -622,14 +622,15 @@ function adjust_for_size() {
         jQuery('.ddcf_dropdown').css('margin-top' , '0px');
         
         /* set the width of the container */
+        controlMargin = 20;
         var dropdownWidth = jQuery('#ddcf_num_adults').outerWidth();
         var dropdownLabelWidth = jQuery('label[for="ddcf_num_adults"]').outerWidth();
         if(jQuery('#ddcf_num_children').outerWidth()>dropdownWidth)
             dropdownWidth = jQuery('#ddcf_num_children').outerWidth();
         if(jQuery('label[for="ddcf_num_children"]').width()>dropdownLabelWidth)
             dropdownLabelWidth = jQuery('label[for="ddcf_num_children"]').outerWidth();
-        jQuery('.ddcf_table_span_dropdown').css('width', dropdownLabelWidth + dropdownWidth + controlMargin );
-        jQuery('#ddcf_dropdowns_align').css('width', dropdownLabelWidth + dropdownWidth + controlMargin )
+        jQuery('.ddcf_table_span_dropdown').outerWidth( dropdownLabelWidth + dropdownWidth + controlMargin );
+        jQuery('#ddcf_dropdowns_align').outerWidth( dropdownLabelWidth + dropdownWidth + controlMargin )
                                        .css('margin', 'auto')
                                        .css('float','none');      
     }

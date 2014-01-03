@@ -112,11 +112,23 @@ function submitCSS(){
 	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_options_form").serializeArray(),
             function(php_message){
                     jQuery('#ddcf_sneaky_ajax').html(''); /* hide the ajax related inputs again */
-                    jQuery('#ddcf_options_feedback').css('display', 'none');                    
-                    jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","1.0");
-                    jQuery('#ddcf_update_css_btn').prop('disabled', false);
+                    if(!php_message.ddcf_error) {
+                        jQuery('#ddcf_custom_css').val(php_message.ddcf_custom_css)
+                        jQuery('#ddcf_options_feedback_text').html('<p>CSS Updated</p>');
+                        window.setTimeout(finishSubmitCSS, 700);
+                    }
+                    else {
+                        jQuery('#ddcf_options_feedback_text').html('<p>Problem updating CSS: '+php_message.ddcf_error+'</p>');                                        
+                    }
                 });
              }
+
+function finishSubmitCSS () {
+            jQuery('#ddcf_options_feedback_text').css('display', 'none');                    
+            jQuery('#ddcf_options_feedback').css('display', 'none');
+            jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","1.0");
+            jQuery('#ddcf_update_css_btn').prop('disabled', false);
+}
 
 
 /* Manager page stuff */

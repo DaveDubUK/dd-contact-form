@@ -30,9 +30,8 @@
 
 /* content div for options page */
 .ddcf-options-div {
-	margin:1.5em 1.0em 2.0em 1.5em;
-	max-width:600px;
-	min-height:800px;
+	margin:1.3em 0em;
+	max-width:555px;
 }
 
 /* throbber for custom css ajax update */
@@ -43,17 +42,29 @@
 #ddcf_options_feedback {
     display:none; /* controlled by jQuery at runtime */
     position:absolute;
-    height: 1.5em;
+    height: 2.4em;
     font-size:1.2em;
     width:100%;
-    top:50%;
+    top:37%;
     float:none;
     margin:auto;
     text-align:center;
-    background-image:url('images/dd-contact-form-ajax-loader.gif'); /* controlled by jQuery at runtime  */
+    background-image:url('images/dd-contact-form-css-updater-throbber.gif'); 
     background-repeat:no-repeat;
     background-position:center center;    
 }
+    #ddcf_options_feedback_text {
+        display:none; /* controlled by jQuery at runtime */
+        position:absolute;
+        height: auto;
+        font-size: 2.1em !important; /* ignored ?! */
+        font-weight:bold;
+        width:100%;
+        top:22%;
+        float:none;
+        margin:auto;
+        text-align:center;
+    }
 
 .ui-accordion .ui-accordion-content {
         overflow:hidden !important; /* workaround cludge for what seems to be this issue: http://bugs.jqueryui.com/ticket/4208 */

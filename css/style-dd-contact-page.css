@@ -55,17 +55,22 @@
 
 /* base styling for most elements (not jQueryUI dat/time pickers) */
 .ddcf_input_base {	
-        width:100% !important;   
+        width:100% !important;
+        min-height:2.4em;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box;         /* Opera/IE 8+ */        
+}
+
+.ddcf_contact_text_input {
+    padding-left: 0.8em !important;
 }
 
 label {
     float: left;
     margin: 0em;
     padding: 0em;
-    line-height: 2.2em;
+    line-height: 2.4em;
 }
 
 
@@ -203,12 +208,19 @@ label {
                     width: 7.0em !important;
                     text-align:center;
                     float: right;
-            }        
+            }   
+            
+            .ddcf_date_picker:hover {
+                cursor: pointer;
+            }
             .ddcf_datetime_picker {
                     width:9.8em !important;
                     text-align:center;
                     float: right;
             }
+            .ddcf_datetime_picker:hover {
+                cursor: pointer;
+            }            
             /* timepicker (datepicker addon) */        
             .ui-widget { font-size: 1em; }            
             .ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
@@ -222,10 +234,14 @@ label {
             .ui-timepicker-rtl dl dd { margin: 0 65px 10px 10px; }        
 
         .ddcf_dropdown {
-                padding: 0.2em;  /* adjust here to line up text inside dropdown selects */              
+                padding: 0.6em 0.5em 0.1em 0em;         
                 float:right;    
-                width: auto !important;          
-}        
+                width: auto !important;
+        }
+        .ddcf_dropdown:hover {
+            cursor: pointer;
+        }                 
+        
         #ddcf_num_children_selector {
                 float:left;
                 text-align:center;

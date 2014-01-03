@@ -62,14 +62,13 @@ function receive_jquery_ajax_call(){
             require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
             $errors = '';
             $table_name = $wpdb->prefix."custom_css";
-            
-            /* no sanitisation - because they're entering code whilst signed in, it's allowed. Just this once. */
-            /* todo: see if any sanitisation methods work ok on CSS code */
-            if(isset($_POST['ddcf_custom_css'])) {
+            $data = filter_var($_POST['ddcf_custom_css'],FILTER_SANITIZE_STRING); //$_POST['ddcf_custom_css'];
+
+            if(isset($_POST['ddcf_custom_css'])&&current_user_can('edit_post')) {
+                /* no sanitisation - because they're entering code whilst signed in, it's allowed. Just this once. */
+                /* tried using filter_var($_POST['ddcf_custom_css'],FILTER_SANITIZE_STRING); but it escaped the apos in the css gradient code */
                 
-                $data = filter_var($_POST['ddcf_custom_css'],FILTER_SANITIZE_STRING);
-                $sql = "UPDATE ".$table_name ." SET custom_css_index = 1, custom_css_text = '".$data."'";
-                
+                $sql = "UPDATE ".$table_name ." SET custom_css_index = 1, custom_css_text = '".$data."'";                
                 $success = $wpdb->update( $table_name, 
                                             array( 'custom_css_text' => $data), 
                                             array( 'custom_css_index' => 1 ));                
@@ -79,8 +78,10 @@ function receive_jquery_ajax_call(){
             }
             else $errors.='No CSS?';
             
-            if(!$errors) $errors = 'CSS updated';
-            $return = array('ddcf_error' => $errors);
+            $data = stripslashes($data);
+            
+            $return = array('ddcf_error' => $errors,
+                            'ddcf_custom_css' => $data);
         }
         else $return = array('ddcf_error' => '406');  
 
@@ -408,7 +409,7 @@ function dd_contact_form_activation()
 	if(!dbDelta($sql)) trigger_error ("Unable to update database");      
         $populated = mysql_result(mysql_query('SELECT COUNT(*) FROM '.$table_name), 0);
 	if(!$populated) {
-            $sql = "INSERT INTO ".$table_name ." VALUES ('1', '/* you can add your own custom css here */')";
+            $sql = "INSERT INTO ".$table_name ." VALUES ('1', '/* You can add your own custom css here. */')";
             if(!dbDelta($sql)) trigger_error ("Unable to update database");  
         }
 }

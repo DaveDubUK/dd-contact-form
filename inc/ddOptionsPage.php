@@ -51,7 +51,13 @@
                                     
 				<?php 
                                     settings_fields( 'ddcf_settings_group' ); // render the hidden input fields and handles the security aspects
-                                    do_settings_fields( 'ddcf_settings_group', 'ddcf_settings_section_id' ); 
+                                    do_settings_fields( 'ddcf_settings_group', 'ddcf_settings_section_id' );
+                                    /* get the custom css from the database */
+                                    global $wpdb;
+                                    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+                                    $table_name = $wpdb->prefix . "custom_css";
+                                    $query = "SELECT custom_css_text FROM ".$table_name." WHERE custom_css_index = 1";
+                                    $custom_css = $wpdb->get_row($query);                                      
                                 ?>
 
 				<div id="tabs-1">
@@ -165,7 +171,7 @@
                                                             <?php
                                                                 _e('Once the user has sucessfully sent their message, you can either send them to a new page or display a thank you messsage on the current page:', 'ddcf_plugin');
                                                                 $thankyouType = (get_option(ddcf_thankyou_type)=='') ? 'ddcf_thankyou_message' : get_option(ddcf_thankyou_type);
-                                                                $thankyouMessage = (get_option(ddcf_thankyou_message)=='') ? _('<br /><br />Thank you for your enquiry.<br /><br />A representative will be in touch shortly.<br /><br />') : get_option(ddcf_thankyou_message);
+                                                                $thankyouMessage = (get_option(ddcf_thankyou_message)=='') ? _('Thank you for your enquiry.<br /><br />A representative will be in touch shortly.') : get_option(ddcf_thankyou_message);
                                                                 $thankyouURL = (get_option(ddcf_thankyou_url)=='') ? '/' : get_option(ddcf_thankyou_url);
                                                             ?>
                                                             <br /><br />
@@ -370,24 +376,21 @@
                                     Use custom CSS: <input type="checkbox" id="ddcf_custom_css_check" name="ddcf_custom_css_check" value="ddcf_custom_css_check" <?php if(get_option('ddcf_custom_css_check')) echo ' checked '; ?>><br /><br />
                                     <div id="ddcf_custom_css_container" name="ddcf_custom_css_container">
                                         <div id="ddcf_options_feedback" name="ddcf_options_feedback"></div>
-                                        <textarea class="ddcf_textarea_input" name="ddcf_custom_css" value="" id="ddcf_custom_css" ><?php 
-                                        global $wpdb;
-                                        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-                                        $table_name = $wpdb->prefix . "custom_css";
-                                        $query = "SELECT custom_css_text FROM ".$table_name." WHERE custom_css_index = 1";
-                                        $custom_css = $wpdb->get_row($query);                                       
-                                        echo $custom_css->custom_css_text;
-                                    ?></textarea>
+                                        <div id="ddcf_options_feedback_text" name="ddcf_options_feedback_text"></div>
+                                        <textarea class="ddcf_textarea_input" name="ddcf_custom_css" value="" id="ddcf_custom_css" ><?php                                      
+                                            echo $custom_css->custom_css_text;
+                                    ?></textarea>   
                                     </div>
                                     <br />
                                     <div id="ddcf_update_css_btn_container" name="ddcf_update_css_btn_container">
                                         <input id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" class="button button-primary" value="<?php _e('Update CSS','ddcf_plugin') ?>" action="the_ajax_hook">
                                     </div>
                                     
+
                                     <!-- this div holds the inputs needed for the ajax call to update the css -->
                                     <!-- however, the inputs will conflict with the normal operation of the settings form -->
                                     <!-- so we hide this div using jQuery until there is an 'Update CSS' button press -->
-                                    <!-- then hide the div again when the ajax call returns -->
+                                    <!-- after which hide the div again when the ajax call returns -->
                                     <div id="ddcf_sneaky_ajax" name="ddcf_sneaky_ajax">
                                         <input type="hidden" name="ddcf_session" id="ddcf_session" value="ddcf_options_session" />
                                         <input type="hidden" name="action" value="the_ajax_hook" />

@@ -21,14 +21,15 @@
 */
 
 var ddcfSneakyAjax;
+var ddcfGreyOutColor = "#555";
 
 function selectCustomCSS(isSelected) {
 	if(isSelected) {
             jQuery('#ddcf_custom_css').css("background-color","#ffffff").css("opacity","1");
-            jQuery('#ddcf_update_css_btn').prop('disabled', false); 
+            jQuery('#ddcf_update_css_btn').prop('disabled', false);            
         }
 	else {
-            jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","0.35");
+            jQuery('#ddcf_custom_css').css("background-color",ddcfGreyOutColor).css("opacity","0.35");
             jQuery('#ddcf_update_css_btn').prop('disabled', true); 
         }
 }
@@ -138,14 +139,29 @@ jQuery(document).ready(function ($) {
         
         // have to hide the ajax related inputs otherwise WP won't submit the settings form properly
         ddcfSneakyAjax = jQuery('#ddcf_sneaky_ajax').html();
-        jQuery('#ddcf_sneaky_ajax').html('');  
+        jQuery('#ddcf_sneaky_ajax').html('');
+  
+        
+        /* send current custom css to db before saving settings page */
+        jQuery('#ddcf_options_form').submit(function( event ) {
+                            jQuery('#ddcf_options_feedback_text').html('<p>Saving Changes...</p>');
+                            jQuery('#ddcf_options_feedback_text').css('display', 'block');
+                            jQuery('#ddcf_options_feedback').css('display', 'block');
+                            jQuery('#ddcf_custom_css').css("background-color", ddcfGreyOutColor).css("opacity","0.35");
+                            jQuery('#ddcf_update_css_btn').prop('disabled', true);
+                            jQuery('#ddcf_sneaky_ajax').html(ddcfSneakyAjax); /* pop the ajax related inputs back into the DOM just for a moment */
+                            jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_options_form").serializeArray());
+                            jQuery('#ddcf_sneaky_ajax').html('');
+          });          
         
 	// update css button
 	jQuery('#ddcf_update_css_btn')
                 .click(function( event ) {
-                            jQuery('#ddcf_sneaky_ajax').html(ddcfSneakyAjax); /* pop the ajax related inputs back in at the last moment */          
+                            jQuery('#ddcf_sneaky_ajax').html(ddcfSneakyAjax); /* pop the ajax related inputs back into the DOM at the last moment */
+                            jQuery('#ddcf_options_feedback_text').html('<p>Updating...</p>');
+                            jQuery('#ddcf_options_feedback_text').css('display', 'block');
                             jQuery('#ddcf_options_feedback').css('display', 'block');
-                            jQuery('#ddcf_custom_css').css("background-color","#ececec").css("opacity","0.35");
+                            jQuery('#ddcf_custom_css').css("background-color", ddcfGreyOutColor).css("opacity","0.35");
                             jQuery('#ddcf_update_css_btn').prop('disabled', true);
                             event.preventDefault();
                             submitCSS();
@@ -207,6 +223,13 @@ jQuery(document).ready(function ($) {
         /* grey out custom css if not selected */
         selectCustomCSS(jQuery('#ddcf_custom_css_check').is(":checked")); // first run through
 	jQuery('#ddcf_custom_css_check').change(function() {
-		selectCustomCSS(jQuery(this).is(":checked"));
+                var custom_css_enabled = jQuery(this).is(":checked");
+                if(custom_css_enabled) 
+                {
+                    jQuery('#ddcf_custom_css').css("background-color", ddcfGreyOutColor).css("opacity","0.35");
+                    jQuery('#ddcf_options_feedback_text').css('display', 'block');
+                    jQuery('#ddcf_options_feedback_text').html('<p>The CSS cannot be updated until you have saved your changes.<br /><br />Please click &#39;Save Changes&#39; to continue.</p>');
+                }
+		else selectCustomCSS(custom_css_enabled);
 	});
 });
