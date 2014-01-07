@@ -41,9 +41,7 @@ add_action( 'wp_ajax_nopriv_the_ajax_hook', 'receive_jquery_ajax_call' ); // nee
 // Ajax call receiving function
 function receive_jquery_ajax_call(){
 
-    $ssID = session_id();
     session_start();
-    $ssID = session_id();
 
     // check requested session type
     if($_POST['ddcf_session']=='ddcf_manager_session') {

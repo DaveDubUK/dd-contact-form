@@ -572,13 +572,18 @@ function adjust_for_size() {
     
     /* get our target values */
     var borderWidthTop = jQuery('#ddcf_contact_message').css('border-top-width');
+    if(!borderWidthTop) borderWidthTop = '0px';
     var borderWidthBottom = jQuery('#ddcf_contact_message').css('border-bottom-width');
+    if(!borderWidthBottom) borderWidthBottom = '0px';
     var paddingTop = jQuery('#ddcf_contact_name').css('padding-top');
+    if(!paddingTop) paddingTop = '0px';
     var paddingBottom = jQuery('#ddcf_contact_name').css('padding-bottom');
+    if(!paddingBottom) paddingBottom = '0px';
     var inputHeight = jQuery('#ddcf_contact_name').height();
+    if(!inputHeight) inputHeight = '0px';
     
     /* calculate our standard line height */
-    
+    var token = 'px';
     var lineHeight = inputHeight + 
                      parseInt(borderWidthTop.replace(token,'')) + 
                      parseInt(borderWidthBottom.replace(token,'')) + 
@@ -586,7 +591,6 @@ function adjust_for_size() {
                      parseInt(paddingBottom.replace(token,''));        
     
     /* vertically align FB divs (ticks and crosses) */
-    var token = 'px';
     var fBOffset = jQuery('#ddcf_contact_name_fb').innerHeight()/2;
     jQuery("#ddcf_contact_name_fb").css('margin-top', -fBOffset );
     jQuery("#ddcf_contact_email_fb").css('margin-top', -fBOffset );

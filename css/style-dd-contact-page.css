@@ -79,7 +79,7 @@ label {
 #ddcf_throbber {
         display:block;  /* initial value - is controlled by jQuery during operation */
 	width:100%;
-        height:1.1em;   /* assume ddcf_thankyou_message_container is only 1.1em high */
+        height:2.4em;   
         padding:0;
 	margin:4em auto 8em !important;
 	text-align:center;
@@ -202,8 +202,8 @@ label {
 /*        height: 2.5em;*/
     }    
     
-    #ddcf_question_two, #ddcf_question_two {
-        padding-left:0.8em !important;
+    #ddcf_question_one, #ddcf_question_two {
+        /*padding-left:0.8em !important;*/
     }
     
     
