@@ -143,7 +143,7 @@ function ddcf_enqueue_front_end_pages () {
         wp_enqueue_script( 'ddcf_datetimepicker_script',
                          plugins_url().'/dd-contact-form/js/jquery-ui-timepicker-addon.js',
                          array( 'jquery',
-                                'jquery-ui-core',
+                                'jquery-ui-core',                                
                                 'jquery-ui-datepicker')
                         );
      

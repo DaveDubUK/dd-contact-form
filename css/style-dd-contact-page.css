@@ -81,7 +81,7 @@ label {
 	width:100%;
         height:2.4em;   
         padding:0;
-	margin:4em auto 8em !important;
+	margin:5em auto 8em !important;
 	text-align:center;
 	position:relative;
         background-image:url('images/dd-contact-form-ajax-loader.gif');
@@ -291,7 +291,7 @@ label {
         }
             /* text input for simple addition captcha */
             #ddcf_contact_captcha_add {
-                    width: 2.8em !important;
+                    width: 3.3em !important; /* allow for some user defined padding */
                     text-align: center;
                     float:right;
                     margin-bottom:0;
@@ -336,8 +336,17 @@ label {
             width:auto;  /* initial value - is controlled by jQuery during operation */
             position:relative;
             margin:auto;
-            padding:0em;
+            padding: 0 0.7em 0.3em 0;
             float:right;
+    }
+    
+    #ddcf_contact_send {
+        float:right;
+    }
+    
+    
+    #ddcf_contact_reset {
+        float:left;
     }
     
     /* Checkbox Area */
@@ -355,7 +364,7 @@ label {
     /* User feedback */
     /* initially invisible div used for relaying error messages back to user. Unused in nearly all modes, but provided for fallbacks */
     #ddcf_error_reporting {
-            margin:0 0 1em 0; 
+            margin:0; 
             padding:0;
             width:100%;
             text-align:center;

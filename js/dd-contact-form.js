@@ -140,7 +140,7 @@ function checkForm(andSubmit,makeChanges)
     if (ddcfInitialTimer > 0) {
         ddcfInitialTimer = ddcfInitialTimer - 500;
         if (ddcfInitialTimer <= 0)
-            adjust_for_size();
+            make_pretty();
     }
 
     /* Check out each form element in turn. Report any problems */
@@ -447,16 +447,16 @@ function checkForm(andSubmit,makeChanges)
         }
     }
     if (errors.length > 0)
-        jQuery('#ddcf_error_reporting').html(errors);
+        jQuery('#ddcf_error_reporting').html(errors+'<br />');
 
     return bChecksOut;
 }
 
-function adjust_for_size() {
+function make_pretty() {
     
     /* if not by now, should be... */
     jQuery("#ddcf_throbber").css("display", "none");
-    jQuery("#ddcf_contact_form_contents").css('visibility','visible').fadeIn( "fast");
+    jQuery("#ddcf_contact_form_contents").css('visibility','visible').fadeIn( "slow");
     jQuery('body').css('cursor', 'auto');
     
     /* get the width of the actual available space */
@@ -567,7 +567,7 @@ function adjust_for_size() {
     var usingDropDowns = jQuery('.ddcf_dropdown').length;
     var usingSimpleAddition = jQuery('#ddcf_span_captcha_add').length;
     
-    /* gap between label and control, px */
+    /* gap between label and control (px) */
     var controlMargin = 16;
     
     /* get our target values */
@@ -644,6 +644,7 @@ function adjust_for_size() {
         jQuery('.ddcf_dropdown').css('transition' , jQuery('#ddcf_contact_name').css('transition'));
         jQuery('.ddcf_dropdown').css('color' , jQuery('#ddcf_contact_name').css('color'));        
         jQuery('.ddcf_dropdown').css('background-color' , jQuery('#ddcf_contact_name').css('background-color'));
+        jQuery('.ddcf_dropdown').css('box-shadow' , jQuery('#ddcf_contact_name').css('box-shadow'));
         jQuery('.ddcf_dropdown').css('margin-top' , '0px').css('height' , lineHeight);
        
         
@@ -720,7 +721,7 @@ jQuery(document).ready(function ($) {
         jQuery('body').css('cursor', 'wait');
 
 	/* window functions */
-	jQuery(window).resize(function(){adjust_for_size();})
+	jQuery(window).resize(function(){make_pretty();})
                       .bind('beforeunload',function(){resetForm();});
 
 	// Get the default values in case of form reset
@@ -798,12 +799,13 @@ jQuery(document).ready(function ($) {
 
 
         // button type (WordPress themed or jQuery-UI themed)
+        
+        jQuery('#ddcf_button_area').height('+=3px'); /* allow for button press movement */
+        
         var buttonStyle = jQuery('#ddcf_btn_style').val();
         if(buttonStyle==='ddcf_btn_style_jqueryui') {
             jQuery('.ddcf_button').button();
         }
-        
-
 	// Reset Button
 	jQuery('#ddcf_contact_reset')
                         .click(function( event ) {
@@ -817,8 +819,7 @@ jQuery(document).ready(function ($) {
                                 event.preventDefault();
                                 checkForm(true,true);
                         });
-        }
-        else { // assume 'realtime'
+        } else { // assume 'realtime'
             jQuery('#ddcf_contact_send').prop('disabled', true)
                         .click(function( event ) {
                                 event.preventDefault();

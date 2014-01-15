@@ -269,7 +269,7 @@
 
                                                 if($extra_dropdown_one_check&&$extra_dropdown_two_check) {
                                                     echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
-                                                            <span class="ddcf_span_dropdown ddcf_input_base '.get_option(ddcf_input_css_classes).'">
+                                                            <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown">
                                                                                     <option value="0" '; if($ddcf_num_adults==0) echo "selected"; echo '>'.__("None").'</option>
@@ -286,7 +286,7 @@
                                                                     </select>
                                                                     <label for="ddcf_num_adults" class="ddcf_label">'.__("Adults:", "ddcf_plugin").'</label>
                                                             </span>
-                                                            <span class="ddcf_span_dropdown ddcf_input_base '.get_option(ddcf_input_css_classes).'">
+                                                            <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown">
                                                                                     <option value="0" '; if($ddcf_num_children==0) echo "selected"; echo '>'.__("None").'</option>
@@ -307,7 +307,7 @@
                                                 }
                                                 else if($extra_dropdown_one_check) {
                                                     echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
-                                                            <span class="ddcf_span_dropdown ddcf_input_base '.get_option(ddcf_input_css_classes).'">
+                                                            <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown">
                                                                                     <option value="0" '; if($ddcf_num_adults==0) echo "selected"; echo '>'.__("None").'</option>
@@ -328,7 +328,7 @@
                                                 }
                                                 else if($extra_dropdown_two_check) {
                                                     echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
-                                                            <span class="ddcf_span_dropdown ddcf_input_base '.get_option(ddcf_input_css_classes).'">
+                                                            <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown">
                                                                                     <option value="0" '; if($ddcf_num_children==0) echo "selected"; echo '>'.__("None").'</option>

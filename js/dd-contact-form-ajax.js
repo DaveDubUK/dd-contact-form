@@ -53,9 +53,8 @@ function do_captcha(php_message) {
 function initialise_session(){
 	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
-				function(php_message){
-//                                        jQuery(this).css("display", "none");                                
-                                        jQuery("#ddcf_error_reporting").html(php_message.ddcf_error); 
+				function(php_message){                            
+                                        //jQuery("#ddcf_error_reporting").html(php_message.ddcf_error); // debug only
                                         jQuery("#ddcf_session_initialised").val("true");
                                         do_captcha(php_message);
     				});
@@ -67,10 +66,9 @@ function submit(){
 	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_contact_form").serializeArray()
 				,
 				function(php_message){
-
 					jQuery("#ddcf_error_reporting").html('');
                                         jQuery("#ddcf_throbber").css("display", "none");
-                                        jQuery("#ddcf_contact_form_contents").fadeIn( "slow");
+                                        jQuery("#ddcf_contact_form_contents").fadeIn(800);
 
 					if(php_message.ddcf_error==='Success!') {
 
@@ -99,7 +97,7 @@ function submit(){
                                                 jQuery('#ddcf_contact_captcha_fb').html('&nbsp;');
                                                 jQuery("#recaptcha_response_field").val('');
                                                 jQuery('#recaptcha_response_field_fb').html('&nbsp;');
-                                                jQuery("#ddcf_error_reporting").html(php_message.ddcf_error);
+                                                jQuery("#ddcf_error_reporting").html(php_message.ddcf_error+'<br />');
 						do_captcha(php_message);
 					}
 				});
@@ -118,7 +116,8 @@ function submitCSS(){
                         window.setTimeout(finishSubmitCSS, 700);
                     }
                     else {
-                        jQuery('#ddcf_options_feedback_text').html('<p>Problem updating CSS: '+php_message.ddcf_error+'</p>');                                        
+                        jQuery('#ddcf_options_feedback_text').html('<p>Problem updating CSS: '+php_message.ddcf_error+'<br/>The CSS was not updated.</p>');
+                        window.setTimeout(finishSubmitCSS, 1500);
                     }
                 });
              }
