@@ -526,7 +526,7 @@ function make_pretty() {
                 jQuery('.ddcf_span_date').css('float','left').css('margin-left','0.5em');                
                 jQuery('.ddc_span_datetime').css('float','left').css('margin-left','1.0em');
                 jQuery('#ddcf_google_recaptcha').css('float', 'none').css('margin', 'auto auto 1.0em auto');
-                jQuery('#ddcf_span_captcha_add').css('margin-bottom', '1.0em');
+                jQuery('#ddcf_captcha_add').css('margin-bottom', '1.0em');
     }
     else { // width > flipWidth                
                 /* tweak top right and left section width ratio */                
@@ -551,7 +551,7 @@ function make_pretty() {
                 jQuery('.ddc_span_datetime').css('float','none').css('margin-left','0em');
                 
                 /* don't double up the margin */
-                jQuery('#ddcf_span_captcha_add').css('margin-bottom', '0px');
+                jQuery('#ddcf_captcha_add').css('margin-bottom', '0px');
                 
                 /* make the reCaptcha look a bit tidier */
                 if(ddcfWidth<750&&jQuery('#ddcf_google_recaptcha').length>0&&formDensity===5) jQuery('#ddcf_google_recaptcha').css('float', 'right').css('margin', '0');
@@ -565,7 +565,7 @@ function make_pretty() {
     var usingDatePicker = jQuery('.ddcf_date_picker').length;
     var usingDateTimePicker = jQuery('.ddcf_datetime_picker').length;
     var usingDropDowns = jQuery('.ddcf_dropdown').length;
-    var usingSimpleAddition = jQuery('#ddcf_span_captcha_add').length;
+    var usingSimpleAddition = jQuery('#ddcf_captcha_add').length;
     
     /* gap between label and control (px) */
     var controlMargin = 16;
@@ -666,7 +666,7 @@ function make_pretty() {
         /* set the width & height */
         var captchaTextWidth = jQuery('#ddcf_captcha_question').outerWidth(); 
         var captchaInputWidth = jQuery('#ddcf_contact_captcha_add').outerWidth(); 
-        jQuery('#ddcf_span_captcha_add').width( captchaTextWidth + captchaInputWidth  + controlMargin )
+        jQuery('#ddcf_captcha_add').width( captchaTextWidth + captchaInputWidth  + controlMargin )
                                         .css('height' , lineHeight);
         jQuery('#ddcf_contact_captcha_add').css('height' , lineHeight);        
     }    

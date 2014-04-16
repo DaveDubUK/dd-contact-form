@@ -385,15 +385,15 @@
                                     CSS entered here will only appear on pages with a contact form.
                                     <br /><br />
                                     Use custom CSS: <input type="checkbox" id="ddcf_custom_css_check" name="ddcf_custom_css_check" value="ddcf_custom_css_check" <?php if(get_option('ddcf_custom_css_check')) echo ' checked '; ?>><br /><br />
-                                    <div id="ddcf_custom_css_container" name="ddcf_custom_css_container">
-                                        <div id="ddcf_options_feedback" name="ddcf_options_feedback"></div>
-                                        <div id="ddcf_options_feedback_text" name="ddcf_options_feedback_text"></div>
+                                    <div id="ddcf_custom_css_container">
+                                        <div id="ddcf_options_feedback"></div>
+                                        <div id="ddcf_options_feedback_text"></div>
                                         <textarea class="ddcf_textarea_input" name="ddcf_custom_css" value="" id="ddcf_custom_css" ><?php                                      
                                             echo $custom_css->custom_css_text;
                                     ?></textarea>   
                                     </div>
                                     <br />
-                                    <div id="ddcf_update_css_btn_container" name="ddcf_update_css_btn_container">
+                                    <div id="ddcf_update_css_btn_container">
                                         <input id="ddcf_update_css_btn" name="ddcf_update_css_btn" type="button" class="button button-primary" value="<?php _e('Update CSS','ddcf_plugin') ?>" action="the_ajax_hook">
                                     </div>
                                     

@@ -167,7 +167,7 @@ function accordionise(jsonData) {
 
 function doxUser(ui) {
 	var finalOutput = jQuery('.ui-accordion-content-active').html();
-	jQuery('.ui-accordion-content-active').html('<div id="ddcf_image_container" name="ddcf_image_container"><img class="ddcf_img" /></div>');
+	jQuery('.ui-accordion-content-active').html('<div id="ddcf_image_container"><img class="ddcf_img" /></div>');
 	jQuery('#accordion').accordion( "refresh" );
 	jQuery("#ddcf_action").val('ddcf_dox_user');
 	jQuery("#ddcf_action_arg").val(ui.newHeader.text());
@@ -252,7 +252,7 @@ function showPrevious(show) {
 
 
 function showUser(str) {
-	jQuery('#ddcf_contact_information').html('<div id="ddcf_image_container" name="ddcf_image_container"></div>');
+	jQuery('#ddcf_contact_information').html('<div id="ddcf_image_container"></div>');
 	jQuery("#ddcf_action_arg").val(str);
 	jQuery('#ddcf_page_info').html('querying database...');
 	jQuery.post(ddcf_ajax_script.ajaxurl, jQuery("#ddcf_management_form").serializeArray()

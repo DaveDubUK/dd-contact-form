@@ -166,7 +166,7 @@ label {
             margin: auto;            
         }
 
-    #ddcf_span_captcha_add {
+    #ddcf_captcha_add {
         display: inline-block;
         position: relative;
         vertical-align:middle;

@@ -86,6 +86,11 @@
 	box-shadow: 0px 0px 0px !important;
 }
 
+/* tab headers */
+.ui-accordion .ui-accordion-header {
+	color: #D1D1D1 !important;
+}
+
 #ddcf_image_container {
 	width:100%;
         height:3em;

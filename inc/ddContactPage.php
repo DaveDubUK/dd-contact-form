@@ -56,16 +56,16 @@
 
 <!--[if gte IE 9]><style type="text/css">.gradient { filter: none; }</style><![endif]-->
 
-<div id="ddcf_contact_form_wrapper" name="ddcf_contact_form_wrapper">
+<div id="ddcf_contact_form_wrapper">
     
-    <div id="ddcf_throbber" name="ddcf_throbber"></div>
+    <div id="ddcf_throbber"></div>
     
-	<div id="ddcf_contact_form_contents" name="ddcf_contact_form_contents">
+	<div id="ddcf_contact_form_contents">
 
 		<!-- form user feedback area -->
-		<div id="ddcf_error_reporting" name="ddcf_error_reporting"></div>
+		<div id="ddcf_error_reporting"></div>
 
-		<form action="" method="" id="ddcf_contact_form" name="ddcf_contact_form">
+		<form action="#" id="ddcf_contact_form" name="ddcf_contact_form">
 
 			<!-- top left -->
 			<div id="ddcf_contact_form_top_left" class="ddcf_float_left">
@@ -98,20 +98,20 @@
                                         ||$ddcf_captcha_type=='Simple Addition'
                                         ||$ddcf_captcha_type=='reCaptcha') 
                                         {
-                                        echo '<div id="ddcf_contact_form_top_right" name="ddcf_contact_form_top_right">
-                                                <div id="ddcf_middle_bit" name="ddcf_middle_bit">';
+                                        echo '<div id="ddcf_contact_form_top_right">
+                                                <div id="ddcf_middle_bit">';
                                         
                                         if(($ddcf_captcha_type=='reCaptcha')
                                             &&!$start_date_check
                                             &&!$end_date_check
                                             &&!$extra_dropdown_one_check
                                             &&!$extra_dropdown_two_check) {
-                                                echo '<div class="ddcf_details_row" name="ddcf_captcha_details_row" id="ddcf_captcha_details_row">
+                                                echo '<div class="ddcf_details_row" id="ddcf_captcha_details_row">
                                                         <div class="ddcf_details_row_division ddcf_full_width">';
                                                 if(get_option(ddcf_recaptcha_public_key)) {
-                                                    echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_float_right">
-                                                            <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha" ></div>
-                                                            <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
+                                                    echo '<div id="ddcf_contact_form_captcha" class="ddcf_float_right">
+                                                            <div id="ddcf_google_recaptcha"></div>
+                                                            <span id="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
                                                          </div>';
                                                 }
                                                 else _e('Missing Google reCaptcha keys - please see plugin options', 'ddcf_plugin');
@@ -123,7 +123,7 @@
                                         
                                         
                                         if($start_date_check||$end_date_check||$extra_dropdown_one_check||$extra_dropdown_two_check) {
-                                            echo '<div class="ddcf_details_row" name="ddcf_extra_details_row" id="ddcf_extra_details_row">';                                            
+                                            echo '<div class="ddcf_details_row" id="ddcf_extra_details_row">';                                            
                                             
                                             if($start_date_check||$end_date_check) {
 
@@ -155,32 +155,32 @@
 
                                                 if(!$wrong_category) {                                                                                   
                                                     if($extra_dropdown_one_check||$extra_dropdown_two_check )
-                                                         echo '<div class="ddcf_details_row_division ddcf_half_width" name="ddcf_dates_details_row_division" id="ddcf_dates_details_row_division">';
-                                                    else echo '<div class="ddcf_details_row_division ddcf_full_width" name="ddcf_dates_details_row_division" id="ddcf_dates_details_row_division">';
+                                                         echo '<div class="ddcf_details_row_division ddcf_half_width" id="ddcf_dates_details_row_division">';
+                                                    else echo '<div class="ddcf_details_row_division ddcf_full_width" id="ddcf_dates_details_row_division">';
                                                     if($start_date_check&&$end_date_check) {
                                                         if($start_date_time_check||$end_date_time_check)
-                                                            echo'   <div id="ddcf_dates_container" name="ddcf_dates_container">      
+                                                            echo'   <div id="ddcf_dates_container">      
                                                                         <span class="ddc_span_datetime">                                                                            
-                                                                            <div name="ddcf_arrival_date_fb" id="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <div id="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
                                                                             <input type="text" class="ddcf_input_base ddcf_datetime_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_arrival_date" id="ddcf_arrival_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_arrival_date" class="ddcf_label">'.__("Booking Start:","ddcf_plugin").'</label>
                                                                         </span>
                                                                         <span class="ddc_span_datetime">
-                                                                            <div name="ddcf_departure_date_fb" id="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
-                                                                            <input type="text" class="ddcf_input_base ddcf_datetime_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_departure_date" id="ddcf_departure_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
+                                                                            <div id="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <input type="text" class="ddcf_input_base ddcf_datetime_picker '.get_option(ddcf_input_css_classes).'" id="ddcf_departure_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_departure_date" class="ddcf_label">'.__("Booking End:","ddcf_plugin").'</label>
                                                                         </span>
                                                                     </div><!-- #ddcf_dates_container-->';
                                                         else
-                                                            echo'   <div id="ddcf_dates_container" name="ddcf_dates_container">      
+                                                            echo'   <div id="ddcf_dates_container">      
                                                                         <span class="ddcf_span_date">
-                                                                            <div id="ddcf_arrival_date_fb" name="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <div id="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
                                                                             <input type="text" class="ddcf_input_base ddcf_date_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_arrival_date" id="ddcf_arrival_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_arrival_date" class="ddcf_label">'.__("Booking Start:","ddcf_plugin").'</label>
                                                                         </span>
                                                                         <span class="ddcf_span_date">
-                                                                            <div name="ddcf_departure_date_fb" id="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
-                                                                            <input type="text" class="ddcf_input_base ddcf_date_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_departure_date" id="ddcf_departure_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
+                                                                            <div id="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <input type="text" class="ddcf_input_base ddcf_date_picker '.get_option(ddcf_input_css_classes).'" id="ddcf_departure_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_departure_date" class="ddcf_label">'.__("Booking End:","ddcf_plugin").'</label>
                                                                         </span>
                                                                     </div><!-- #ddcf_dates_container-->';
@@ -188,27 +188,27 @@
                                                     else if($start_date_check) {
                                                         if($start_date_time_check||$end_date_time_check)
                                                             echo'      <span class="ddc_span_datetime">
-                                                                            <div id="ddcf_arrival_date_fb" name="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
-                                                                            <input type="text" class="ddcf_input_base ddcf_datetime_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_arrival_date" id="ddcf_arrival_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
+                                                                            <div id="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <input type="text" class="ddcf_input_base ddcf_datetime_picker '.get_option(ddcf_input_css_classes).'" id="ddcf_arrival_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_arrival_date" class="ddcf_label">'.__("Booking Start:","ddcf_plugin").'</label>
                                                                         </span>';
                                                         else
                                                             echo'       <span class="ddcf_span_date">
-                                                                            <div id="ddcf_arrival_date_fb" name="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
-                                                                            <input type="text" class="ddcf_input_base ddcf_date_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_arrival_date" id="ddcf_arrival_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
+                                                                            <div id="ddcf_arrival_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <input type="text" class="ddcf_input_base ddcf_date_picker '.get_option(ddcf_input_css_classes).'" id="ddcf_arrival_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_arrival_date" class="ddcf_label">'.__("Booking Start:","ddcf_plugin").'</label>
                                                                         </span>';
                                                     }
                                                     else if($end_date_check) {
                                                         if($start_date_time_check||$end_date_time_check)
                                                             echo'      <span class="ddc_span_datetime">
-                                                                            <div id="ddcf_departure_date_fb" name="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <div id="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
                                                                             <input type="text" class="ddcf_input_base ddcf_datetime_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_departure_date" id="ddcf_departure_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_departure_date" class="ddcf_label">'.__("Booking End:","ddcf_plugin").'</label>
                                                                         </span>';
                                                         else
                                                             echo'       <span class="ddcf_span_date">
-                                                                            <div id="ddcf_departure_date_fb" name="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
+                                                                            <div id="ddcf_departure_date_fb" class="ddcf_contact_input_verify"></div>
                                                                             <input type="text" class="ddcf_input_base ddcf_date_picker '.get_option(ddcf_input_css_classes).'" name="ddcf_departure_date" id="ddcf_departure_date" value="'. __('Click here','ddcf_plugin') .'" title="'. __('Click here','ddcf_plugin') .'" />
                                                                             <label for="ddcf_departure_date" class="ddcf_label">'.__("Booking End:","ddcf_plugin").'</label>
                                                                         </span>';
@@ -232,8 +232,8 @@
                                         if($extra_dropdown_one_check||$extra_dropdown_two_check) {
 
                                                if($start_date_time_check||$end_date_time_check||$start_date_check||$end_date_check)
-                                                    echo '<div class="ddcf_details_row_division ddcf_half_width" name="ddcf_party_size_details_row_division" id="ddcf_party_size_details_row_division">';
-                                               else echo '<div class="ddcf_details_row_division ddcf_full_width" name="ddcf_party_size_details_row_division" id="ddcf_party_size_details_row_division">';                                             
+                                                    echo '<div class="ddcf_details_row_division ddcf_half_width" id="ddcf_party_size_details_row_division">';
+                                               else echo '<div class="ddcf_details_row_division ddcf_full_width" id="ddcf_party_size_details_row_division">';                                             
 
 
                                             // gather necessary user prefs                                           
@@ -268,7 +268,7 @@
                                             if(!$wrong_category) {                     
 
                                                 if($extra_dropdown_one_check&&$extra_dropdown_two_check) {
-                                                    echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
+                                                    echo'<div id="ddcf_dropdowns_align">
                                                             <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown">
@@ -306,7 +306,7 @@
                                                     </div>';
                                                 }
                                                 else if($extra_dropdown_one_check) {
-                                                    echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
+                                                    echo'<div id="ddcf_dropdowns_align">
                                                             <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_adults_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_adults" id="ddcf_num_adults" class="ddcf_dropdown">
@@ -327,7 +327,7 @@
                                                     </div>';
                                                 }
                                                 else if($extra_dropdown_two_check) {
-                                                    echo'<div name="ddcf_dropdowns_align" id="ddcf_dropdowns_align">
+                                                    echo'<div id="ddcf_dropdowns_align">
                                                             <span class="ddcf_span_dropdown '.get_option(ddcf_input_css_classes).'">
                                                                     <div id="ddcf_num_children_fb" class="ddcf_contact_input_verify"></div>
                                                                     <select name="ddcf_num_children" id="ddcf_num_children"  class="ddcf_dropdown">
@@ -368,18 +368,13 @@
                                    // Simple Add Captcha
                                    if($ddcf_captcha_type=='Simple Addition') {
                                            // default to Simple Addition
-                                           echo '<div class="ddcf_details_row" name="ddcf_captcha_details_row" id="ddcf_captcha_details_row">
+                                           echo '<div class="ddcf_details_row" id="ddcf_captcha_details_row">
                                                    <div class="ddcf_details_row_division ddcf_full_width">
-                                                       <span name="ddcf_span_captcha_add" id="ddcf_span_captcha_add">
-                                                           <!--div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_float_right"-->
-                                                               <!--div id="ddcf_simple_add_captcha" name="ddcf_simple_add_captcha"-->
-                                                               <div name="ddcf_captcha_question" id="ddcf_captcha_question">What is <span id="ddcf_captcha_one">?</span> plus <span id="ddcf_captcha_two">?</span> ?</div>
-                                                                   <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="ddcf_input_base '.get_option(ddcf_input_css_classes).'" title="'.__('Please add the two numbers').'"/>
-                                                                   <div id="ddcf_contact_captcha_fb" name="ddcf_contact_captcha_fb" class="ddcf_contact_input_verify"></div>
-
-                                                               <!--/div-->
-                                                           <!--/div-->
-                                                       </span>
+                                                       <div id="ddcf_captcha_add">
+                                                            <div id="ddcf_captcha_question">What is <span id="ddcf_captcha_one">?</span> plus <span id="ddcf_captcha_two">?</span> ?</div>
+                                                            <input type="text" name="ddcf_contact_captcha_add" value="" id="ddcf_contact_captcha_add" class="ddcf_input_base '.get_option(ddcf_input_css_classes).'" title="'.__('Please add the two numbers').'"/>
+                                                            <div id="ddcf_contact_captcha_fb" class="ddcf_contact_input_verify"></div>
+                                                       </div>
                                                    </div>
                                                </div>';
                                            if($ddcf_form_density<3) $ddcf_form_density = 3;
@@ -402,9 +397,9 @@
                                          ||$extra_dropdown_two_check)) {
                                          echo '<div class="ddcf_float_left">';
                                          if(get_option(ddcf_recaptcha_public_key)) {
-                                                 echo '<div id="ddcf_contact_form_captcha" name="ddcf_contact_form_captcha" class="ddcf_float_right">
-                                                         <div id="ddcf_google_recaptcha" name="ddcf_google_recaptcha" ></div>
-                                                         <span id="ddcf_contact_recaptcha_fb" name="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
+                                                 echo '<div id="ddcf_contact_form_captcha" class="ddcf_float_right">
+                                                         <div id="ddcf_google_recaptcha"></div>
+                                                         <span id="ddcf_contact_recaptcha_fb" class="ddcf_contact_input_verify"></span>
                                                       </div>';
                                          }
                                          else    _e('Missing Google reCaptcha keys - please see plugin options', 'ddcf_plugin');
@@ -443,22 +438,18 @@
 
                                             echo '
                                         <div class="ddcf_float_left ddcf_markable_container">
-                                            <!--div id="ddcf_question_container" name="ddcf_question_container"-->
-                                                <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_contact_text_input ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
-                                                <div name="ddcf_question_one_fb" id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
-                                            <!--/div-->
+                                            <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_contact_text_input ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
+                                            <div id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
                                         </div>
                                         <div class="ddcf_float_left ddcf_markable_container">
-                                            <!--div id="ddcf_question_container" name="ddcf_question_container"-->
-                                                <input type="text" id="ddcf_question_two" name="ddcf_question_two" class="ddcf_input_base ddcf_contact_text_input ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_two).'" title="'.get_option(ddcf_extra_question_two).'" />
-                                                <div name="ddcf_question_two_fb" id="ddcf_question_two_fb" class="ddcf_contact_input_verify"></div>
-                                            <!--/div-->
+                                            <input type="text" id="ddcf_question_two" name="ddcf_question_two" class="ddcf_input_base ddcf_contact_text_input ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_two).'" title="'.get_option(ddcf_extra_question_two).'" />
+                                            <div id="ddcf_question_two_fb" class="ddcf_contact_input_verify"></div>
                                         </div><!-- both questions --> ';
 
                                         else if(get_option(ddcf_extra_question_one_check) && $question_one!='false') echo '
                                         <div class="ddcf_float_left ddcf_markable_container">
-                                                <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
-                                                <div name="ddcf_question_two_fb" id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
+                                                <input type="text" id="ddcf_question_one" class="ddcf_input_base ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
+                                                <div id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
                                         </div><!-- extra question 1 -->';
 
 
@@ -483,7 +474,7 @@
                         
                         <!-- message area -->
                         <div id="ddcf_message" class="ddcf_full_width ddcf_float_left ddcf_markable_container">
-                                        <textarea name="ddcf_contact_message" value="<?php _e('Message','ddcf_plugin') ?>" title="<?php _e('Please enter your message','ddcf_plugin') ?>" id="ddcf_contact_message" name="ddcf_contact_message"  class="ddcf_input_base <?php _e(get_option(ddcf_input_css_classes)) ?>" /><?php _e('Message','ddcf_plugin') ?></textarea>
+                                        <textarea title="<?php _e('Please enter your message','ddcf_plugin') ?>" id="ddcf_contact_message" name="ddcf_contact_message"  class="ddcf_input_base <?php _e(get_option(ddcf_input_css_classes)) ?>"><?php _e('Message','ddcf_plugin') ?></textarea>
                                         <div id="ddcf_contact_message_fb" class="ddcf_contact_input_verify"></div>
                         </div><!-- message area -->
 
@@ -492,8 +483,8 @@
                                 
                                 
                         <!-- bottom bar - Signup option, reset and send mail buttons -->
-                        <div id="ddcf_opts_and_buttons" name="ddcf_opts_and_buttons" class="ddcf_float_left">
-                            <div id="ddcf_checkbox_area" name="ddcf_checkbox_area">
+                        <div id="ddcf_opts_and_buttons" class="ddcf_float_left">
+                            <div id="ddcf_checkbox_area">
                                 <?php
                                 if(get_option(ddcf_rec_updates_option_check)) {
                                         $updates_message = get_option('ddcf_rec_updates_message');
