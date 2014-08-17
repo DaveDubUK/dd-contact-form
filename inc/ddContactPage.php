@@ -448,7 +448,7 @@
 
                                         else if(get_option(ddcf_extra_question_one_check) && $question_one!='false') echo '
                                         <div class="ddcf_float_left ddcf_markable_container">
-                                                <input type="text" id="ddcf_question_one" class="ddcf_input_base ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
+                                                <input type="text" id="ddcf_question_one" name="ddcf_question_one" class="ddcf_input_base ddcf_question '.get_option(ddcf_input_css_classes).'" value="'.get_option(ddcf_extra_question_one).'" title="'.get_option(ddcf_extra_question_one).'" />
                                                 <div id="ddcf_question_one_fb" class="ddcf_contact_input_verify"></div>
                                         </div><!-- extra question 1 -->';
 
