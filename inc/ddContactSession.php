@@ -210,7 +210,7 @@ function set_html_content_type() { return 'text/html'; }
         } else {
             if(isset($_POST['ddcf_question_one'])&&!empty($_POST["ddcf_question_one"])) $ddcf_question_one = filter_var($_POST['ddcf_question_one'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_questions_compulsory_check)&&get_option(ddcf_extra_question_one_check)&&$_POST['question_one']!='false') $errors.=_e('Question one was not answered<br />');
-            if(isset($_POST['ddcf_question_two'])&&!empty($_POST["ddcf_question_two"])) filter_var($ddcf_question_two = $_POST['ddcf_question_two'], FILTER_SANITIZE_STRING);
+            if(isset($_POST['ddcf_question_two'])&&!empty($_POST["ddcf_question_two"])) $ddcf_question_two = filter_var($_POST['ddcf_question_two'], FILTER_SANITIZE_STRING);
             else if(get_option(ddcf_questions_compulsory_check)&&get_option(ddcf_extra_question_two_check)&& $_POST['question_two']!='false') $errors.=_e('Question two was not answered<br />');
         }
         
