@@ -22,12 +22,6 @@
 
 /* Options page stuff */
 
-/*h3 {
-    font-weight: bold !important;
-    font-size:1.05em !important;
-}*/
-
-
 /* content div for options page */
 .ddcf-options-div {
 	margin:1.3em 0em;
@@ -39,6 +33,7 @@
     position:relative;
     width:100%;
 }
+
 #ddcf_options_feedback {
     display:none; /* controlled by jQuery at runtime */
     position:absolute;
@@ -49,66 +44,75 @@
     float:none;
     margin:auto;
     text-align:center;
-    background-image:url('images/dd-contact-form-css-updater-throbber.gif'); 
+    background-image:url('images/ddcf-custom-css-throbber.gif'); 
     background-repeat:no-repeat;
     background-position:center center;    
 }
-    #ddcf_options_feedback_text {
-        display:none; /* controlled by jQuery at runtime */
-        position:absolute;
-        height: auto;
-        font-size: 2.1em !important; /* ignored ?! */
-        font-weight:bold;
-        width:100%;
-        top:22%;
-        float:none;
-        margin:auto;
-        text-align:center;
-    }
+
+#ddcf_options_feedback_text {
+    display:none; /* controlled by jQuery at runtime */
+    position:absolute;
+    height: auto;
+    font-size: 2.1em !important; /* ignored ?! */
+    font-weight:bold;
+    width:100%;
+    top:22%;
+    float:none;
+    margin:auto;
+    text-align:center;
+}
 
 .ui-accordion .ui-accordion-content {
-        overflow:hidden !important; /* workaround cludge for what seems to be this issue: http://bugs.jqueryui.com/ticket/4208 */
-        padding-bottom:auto;
+    overflow:hidden !important; /* workaround cludge for what seems to be this issue: http://bugs.jqueryui.com/ticket/4208 */
+    padding-bottom:auto;
 }
 
 .ui-tabs .ui-tabs-panel {
-        background-color: #333 !important;
+    background-color: #333 !important;
 }
 
 .ui-accordion-header{ /*}.ui-widget-content  .ui-state-default, .ui-widget-header .ui-state-default {*/
-        border: 1px solid #333 !important;
-        background: #333 !important;
-        font-size:1.08em !important;
-        font-weight: bold !important;
+    border: 1px solid #333 !important;
+    background: #333 !important;
+    font-size:1.08em !important;
+    font-weight: bold !important;
 }
 
-.ui-widget select {margin-left:0.5em}
+.ui-widget select {
+    margin-left:0.5em
+}
 
 #ddcf_custom_css {
-        height:100%;
-        min-height:30em;
-        width:100%;
-        max-width:100%;
+    height:100%;
+    min-height:30em;
+    width:100%;
+    max-width:100%;
 }
-        #ddcf_update_css_btn_container {
-                width:100%;
-                position:relative;
-        }
 
-        #ddcf_update_css_btn {
-                float: none;
-                margin: auto;
-                display: block;
-        }
+#ddcf_update_css_btn_container {
+    width:100%;
+    position:relative;
+}
+
+#ddcf_update_css_btn {
+    float: none;
+    margin: auto;
+    display: block;
+}
 
 /* text inputs on options form */
 .ddcf_text_input {  
-	min-width:20em;
-        margin:0.5em;
+    min-width:20em;
+    margin:0.5em;
 }
 .ddcf_textarea_input {
 	margin-top:1.0em;
 	width:97%;
 	min-height:4.0em;
 	vertical-align:bottom;
+}
+
+/* drop down menus on options form */
+.ddcf-category-filter-check {
+    margin:0.7em 0em;
 }

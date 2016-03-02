@@ -23,8 +23,9 @@
 <!--[if gte IE 9]><style type="text/css">.gradient { filter: none; }</style><![endif]-->
 
 <?php
-    if(current_user_can(read)) {
-		session_start();
+    if (current_user_can(read)) {
+		//error_reporting(E_ERROR | E_PARSE);
+		//session_start();
 		echo '<div id="ddcf_contacts_wrapper">
 				<form id="ddcf_management_form">
 					<div id="ddcf_tools_panel">

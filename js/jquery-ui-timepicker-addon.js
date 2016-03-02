@@ -170,7 +170,7 @@
 		    	overrides, i;
 
 			for (var attrName in this._defaults) {
-				if(this._defaults.hasOwnProperty(attrName)){
+				if (this._defaults.hasOwnProperty(attrName)) {
 					var attrValue = $input.attr('time:' + attrName);
 					if (attrValue) {
 						try {
@@ -228,8 +228,8 @@
 					(tp_inst._defaults.altTimeFormat? tp_inst._defaults.altTimeFormat:''));
 
 			// controlType is string - key to our this._controls
-			if(typeof(tp_inst._defaults.controlType) === 'string'){
-				if(tp_inst._defaults.controlType == 'slider' && typeof(jQuery.ui.slider) === 'undefined'){
+			if (typeof(tp_inst._defaults.controlType) === 'string') {
+				if (tp_inst._defaults.controlType == 'slider' && typeof(jQuery.ui.slider) === 'undefined') {
 					tp_inst._defaults.controlType = 'select';
 				}
 				tp_inst.control = tp_inst._controls[tp_inst._defaults.controlType];
@@ -247,7 +247,7 @@
 			}
 			var tzl=timezoneList.length,tzi=0,tzv=null;
 			if (tzl > 0 && typeof timezoneList[0] !== 'object') {
-				for(; tzi<tzl; tzi++){
+				for(; tzi<tzl; tzi++) {
 					tzv = timezoneList[tzi];
 					timezoneList[tzi] = { value: tzv, label: $.timepicker.timezoneOffsetString(tzv, tp_inst.support.iso8601) };
 				}
@@ -373,7 +373,7 @@
 								'<dd class="ui_tpicker_time"' + ((o.showTime) ? '' : noDisplay) + '></dd>';
 
 				// Create the markup
-				for(i=0,l=this.units.length; i<l; i++){
+				for(i=0,l=this.units.length; i<l; i++) {
 					litem = this.units[i];
 					uitem = litem.substr(0,1).toUpperCase() + litem.substr(1);
 					show = o['show'+uitem] !== null? o['show'+uitem] : this.support[litem];
@@ -390,7 +390,7 @@
 					if (show && o[litem+'Grid'] > 0) {
 						html += '<div style="padding-left: 1px"><table class="ui-tpicker-grid-label"><tr>';
 
-						if(litem == 'hour'){
+						if (litem == 'hour') {
 							for (var h = o[litem+'Min']; h <= max[litem]; h += parseInt(o[litem+'Grid'], 10)) {
 								gridSize[litem]++;
 								var tmph = $.datepicker.formatTime(this.support.ampm? 'hht':'HH', {hour:h}, o);
@@ -425,7 +425,7 @@
 				}
 
 				// add sliders, adjust grids, add events
-				for(i=0,l=tp_inst.units.length; i<l; i++){
+				for(i=0,l=tp_inst.units.length; i<l; i++) {
 					litem = tp_inst.units[i];
 					uitem = litem.substr(0,1).toUpperCase() + litem.substr(1);
 					show = o['show'+uitem] !== null? o['show'+uitem] : this.support[litem];
@@ -441,19 +441,19 @@
 							marginLeft: o.isRTL? '0' : ((size / (-2 * gridSize[litem])) + "%"),
 							marginRight: o.isRTL? ((size / (-2 * gridSize[litem])) + "%") : '0',
 							borderCollapse: 'collapse'
-						}).find("td").click(function(e){
+						}).find("td").click(function(e) {
 								var $t = $(this),
 									h = $t.html(),
 									n = parseInt(h.replace(/[^0-9]/g),10),
 									ap = h.replace(/[^apm]/ig),
 									f = $t.data('for'); // loses scope, so we use data-for
 
-								if(f == 'hour'){
-									if(ap.indexOf('p') !== -1 && n < 12){
+								if (f == 'hour') {
+									if (ap.indexOf('p') !== -1 && n < 12) {
 										n += 12;
 									}
 									else{
-										if(ap.indexOf('a') !== -1 && n === 12){
+										if (ap.indexOf('a') !== -1 && n === 12) {
 											n = 0;
 										}
 									}
@@ -581,7 +581,7 @@
 							if (this.second <= this._defaults.secondMin) {
 								this.second = this._defaults.secondMin;
 								this._defaults.millisecMin = minDateTime.getMilliseconds();
-								if(this.millisec <= this._defaults.millisecMin) {
+								if (this.millisec <= this._defaults.millisecMin) {
 									this.millisec = this._defaults.millisecMin;
 									this._defaults.microsecMin = minDateTime.getMicroseconds();
 								} else {
@@ -793,7 +793,7 @@
 			// Updates the time within the timepicker
 			this.formattedTime = $.datepicker.formatTime(o.timeFormat, this, o);
 			if (this.$timeObj) {
-				if(pickerTimeFormat === o.timeFormat){
+				if (pickerTimeFormat === o.timeFormat) {
 					this.$timeObj.text(this.formattedTime + pickerTimeSuffix);
 				}
 				else{
@@ -832,7 +832,7 @@
 			var formattedDateTime = this.formattedDate;
 
 			// if a slider was changed but datepicker doesn't have a value yet, set it
-			if(dp_inst.lastVal===""){
+			if (dp_inst.lastVal==="") {
                 dp_inst.currentYear=dp_inst.selectedYear;
                 dp_inst.currentMonth=dp_inst.selectedMonth;
                 dp_inst.currentDay=dp_inst.selectedDay;
@@ -866,20 +866,20 @@
 					altSeparator = this._defaults.altSeparator ? this._defaults.altSeparator : this._defaults.separator,
 					altTimeSuffix = this._defaults.altTimeSuffix ? this._defaults.altTimeSuffix : this._defaults.timeSuffix;
 
-				if(!this._defaults.timeOnly){
-					if (this._defaults.altFormat){
+				if (!this._defaults.timeOnly) {
+					if (this._defaults.altFormat) {
 						altFormattedDateTime = $.datepicker.formatDate(this._defaults.altFormat, (dt === null ? new Date() : dt), formatCfg);
 					}
 					else{
 						altFormattedDateTime = this.formattedDate;
 					}
 
-					if (altFormattedDateTime){
+					if (altFormattedDateTime) {
 						altFormattedDateTime += altSeparator;
 					}
 				}
 
-				if(this._defaults.altTimeFormat){
+				if (this._defaults.altTimeFormat) {
 					altFormattedDateTime += $.datepicker.formatTime(this._defaults.altTimeFormat, this, this._defaults) + altTimeSuffix;
 				}
 				else{
@@ -917,7 +917,7 @@
 		_controls: {
 			// slider methods
 			slider: {
-				create: function(tp_inst, obj, unit, val, min, max, step){
+				create: function(tp_inst, obj, unit, val, min, max, step) {
 					var rtl = tp_inst._defaults.isRTL; // if rtl go -60->0 instead of 0->60
 					return obj.prop('slide', null).slider({
 						orientation: "horizontal",
@@ -934,11 +934,11 @@
 						}
 					});
 				},
-				options: function(tp_inst, obj, unit, opts, val){
-					if(tp_inst._defaults.isRTL){
-						if(typeof(opts) == 'string'){
-							if(opts == 'min' || opts == 'max'){
-								if(val !== undefined){
+				options: function(tp_inst, obj, unit, opts, val) {
+					if (tp_inst._defaults.isRTL) {
+						if (typeof(opts) == 'string') {
+							if (opts == 'min' || opts == 'max') {
+								if (val !== undefined) {
 									return obj.slider(opts, val*-1);
 								}
 								return Math.abs(obj.slider(opts));
@@ -948,27 +948,27 @@
 						var min = opts.min,
 							max = opts.max;
 						opts.min = opts.max = null;
-						if(min !== undefined){
+						if (min !== undefined) {
 							opts.max = min * -1;
 						}
-						if(max !== undefined){
+						if (max !== undefined) {
 							opts.min = max * -1;
 						}
 						return obj.slider(opts);
 					}
-					if(typeof(opts) == 'string' && val !== undefined){
+					if (typeof(opts) == 'string' && val !== undefined) {
 							return obj.slider(opts, val);
 					}
 					return obj.slider(opts);
 				},
-				value: function(tp_inst, obj, unit, val){
-					if(tp_inst._defaults.isRTL){
-						if(val !== undefined){
+				value: function(tp_inst, obj, unit, val) {
+					if (tp_inst._defaults.isRTL) {
+						if (val !== undefined) {
 							return obj.slider('value', val*-1);
 						}
 						return Math.abs(obj.slider('value'));
 					}
-					if(val !== undefined){
+					if (val !== undefined) {
 						return obj.slider('value', val);
 					}
 					return obj.slider('value');
@@ -976,16 +976,16 @@
 			},
 			// select methods
 			select: {
-				create: function(tp_inst, obj, unit, val, min, max, step){
+				create: function(tp_inst, obj, unit, val, min, max, step) {
 					var sel = '<select class="ui-timepicker-select" data-unit="'+ unit +'" data-min="'+ min +'" data-max="'+ max +'" data-step="'+ step +'">',
 						format = tp_inst._defaults.pickerTimeFormat || tp_inst._defaults.timeFormat;
 
-					for(var i=min; i<=max; i+=step){
+					for(var i=min; i<=max; i+=step) {
 						sel += '<option value="'+ i +'"'+ (i==val? ' selected':'') +'>';
-						if(unit == 'hour'){
+						if (unit == 'hour') {
 							sel += $.datepicker.formatTime($.trim(format.replace(/[^ht ]/ig,'')), {hour:i}, tp_inst._defaults);
 						}
-						else if(unit == 'millisec' || unit == 'microsec' || i >= 10){ sel += i; }
+						else if (unit == 'millisec' || unit == 'microsec' || i >= 10) { sel += i; }
 						else {sel += '0'+ i.toString(); }
 						sel += '</option>';
 					}
@@ -993,18 +993,18 @@
 
 					obj.children('select').remove();
 
-					$(sel).appendTo(obj).change(function(e){
+					$(sel).appendTo(obj).change(function(e) {
 						tp_inst._onTimeChange();
 						tp_inst._onSelectHandler();
 					});
 
 					return obj;
 				},
-				options: function(tp_inst, obj, unit, opts, val){
+				options: function(tp_inst, obj, unit, opts, val) {
 					var o = {},
 						$t = obj.children('select');
-					if(typeof(opts) == 'string'){
-						if(val === undefined){
+					if (typeof(opts) == 'string') {
+						if (val === undefined) {
 							return $t.data(opts);
 						}
 						o[opts] = val;
@@ -1012,9 +1012,9 @@
 					else{ o = opts; }
 					return tp_inst.control.create(tp_inst, obj, $t.data('unit'), $t.val(), o.min || $t.data('min'), o.max || $t.data('max'), o.step || $t.data('step'));
 				},
-				value: function(tp_inst, obj, unit, val){
+				value: function(tp_inst, obj, unit, val) {
 					var $t = obj.children('select');
-					if(val !== undefined){
+					if (val !== undefined) {
 						return $t.val(val);
 					}
 					return $t.val();
@@ -1090,7 +1090,7 @@
 			iso8601 = (timeFormat.replace(/\'.*?\'/g,'').indexOf('Z') !== -1);
 
 		// Strict parse requires the timeString to match the timeFormat exactly
-		var strictParse = function(f, s, o){
+		var strictParse = function(f, s, o) {
 
 			// pattern for standard and localized AM/PM markers
 			var getPatternAmpm = function(amNames, pmNames) {
@@ -1207,14 +1207,14 @@
 		};// end strictParse
 
 		// First try JS Date, if that fails, use strictParse
-		var looseParse = function(f,s,o){
+		var looseParse = function(f,s,o) {
 			try{
 				var d = new Date('2012-01-01 '+ s);
-				if(isNaN(d.getTime())){
+				if (isNaN(d.getTime())) {
 					d = new Date('2012-01-01T'+ s);
-					if(isNaN(d.getTime())){
+					if (isNaN(d.getTime())) {
 						d = new Date('01/01/2012 '+ s);
-						if(isNaN(d.getTime())){
+						if (isNaN(d.getTime())) {
 							throw "Unable to parse time with native Date: "+ s;
 						}
 					}
@@ -1229,21 +1229,21 @@
 					timezone: d.getTimezoneOffset()*-1
 				};
 			}
-			catch(err){
+			catch(err) {
 				try{
 					return strictParse(f,s,o);
 				}
-				catch(err2){
+				catch(err2) {
 					$.timepicker.log("Unable to parse \ntimeString: "+ s +"\ntimeFormat: "+ f);
 				}
 			}
 			return false;
 		}; // end looseParse
 
-		if(typeof o.parse === "function"){
+		if (typeof o.parse === "function") {
 			return o.parse(timeFormat, timeString, o);
 		}
-		if(o.parse === 'loose'){
+		if (o.parse === 'loose') {
 			return looseParse(timeFormat, timeString, o);
 		}
 		return strictParse(timeFormat, timeString, o);
@@ -1405,7 +1405,7 @@
 	/* Update any alternate field to synchronise with the main field. */
 	$.datepicker._updateAlternate = function(inst) {
 		var tp_inst = this._get(inst, 'timepicker');
-		if(tp_inst){
+		if (tp_inst) {
 			var altField = tp_inst._defaults.altField;
 			if (altField) { // update alternate field too
 				var altFormat = tp_inst._defaults.altFormat || tp_inst._defaults.dateFormat,
@@ -1417,8 +1417,8 @@
 					altTimeFormat = tp_inst._defaults.altTimeFormat !== null ? tp_inst._defaults.altTimeFormat : tp_inst._defaults.timeFormat;
 
 				altFormattedDateTime += $.datepicker.formatTime(altTimeFormat, tp_inst, tp_inst._defaults) + altTimeSuffix;
-				if(!tp_inst._defaults.timeOnly && !tp_inst._defaults.altFieldTimeOnly && date !== null){
-					if(tp_inst._defaults.altFormat){
+				if (!tp_inst._defaults.timeOnly && !tp_inst._defaults.altFieldTimeOnly && date !== null) {
+					if (tp_inst._defaults.altFormat) {
 						altFormattedDateTime = $.datepicker.formatDate(tp_inst._defaults.altFormat, date, formatCfg) + altSeparator + altFormattedDateTime;
 					}
 					else{
@@ -1573,7 +1573,7 @@
 		// object will only return the timezone offset for the current locale, so we
 		// adjust it accordingly.  If not using timezone option this won't matter..
 		// If a timezone is different in tp, keep the timezone as is
-		if(tp_inst && tp_inst.timezone != null){
+		if (tp_inst && tp_inst.timezone != null) {
 			date = $.timepicker.timezoneAdjust(date, tp_inst.timezone);
 			tp_date = $.timepicker.timezoneAdjust(tp_date, tp_inst.timezone);
 		}
@@ -1597,7 +1597,7 @@
 
 		if (tp_inst) {
 			// if it hasn't yet been defined, grab from field
-			if(inst.lastVal === undefined){
+			if (inst.lastVal === undefined) {
 				this._setDateFromField(inst, noDefault);
 			}
 
@@ -1609,7 +1609,7 @@
 				// This is important if you are using the timezone option, javascript's Date
 				// object will only return the timezone offset for the current locale, so we
 				// adjust it accordingly.  If not using timezone option this won't matter..
-				if(tp_inst.timezone != null){
+				if (tp_inst.timezone != null) {
 					date = $.timepicker.timezoneAdjust(date, tp_inst.timezone);
 				}
 			}
@@ -1768,9 +1768,9 @@
 	* Determine by the time format which units are supported
 	* Returns an object of booleans for each unit
 	*/
-	var detectSupport = function(timeFormat){
+	var detectSupport = function(timeFormat) {
 		var tf = timeFormat.replace(/\'.*?\'/g,'').toLowerCase(), // removes literals
-			isIn = function(f, t){ // does the format contain the token?
+			isIn = function(f, t) { // does the format contain the token?
 					return f.indexOf(t) !== -1? true:false;
 				};
 		return {
@@ -1898,7 +1898,7 @@
 	 * @return string
 	 */
 	$.timepicker.timezoneOffsetString = function(tzMinutes, iso8601) {
-		if(isNaN(tzMinutes) || tzMinutes > 840){
+		if (isNaN(tzMinutes) || tzMinutes > 840) {
 			return tzMinutes;
 		}
 
@@ -1908,7 +1908,7 @@
 			iso = iso8601? ':':'',
 			tz = (off >= 0 ? '+' : '-') + ('0' + (hours * 101).toString()).slice(-2) + iso + ('0' + (minutes * 101).toString()).slice(-2);
 
-		if(tz == '+00:00'){
+		if (tz == '+00:00') {
 			return 'Z';
 		}
 		return tz;
@@ -1922,11 +1922,11 @@
 	$.timepicker.timezoneOffsetNumber = function(tzString) {
 		tzString = tzString.toString().replace(':',''); // excuse any iso8601, end up with "+1245"
 
-		if(tzString.toUpperCase() === 'Z'){ // if iso8601 with Z, its 0 minute offset
+		if (tzString.toUpperCase() === 'Z') { // if iso8601 with Z, its 0 minute offset
 			return 0;
 		}
 
-		if(!/^(\-|\+)\d{4}$/.test(tzString)){ // possibly a user defined tz, so just give it back
+		if (!/^(\-|\+)\d{4}$/.test(tzString)) { // possibly a user defined tz, so just give it back
 			return tzString;
 		}
 
@@ -1943,7 +1943,7 @@
 	 */
 	$.timepicker.timezoneAdjust = function(date, toTimezone) {
 		var toTz = $.timepicker.timezoneOffsetNumber(toTimezone);
-		if(!isNaN(toTz)){
+		if (!isNaN(toTz)) {
 			var currTz = date.getTimezoneOffset()*-1,
 				diff = currTz - toTz; // difference in minutes
 
@@ -2036,17 +2036,17 @@
 				enddt = endTime[method]('getDate'),
 				changeddt = changed[method]('getDate');
 
-			if(startdt !== null){
+			if (startdt !== null) {
 				var minDate = new Date(startdt.getTime()),
 					maxDate = new Date(startdt.getTime());
 
 				minDate.setMilliseconds(minDate.getMilliseconds() + options.minInterval);
 				maxDate.setMilliseconds(maxDate.getMilliseconds() + options.maxInterval);
 
-				if(options.minInterval > 0 && minDate > enddt){ // minInterval check
+				if (options.minInterval > 0 && minDate > enddt) { // minInterval check
 					endTime[method]('setDate',minDate);
 				}
-				else if(options.maxInterval > 0 && maxDate < enddt){ // max interval check
+				else if (options.maxInterval > 0 && maxDate < enddt) { // max interval check
 					endTime[method]('setDate',maxDate);
 				}
 				else if (startdt > enddt) {
@@ -2060,11 +2060,11 @@
 				return;
 			}
 			var date = changed[method].call(changed, 'getDate');
-			if(date !== null && options.minInterval > 0){
-				if(option == 'minDate'){
+			if (date !== null && options.minInterval > 0) {
+				if (option == 'minDate') {
 					date.setMilliseconds(date.getMilliseconds() + options.minInterval);
 				}
-				if(option == 'maxDate'){
+				if (option == 'maxDate') {
 					date.setMilliseconds(date.getMilliseconds() - options.minInterval);
 				}
 			}
@@ -2080,8 +2080,8 @@
 	 * @param  Object err pass any type object to log to the console during error or debugging
 	 * @return void
 	 */
-	$.timepicker.log = function(err){
-		if(window.console){
+	$.timepicker.log = function(err) {
+		if (window.console) {
 			console.log(err);
 		}
 	};
@@ -2089,10 +2089,10 @@
 	/*
 	* Rough microsecond support
 	*/
-	if(!Date.prototype.getMicroseconds){
+	if (!Date.prototype.getMicroseconds) {
 		Date.microseconds = 0;
-		Date.prototype.getMicroseconds = function(){ return this.microseconds; };
-		Date.prototype.setMicroseconds = function(m){ this.microseconds = m; return this; };
+		Date.prototype.getMicroseconds = function() { return this.microseconds; };
+		Date.prototype.setMicroseconds = function(m) { this.microseconds = m; return this; };
 	}
 
 	/*

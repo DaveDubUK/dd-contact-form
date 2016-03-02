@@ -46,8 +46,8 @@ define("RECAPTCHA_VERIFY_SERVER", "www.google.com");
  */
 function _recaptcha_qsencode ($data) {
         $req = "";
-        foreach ( $data as $key => $value )
-                $req .= $key . '=' . urlencode( stripslashes($value) ) . '&';
+        foreach ($data as $key => $value)
+                $req .= $key . '=' . urlencode(stripslashes($value)) . '&';
 
         // Cut the last '&'
         $req=substr($req,0,strlen($req)-1);
@@ -77,13 +77,13 @@ function _recaptcha_http_post($host, $path, $data, $port = 80) {
         $http_request .= $req;
 
         $response = '';
-        if( false == ( $fs = @fsockopen($host, $port, $errno, $errstr, 10) ) ) {
+        if (false == ($fs = @fsockopen($host, $port, $errno, $errstr, 10))) {
                 die ('Could not open socket');
         }
 
         fwrite($fs, $http_request);
 
-        while ( !feof($fs) )
+        while (!feof($fs))
                 $response .= fgets($fs, 1160); // One TCP-IP packet
         fclose($fs);
         $response = explode("\r\n\r\n", $response, 2);
@@ -175,8 +175,8 @@ function recaptcha_check_answer ($privkey, $remoteip, $challenge, $response, $ex
                                                  'remoteip' => $remoteip,
                                                  'challenge' => $challenge,
                                                  'response' => $response
-                                                 ) + $extra_params
-                                          );
+                                                ) + $extra_params
+                                         );
 
         $answers = explode ("\n", $response [1]);
         $recaptcha_response = new ReCaptchaResponse();
@@ -246,7 +246,7 @@ function recaptcha_mailhide_url($pubkey, $privkey, $email) {
  * the email is then displayed as john...@example.com
  */
 function _recaptcha_mailhide_email_parts ($email) {
-	$arr = preg_split("/@/", $email );
+	$arr = preg_split("/@/", $email);
 
 	if (strlen ($arr[0]) <= 4) {
 		$arr[0] = substr ($arr[0], 0, 1);

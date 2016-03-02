@@ -26,80 +26,78 @@ var gLastAction;
 var gResultsPerPage = 10;
 var gGreyOut = '#cccccc';
 
-function search(str) {
+function ddcfSearch(str) {
 	gLastQuery = str;
 	gLastAction = jQuery('#ddcf_action').val();
-	showUser(str);
+	ddcfShowUser(str);
 }
-function showMore() {
-	if(gLastQuery) {
+function ddcfShowMore() {
+	if (gLastQuery) {
 		jQuery('#ddcf_action').val(gLastAction);
-		showUser(gLastQuery);
+		ddcfShowUser(gLastQuery);
 	}
 }
 
-function resetButtons() {
+function ddcfResetButtons() {
 	jQuery('.ddcf_button').prop('disabled', true)
-                                .click(function( event ) {
-                                        event.preventDefault();
-                                });
+                          .click(function(event) {
+                                event.preventDefault();
+                            });
 }
-
 
 jQuery(document).ready(function ($) {
 
 	/* initialise */
-        resetButtons();
+    ddcfResetButtons();
 
 	/* previous and next results page links  */
 	jQuery('#ddcf_previous_page').css('color', gGreyOut)
-            .click(function() {
+                                 .click(function() {
 		var cursorType = jQuery(this).css('cursor');
-		if(cursorType==='pointer') {
-			resetButtons();
-			var currentValue = parseInt(jQuery('#ddcf_results_offset').val(),10);
-			currentValue-=parseInt(gResultsPerPage,10);
-			if(currentValue<0) currentValue = 0;
+		if (cursorType === 'pointer') {
+			ddcfResetButtons();
+			var currentValue = parseInt(jQuery('#ddcf_results_offset').val(), 10);
+			currentValue -= parseInt(gResultsPerPage, 10);
+			if (currentValue<0) currentValue = 0;
 			jQuery('#ddcf_results_offset').val(currentValue);
-                        jQuery('#ddcf_action').val('ddcf_search_action');
-			showMore();
+            jQuery('#ddcf_action').val('ddcf_search_action');
+			ddcfShowMore();
 		}
 	});
 	jQuery('#ddcf_next_page').css('color', gGreyOut)
-            .click(function() {
+                             .click(function() {
 		var cursorType = jQuery(this).css('cursor');
-		if(cursorType==='pointer') {
-			resetButtons();
-			var currentValue = parseInt(jQuery('#ddcf_results_offset').val(),10);
-			currentValue+=parseInt(gResultsPerPage,10);
-                        if(currentValue>jQuery('#ddcf_total_num_results').val()) currentValue -= gResultsPerPage;
+		if (cursorType === 'pointer') {
+			ddcfResetButtons();
+			var currentValue = parseInt(jQuery('#ddcf_results_offset').val(), 10);
+			currentValue += parseInt(gResultsPerPage, 10);
+            if (currentValue > jQuery('#ddcf_total_num_results').val()) currentValue -= gResultsPerPage;
 			jQuery('#ddcf_results_offset').val(currentValue);
 			jQuery('#ddcf_action').val('ddcf_search_action');
-			showMore();
+			ddcfShowMore();
 		}
 	});
 
 	jQuery("#ddcf_action").val('');
 	jQuery("#ddcf_action_arg").val('');
 	jQuery("#ddcf_num_results").val(gResultsPerPage);
-        jQuery("#ddcf_results_offset").val('0');
+    jQuery("#ddcf_results_offset").val('0');
 
-	initialise_manager_session();
+	ddcfInitialiseManagerSession();
 
 	// monitor the search box for changes when in focus
 	gLastSearch = jQuery('#ddcf_search_form').val();
-	var intervalID = setInterval(function(){
+	var intervalID = setInterval(function() {
 		var currentSearch=jQuery('#ddcf_search_form').val();
-		if(currentSearch!==gLastSearch) {
-			resetButtons();
+		if (currentSearch !== gLastSearch) {
+			ddcfResetButtons();
 			jQuery('#ddcf_action').val('ddcf_search_action');
 			jQuery('#ddcf_results_offset').val(0);
-			var searchString=jQuery('#ddcf_search_form').val();
-			search(searchString);
+			var searchString = jQuery('#ddcf_search_form').val();
+			ddcfSearch(searchString);
 		}
 		gLastSearch = jQuery('#ddcf_search_form').val();
     }, 600); // 600 ms check
-
 
     jQuery("#ddcf_create_contact_dialog").dialog({
 			autoOpen: false,
@@ -108,12 +106,10 @@ jQuery(document).ready(function ($) {
 			modal: true,
 			buttons: {
 				Cancel: function () {
-                                        jQuery(this).dialog("close");
+                    jQuery(this).dialog("close");
 				},
-                                        
 				"Create New Contact": function () {
-                                        /*alert("Contact ID is "+gCurrentContactID.toString());*/
-					jQuery(this).dialog("close");
+                    jQuery(this).dialog("close");
 				}
 			},
 			open: function() {
@@ -124,97 +120,97 @@ jQuery(document).ready(function ($) {
 			close: function () {
 				////allFields.val("").removeClass("ui-state-error");
 			}
-		 });
+	});
 
     jQuery("#ddcf_edit_contact_dialog").dialog({
-			autoOpen: false,
-			height: 485,
-			width: 300,
-			modal: true,
-			buttons: {
-				Cancel: function () {
-				jQuery(this).dialog("close");
-				},
-				"Update Contact": function () {
-					jQuery(this).dialog("close");
-				}
-			},
-			open: function() {
-				// get currently selected contact-id
+        autoOpen: false,
+        height: 485,
+        width: 300,
+        modal: true,
+        buttons: {
+            Cancel: function () {
+                jQuery(this).dialog("close");
+            },
+            "Update Contact": function () {
+                jQuery(this).dialog("close");
+            }
+        },
+        open: function() {
+            // get currently selected contact-id
 
-				//alert("Contact ID is "+gCurrentContactID.toString());
-			},
-			close: function () {
-				////allFields.val("").removeClass("ui-state-error");
-			}
-		 });
+            //alert("Contact ID is "+gCurrentContactID.toString());
+        },
+        close: function () {
+            ////allFields.val("").removeClass("ui-state-error");
+        }
+	});
 
     jQuery("#ddcf_add_contact_info_dialog").dialog({
-			autoOpen: false,
-			height: 485,
-			width: 300,
-			modal: true,
-			buttons: {
-				Cancel: function () {
-				jQuery(this).dialog("close");
-				},
-				"Update Contact": function () {
-					jQuery(this).dialog("close");
-				}
-			},
-			open: function() {
-				// get currently selected contact-id
+        autoOpen: false,
+        height: 485,
+        width: 300,
+        modal: true,
+        buttons: {
+            Cancel: function () {
+                jQuery(this).dialog("close");
+            },
+            "Update Contact": function () {
+                jQuery(this).dialog("close");
+            }
+        },
+        open: function() {
+            // get currently selected contact-id
 
-				//alert("Contact ID is "+gCurrentContactID.toString());
-			},
-			close: function () {
-				////allFields.val("").removeClass("ui-state-error");
-			}
-		 });
+            //alert("Contact ID is "+gCurrentContactID.toString());
+        },
+        close: function () {
+            ////allFields.val("").removeClass("ui-state-error");
+        }
+	});
 
     jQuery("#ddcf_add_contact_rel_dialog").dialog({
-			autoOpen: false,
-			height: 485,
-			width: 300,
-			modal: true,
-			buttons: {
-				Cancel: function () {
-				jQuery(this).dialog("close");
-				},
-				"Update Contact": function () {
-					jQuery(this).dialog("close");
-				}
-			},
-			open: function() {
-				// get currently selected contact-id
+        autoOpen: false,
+        height: 485,
+        width: 300,
+        modal: true,
+        buttons: {
+            Cancel: function () {
+                jQuery(this).dialog("close");
+            },
+            "Update Contact": function () {
+                jQuery(this).dialog("close");
+            }
+        },
+        open: function() {
+            // get currently selected contact-id
 
-				//alert("Contact ID is "+gCurrentContactID.toString());
-			},
-			close: function () {
-				////allFields.val("").removeClass("ui-state-error");
-			}
-		 });
+            //alert("Contact ID is "+gCurrentContactID.toString());
+        },
+        close: function () {
+            ////allFields.val("").removeClass("ui-state-error");
+        }
+	});
 
     jQuery("#ddcf_add_contact_note_dialog").dialog({
-			autoOpen: false,
-			height: 485,
-			width: 300,
-			modal: true,
-			buttons: {
-				Cancel: function () {
-				jQuery(this).dialog("close");
-				},
-				"Update Contact": function () {
-					jQuery(this).dialog("close");
-				}
-			},
-			open: function() {
-				// get currently selected contact-id
+        autoOpen: false,
+        height: 485,
+        width: 300,
+        modal: true,
+        buttons: {
+            Cancel: function () {
+                jQuery(this).dialog("close");
+            },
+            "Update Contact": function () {
+                jQuery(this).dialog("close");
+            }
+        },
+        open: function() {
+            // get currently selected contact-id
 
-				//alert("Contact ID is "+gCurrentContactID.toString());
-			},
-			close: function () {
-				////allFields.val("").removeClass("ui-state-error");
-			}
-		 });
+            //alert("Contact ID is "+gCurrentContactID.toString());
+        },
+        close: function () {
+            ////allFields.val("").removeClass("ui-state-error");
+        }
+	});
 });
